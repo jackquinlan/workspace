@@ -61,9 +61,11 @@ model User {
   stripePriceId          String?   @map(name: "stripe_price_id")
   stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
 
-  accounts    Account[]
-  sessions    Session[]
-  resetTokens ResetPasswordToken[]
+  views View[]
+
+  accounts           Account[]
+  sessions           Session[]
+  resetTokens        ResetPasswordToken[]
   verificationTokens VerificationToken[]
 
   @@index([id])
@@ -72,14 +74,14 @@ model User {
 }
 
 model VerificationToken {
-  id         String   @id @default(uuid())
-  createdAt  DateTime @default(now())
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
 
   identifier String
   expires    DateTime
 
-  userId     String
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@map(name: "verification_tokens")
@@ -98,3 +100,59 @@ model ResetPasswordToken {
   @@map(name: "reset_password_tokens")
 }
 
+enum ViewType {
+  board
+  table
+}
+
+model View {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  name String
+  type ViewType @default(table)
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  lists List[]
+
+  @@index([userId])
+  @@index([id])
+  @@map(name: "views")
+}
+
+model List {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  name String
+
+  view   View   @relation(fields: [viewId], references: [id], onDelete: Cascade)
+  viewId String
+
+  tasks Task[]
+
+  @@index([viewId])
+  @@index([id])
+  @@map(name: "lists")
+}
+
+model Task {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  name        String
+  description String?
+  completed   Boolean @default(false)
+
+  list   List   @relation(fields: [listId], references: [id], onDelete: Cascade)
+  listId String
+
+  @@index([listId])
+  @@index([id])
+  @@map(name: "tasks")
+}
