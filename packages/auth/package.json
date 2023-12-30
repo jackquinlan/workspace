@@ -1,0 +1,20 @@
+{
+    "name": "@workspace/auth",
+    "version": "1.0.0",
+    "main": "src/index.ts",
+    "dependencies": {
+        "@next-auth/prisma-adapter": "^1.0.7",
+        "@workspace/db": "workspace:*",
+        "@workspace/emails": "workspace:*",
+        "@workspace/lib": "workspace:*",
+        "date-fns": "^2.30.0",
+        "hash-wasm": "^4.11.0",
+        "next-auth": "^4.24.5",
+        "resend": "^2.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "20.8.0",
+        "@workspace/tsconfig": "workspace:*",
+        "typescript": "5.2.2"
+    }
+}

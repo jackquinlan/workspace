@@ -1,0 +1,22 @@
+{
+    "name": "@workspace/db",
+    "version": "1.0.0",
+    "main": "./index.ts",
+    "types": "./index.ts",
+    "scripts": {
+        "db:generate": "prisma generate",
+        "db:push": "prisma db push --skip-generate",
+        "db:seed": "pnpx prisma db seed",
+        "db:format": "pnpx prisma format"
+    },
+    "prisma": {
+        "seed": "ts-node --transpile-only ./seed.ts"
+    },
+    "devDependencies": {
+        "prisma": "5.5.2"
+    },
+    "dependencies": {
+        "@prisma/client": "5.6.0",
+        "ts-node": "^10.9.1"
+    }
+}
