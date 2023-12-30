@@ -13,10 +13,10 @@
         "seed": "ts-node --transpile-only ./seed.ts"
     },
     "devDependencies": {
-        "prisma": "5.5.2"
+        "prisma": "5.6.0"
     },
     "dependencies": {
         "@prisma/client": "5.6.0",
-        "ts-node": "^10.9.1"
+        "ts-node": "^10.9.2"
     }
 }

@@ -2,8 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 
-import { cn } from "@/lib/utils";
-
 type Star = {
     size: number;
     opacity: number;

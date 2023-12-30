@@ -4,7 +4,7 @@ import React, { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
 import { toast } from "sonner";
-import { Lock, Trash } from "lucide-react";
+import { Lock } from "lucide-react";
 import { z } from "zod";
 
 import { 
