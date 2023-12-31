@@ -23,13 +23,13 @@ export function SettingsMenu({ user }: { user: User }) {
         <DropdownMenu>
             <DropdownMenuTrigger className="outline-none">
                 <Avatar className="h-7 w-7">
-                    <AvatarFallback className="border border-border bg-gradient-to-b from-sky-400 to-sky-200" />
+                    <AvatarFallback className="border-border border bg-gradient-to-b from-sky-400 to-sky-200" />
                 </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-[280px] p-1" side="bottom" align="start">
                 <div className="flex items-center gap-2 px-1 py-1.5">
                     <Avatar className="h-7 w-7">
-                        <AvatarFallback className="border border-border bg-gradient-to-b from-sky-400 to-sky-200" />
+                        <AvatarFallback className="border-border border bg-gradient-to-b from-sky-400 to-sky-200" />
                     </Avatar>
                     <div className="flex flex-col text-left text-xs">
                         <h1 className="font-medium">{user.email}</h1>

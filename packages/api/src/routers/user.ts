@@ -4,8 +4,8 @@ import { Resend } from "resend";
 import * as z from "zod";
 
 import { hashPassword, verifyPassword } from "@workspace/auth/src/crypto";
-import { sendVerificationEmail } from "@workspace/lib/auth/send-verification-email";
 import { ResetPasswordEmail } from "@workspace/emails";
+import { sendVerificationEmail } from "@workspace/lib/auth/send-verification-email";
 import {
     addPasswordSchema,
     forgotPasswordSchema,
@@ -123,7 +123,10 @@ export const userRouter = createRouter({
         if (!user.hashedPassword) {
             throw new Error("User does not have a password.");
         }
-        const passwordMatches = await verifyPassword(user.hashedPassword, opts.input.currentPassword);
+        const passwordMatches = await verifyPassword(
+            user.hashedPassword,
+            opts.input.currentPassword,
+        );
         if (!passwordMatches) {
             throw new Error("Current password is incorrect.");
         }
@@ -201,16 +204,15 @@ export const userRouter = createRouter({
                 },
             });
         }),
-    getUserSettingsInfo: protectedProcedure
-        .query(async (opts) => {
-            const user = await opts.ctx.db.user.findFirstOrThrow({
-                where: {
-                    id: opts.ctx.session.user.id,
-                },
-            });
-            const hasPassword = user.hashedPassword ? true : false; 
-            return {
-                hasPassword: hasPassword,
-            };
-        }),
+    getUserSettingsInfo: protectedProcedure.query(async (opts) => {
+        const user = await opts.ctx.db.user.findFirstOrThrow({
+            where: {
+                id: opts.ctx.session.user.id,
+            },
+        });
+        const hasPassword = user.hashedPassword ? true : false;
+        return {
+            hasPassword: hasPassword,
+        };
+    }),
 });

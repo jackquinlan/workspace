@@ -65,8 +65,8 @@ export function VerifyEmailBanner({ email }: Props) {
                         Verify Your Email
                     </DialogTitle>
                     <DialogDescription>
-                        We&apos;ve sent an email to <strong>{email}</strong>. Please check your inbox and
-                        click the link in the email to verify your account.
+                        We&apos;ve sent an email to <strong>{email}</strong>. Please check your
+                        inbox and click the link in the email to verify your account.
                     </DialogDescription>
                     <DialogFooter>
                         <Button disabled={isLoading} size="sm" onClick={handleResendEmail}>

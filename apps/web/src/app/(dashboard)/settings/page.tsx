@@ -5,7 +5,7 @@ import { getServerAuthSession } from "@workspace/auth";
 import { Separator, Tabs, TabsContent, TabsList, TabsTrigger } from "@workspace/ui";
 
 import { api } from "@/trpc/server";
-import { AddOrUpdatePasswordModal } from "./components/add-or-update-password-modal";
+import { AddOrUpdatePasswordModal } from "./components/add-or-update-password";
 import { DeleteAccount } from "./components/delete-account";
 import { ProfileSettings } from "./components/profile-settings";
 
@@ -18,14 +18,12 @@ export default async function SettingsPage() {
 
     return (
         <React.Fragment>
-            <div className="border-b border-b-border px-4">
-                <h1 className="text-[28px] pt-[2px] font-semibold">Settings</h1>
+            <div className="border-b-border border-b px-4">
+                <h1 className="pt-[2px] text-[28px] font-semibold">Settings</h1>
             </div>
             <Tabs className="container" defaultValue="account">
                 <TabsList className="-mx-4 my-1">
-                    <TabsTrigger value="account">
-                        Account
-                    </TabsTrigger>
+                    <TabsTrigger value="account">Account</TabsTrigger>
                 </TabsList>
                 <TabsContent value="account" className="w-full space-y-4 md:w-2/3">
                     <div className="relative -left-3 -top-1 space-y-4">

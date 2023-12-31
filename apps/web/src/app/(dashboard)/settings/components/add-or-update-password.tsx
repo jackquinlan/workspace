@@ -3,14 +3,15 @@
 import React, { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
-import { toast } from "sonner";
 import { Lock } from "lucide-react";
+import { toast } from "sonner";
 import { z } from "zod";
 
-import { 
+import { addPasswordSchema, updatePasswordSchema } from "@workspace/lib/validators/user";
+import {
     Alert,
-    Button, 
-    Dialog, 
+    Button,
+    Dialog,
     DialogContent,
     DialogDescription,
     DialogFooter,
@@ -22,14 +23,13 @@ import {
     FormLabel,
     FormMessage,
     Input,
-    Label, 
+    Label,
     Switch,
     useZodForm,
 } from "@workspace/ui";
-import { addPasswordSchema, updatePasswordSchema } from "@workspace/lib/validators/user";
 
-import { api } from "@/trpc/react";
 import { Loader } from "@/components/loading-animation";
+import { api } from "@/trpc/react";
 
 interface Props {
     hasPassword: boolean;
@@ -44,7 +44,9 @@ export function AddOrUpdatePasswordModal({ hasPassword }: Props) {
             <div className="flex items-center justify-between">
                 <div className="flex flex-col space-y-1">
                     <Label>Password</Label>
-                    <p className="text-xs leading-5">Set a permanent password to login to your account</p>
+                    <p className="text-xs leading-5">
+                        Set a permanent password to login to your account
+                    </p>
                 </div>
                 {!hasPassword ? (
                     <Switch checked={open} onCheckedChange={() => setOpen(!open)} />
@@ -58,29 +60,29 @@ export function AddOrUpdatePasswordModal({ hasPassword }: Props) {
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogContent className="top-[30%]">
                         <DialogTitle className="flex items-center gap-1">
-                            <Lock className="w-4 h-4" /> 
+                            <Lock className="h-4 w-4" />
                             Add a password to your account
                         </DialogTitle>
                         <DialogDescription>
-                            Password must contain at least one uppercase letter, one number, and
-                            one special character.
+                            Password must contain at least one uppercase letter, one number, and one
+                            special character.
                         </DialogDescription>
                         <AddPasswordForm close={() => setOpen(!open)} />
-                    </DialogContent> 
+                    </DialogContent>
                 </Dialog>
             )}
             <Dialog open={openUpdate} onOpenChange={setOpenUpdate}>
                 <DialogContent className="top-[30%]">
                     <DialogTitle className="flex items-center gap-1">
-                        <Lock className="w-4 h-4" /> 
+                        <Lock className="h-4 w-4" />
                         Update your password
                     </DialogTitle>
                     <DialogDescription>
-                        New password must contain at least one uppercase letter, one number, and
-                        one special character.
+                        New password must contain at least one uppercase letter, one number, and one
+                        special character.
                     </DialogDescription>
                     <ChangePasswordForm close={() => setOpenUpdate(!openUpdate)} />
-                </DialogContent> 
+                </DialogContent>
             </Dialog>
         </React.Fragment>
     );
@@ -91,8 +93,8 @@ export function AddPasswordForm({ close }: { close: () => void }) {
     const addPassword = api.user.addPassword.useMutation({
         onSuccess: () => router.refresh(),
     });
-    const form = useZodForm({ 
-        schema: addPasswordSchema, 
+    const form = useZodForm({
+        schema: addPasswordSchema,
         defaultValues: {
             confirmPassword: "",
             password: "",
@@ -143,10 +145,14 @@ export function AddPasswordForm({ close }: { close: () => void }) {
                     )}
                 />
                 <DialogFooter className="pt-2">
-                    <Button size="sm" variant="outline" onClick={(e) => {
-                        e.preventDefault();
-                        close();
-                    }}>
+                    <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            close();
+                        }}
+                    >
                         Cancel
                     </Button>
                     <Button type="submit" size="sm">
@@ -154,7 +160,7 @@ export function AddPasswordForm({ close }: { close: () => void }) {
                     </Button>
                 </DialogFooter>
             </form>
-        </Form> 
+        </Form>
     );
 }
 
@@ -166,8 +172,8 @@ export function ChangePasswordForm({ close }: { close: () => void }) {
         onError: (error) => setError(error.message),
     });
     const [isLoading, startTransition] = useTransition();
-    const form = useZodForm({ 
-        schema: updatePasswordSchema, 
+    const form = useZodForm({
+        schema: updatePasswordSchema,
         defaultValues: {
             currentPassword: "",
             password: "",
@@ -232,10 +238,14 @@ export function ChangePasswordForm({ close }: { close: () => void }) {
                     )}
                 />
                 <DialogFooter className="pt-2">
-                    <Button size="sm" variant="outline" onClick={(e) => {
-                        e.preventDefault();
-                        close();
-                    }}>
+                    <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            close();
+                        }}
+                    >
                         Cancel
                     </Button>
                     <Button type="submit" size="sm">
@@ -243,6 +253,6 @@ export function ChangePasswordForm({ close }: { close: () => void }) {
                     </Button>
                 </DialogFooter>
             </form>
-        </Form> 
+        </Form>
     );
 }

@@ -8,7 +8,7 @@ export default withAuth(
         const token = await getToken({ req });
 
         const isAuthPage =
-            req.nextUrl.pathname.startsWith("/login")  ||
+            req.nextUrl.pathname.startsWith("/login") ||
             req.nextUrl.pathname.startsWith("/signup") ||
             req.nextUrl.pathname.startsWith("/forgot-password");
 
@@ -26,7 +26,9 @@ export default withAuth(
         if (!token) {
             let from = req.nextUrl.pathname;
             if (req.nextUrl.search) from += req.nextUrl.search;
-            return NextResponse.redirect(new URL(`/login?from=${encodeURIComponent(from)}`, req.url));
+            return NextResponse.redirect(
+                new URL(`/login?from=${encodeURIComponent(from)}`, req.url),
+            );
         }
     },
     {
@@ -39,5 +41,5 @@ export default withAuth(
 );
 
 export const config = {
-    matcher: ["/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)"],
+    matcher: ["/view/:path*", "/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)"],
 };
