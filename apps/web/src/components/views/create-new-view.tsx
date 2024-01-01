@@ -65,13 +65,13 @@ export function CreateNewViewModal() {
                 className="h-5 w-5 cursor-pointer rounded-md p-[2px] hover:bg-[#DDDDDC]" 
             />
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogContent className="" showClose={false}>
-                    <DialogTitle className="flex items-center gap-1">
-                        <Layers className="h-4 w-4" />
+                <DialogContent className="w-[450px]" showClose={false}>
+                    <DialogTitle className="flex items-center gap-1 text-xl">
+                        <Layers className="h-5 w-5" />
                         Add view
                     </DialogTitle>
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(handleAddView)} className="space-y-2">
+                        <form onSubmit={form.handleSubmit(handleAddView)} className="-mt-2 space-y-2">
                             <FormField
                                 control={form.control}
                                 name="name"

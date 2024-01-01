@@ -1,6 +1,5 @@
 import * as React from "react";
-
-import { Bird } from "lucide-react";
+import { redirect } from "next/navigation";
 
 import { db } from "@workspace/db";
 
@@ -11,12 +10,14 @@ export default async function View({ params }: { params: { id: string } }) {
         },
     });
     if (!view) {
-        return (
-            <div className="mt-[5%] flex flex-col items-center justify-center">
-                <Bird className="h-12 w-12" />
-                <h1 className="text-xl font-semibold">This view no longer exists.</h1>
-            </div>
-        );
+        return redirect("/inbox");
     }
-    return <div className="mt-[5%] flex justify-center text-3xl font-semibold">{view.name}</div>;
+    return (
+        <div className="flex flex-col">
+            <h1 className="flex items-center gap-2 text-2xl font-semibold">
+                <div className="border-border h-5 w-5 rounded-md border bg-red-400" />
+                {view.name}
+            </h1>
+        </div>
+    );
 }

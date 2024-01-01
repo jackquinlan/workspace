@@ -110,20 +110,21 @@ model View {
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
-  name String
-  type ViewType @default(table)
+  color String   @default("#4f46e5")
+  name  String
+  type  ViewType @default(table)
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-  lists List[]
+  groups Group[]
 
   @@index([userId])
   @@index([id])
   @@map(name: "views")
 }
 
-model List {
+model Group {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
@@ -137,7 +138,7 @@ model List {
 
   @@index([viewId])
   @@index([id])
-  @@map(name: "lists")
+  @@map(name: "groups")
 }
 
 model Task {
@@ -149,10 +150,10 @@ model Task {
   description String?
   completed   Boolean @default(false)
 
-  list   List   @relation(fields: [listId], references: [id], onDelete: Cascade)
-  listId String
+  group   Group   @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  groupId String
 
-  @@index([listId])
+  @@index([groupId])
   @@index([id])
   @@map(name: "tasks")
 }

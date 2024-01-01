@@ -10,7 +10,7 @@ import { api } from "@/trpc/server";
 import { cn } from "@/lib/utils";
 import { CreateNewViewModal } from "@/components/views/create-new-view";
 import { SettingsMenu } from "@/components/layout/settings-menu";
-import { ViewSettings } from "@/components/views/view-settings";
+import { ViewSettings } from "@/components/views/view-settings-dropdown";
 
 interface Props {
     user: User;
