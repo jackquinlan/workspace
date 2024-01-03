@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 
 import { getServerAuthSession } from "@workspace/auth";
 
-import { LockBodyScroll } from "@/components/layout/lock-body-scroll";
+import { LockBodyScroll } from "@/components/lock-body-scroll";
 import { Sidebar } from "@/components/layout/sidebar";
 import { VerifyEmailBanner } from "@/components/verify-email-banner";
 import { cn } from "@/lib/utils";

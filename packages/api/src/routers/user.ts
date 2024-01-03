@@ -87,7 +87,7 @@ export const userRouter = createRouter({
                 email: opts.input.email,
             },
         });
-        if (!userExists || !userExists.hashedPassword) {
+        if (!userExists) {
             throw new Error("User does not exist.");
         }
         return await sendVerificationEmail(userExists);

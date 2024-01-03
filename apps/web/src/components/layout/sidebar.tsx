@@ -1,7 +1,7 @@
 import * as React from "react";
 import Link from "next/link";
 
-import { Inbox } from "lucide-react";
+import { Bell, Inbox, Search } from "lucide-react";
 import type { User } from "next-auth";
 
 import { Separator } from "@workspace/ui";
@@ -10,7 +10,7 @@ import { api } from "@/trpc/server";
 import { cn } from "@/lib/utils";
 import { CreateNewViewModal } from "@/components/views/create-new-view";
 import { SettingsMenu } from "@/components/layout/settings-menu";
-import { ViewSettings } from "@/components/views/view-settings-dropdown";
+import { ViewSettings } from "@/components/views/view-settings-menu";
 
 interface Props {
     user: User;
@@ -29,6 +29,14 @@ export async function Sidebar({ user }: Props) {
                 <SidebarItem href="/inbox">
                     <Inbox className="h-4 w-4" />
                     Inbox
+                </SidebarItem>
+                <SidebarItem href="/inbox">
+                    <Bell className="h-4 w-4" />
+                    Notifications 
+                </SidebarItem>
+                <SidebarItem href="/inbox">
+                    <Search className="h-4 w-4" />
+                    Search 
                 </SidebarItem>
             </div>
             <div className="flex flex-col space-y-1 px-2">

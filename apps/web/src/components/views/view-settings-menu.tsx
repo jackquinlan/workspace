@@ -43,7 +43,16 @@ export function ViewSettings({ view }: Props) {
                 <MoreHorizontal className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-52" sideOffset={-2} side="bottom" align="start">
+                <DropdownMenuItem disabled>
+                    <Star className="mr-2 h-4 w-4" />
+                    Add to favorites
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                    <PenSquare className="mr-2 h-4 w-4" />
+                    Edit
+                </DropdownMenuItem>
                 <DropdownMenuItem
+                    className="hover:text-destructive"
                     onClick={(e) => {
                         e.preventDefault();
                         handleDeleteView();
@@ -51,14 +60,6 @@ export function ViewSettings({ view }: Props) {
                 >
                     <Trash2 className="mr-2 h-4 w-4" />
                     Delete
-                </DropdownMenuItem>
-                <DropdownMenuItem disabled>
-                    <Star className="mr-2 h-4 w-4" />
-                    Add to favorites
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                    <PenSquare className="mr-2 h-4 w-4" />
-                    Rename
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

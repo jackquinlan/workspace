@@ -10,6 +10,7 @@ import { z } from "zod";
 import { addViewSchema } from "@workspace/lib/validators/view";
 import {
     Button,
+    CancelButton,
     Dialog,
     DialogContent,
     DialogFooter,
@@ -86,16 +87,7 @@ export function CreateNewViewModal() {
                                 )}
                             />
                             <DialogFooter className="pt-2">
-                                <Button
-                                    size="sm"
-                                    variant="outline"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        setOpen(false);
-                                    }}
-                                >
-                                    Cancel
-                                </Button>
+                                <CancelButton size="sm" close={() => setOpen(false)}>Cancel</CancelButton>
                                 <Button type="submit" size="sm" className="px-4">
                                     {isLoading ? <Loader size="sm" /> : "Add"}
                                 </Button>
