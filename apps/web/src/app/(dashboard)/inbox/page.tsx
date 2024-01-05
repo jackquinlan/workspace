@@ -4,8 +4,5 @@ import { getServerAuthSession } from "@workspace/auth";
 
 export default async function Inbox() {
     const session = await getServerAuthSession();
-    if (!session) {
-        return <div>Inbox</div>;
-    }
-    return <pre>{JSON.stringify(session.user, null, 2)}</pre>;
+    return <pre>{JSON.stringify(session?.user, null, 2)}</pre>;
 }

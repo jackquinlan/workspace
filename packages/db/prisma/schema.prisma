@@ -61,9 +61,12 @@ model User {
   stripePriceId          String?   @map(name: "stripe_price_id")
   stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
 
-  accounts    Account[]
-  sessions    Session[]
-  resetTokens ResetPasswordToken[]
+  activeWorkspaceId String?
+  workspaces        WorkspaceMember[]
+
+  accounts           Account[]
+  sessions           Session[]
+  resetTokens        ResetPasswordToken[]
   verificationTokens VerificationToken[]
 
   @@index([id])
@@ -72,14 +75,14 @@ model User {
 }
 
 model VerificationToken {
-  id         String   @id @default(uuid())
-  createdAt  DateTime @default(now())
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
 
   identifier String
   expires    DateTime
 
-  userId     String
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@map(name: "verification_tokens")
@@ -98,3 +101,59 @@ model ResetPasswordToken {
   @@map(name: "reset_password_tokens")
 }
 
+enum ThemeColor {
+  orange
+  yellow
+  red
+  indigo
+  sky
+  green
+  pink
+  purple
+}
+
+enum WorkspaceType {
+  personal
+  team
+}
+
+model Workspace {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  color ThemeColor @default(sky)
+
+  name String
+  type WorkspaceType @default(personal)
+
+  members WorkspaceMember[]
+
+  @@index([id])
+  @@map(name: "workspaces")
+}
+
+enum WorkspaceMemberRole {
+  admin
+  owner
+  member
+}
+
+model WorkspaceMember {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  role WorkspaceMemberRole @default(member)
+
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([id])
+  @@index([workspaceId])
+  @@index([userId])
+  @@map(name: "workspace_members")
+}

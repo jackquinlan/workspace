@@ -17,6 +17,7 @@ const authOptions: NextAuthOptions = {
                 ...session,
                 user: {
                     id: token.id, name: token.name, email: token.email, image: token.picture, emailVerified: token.emailVerified,
+                    workspace: token.workspace,
                 },
             };
             return updatedSession;
@@ -33,8 +34,11 @@ const authOptions: NextAuthOptions = {
             }
             // prettier-ignore
             return {
-                id: userFromPrisma.id, name: userFromPrisma.name, email: userFromPrisma.email, picture: userFromPrisma.image, 
+                id: userFromPrisma.id, name: userFromPrisma.name, 
+                email: userFromPrisma.email, 
                 emailVerified: userFromPrisma.emailVerified ? new Date(userFromPrisma.emailVerified).toISOString() : null,
+                picture: userFromPrisma.image, 
+                workspace: userFromPrisma.activeWorkspaceId ?? "",
             } satisfies JWT;
         },
     },

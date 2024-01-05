@@ -7,7 +7,7 @@ import { VerifyAccountEmail } from "@workspace/emails";
 const resend = new Resend(process.env.RESEND_API_KEY);
 export const url =
     process.env.NODE_ENV === "production"
-        ? "https://blueprint.jackquinlan.co"
+        ? "https://work.jackquinlan.co"
         : "http://localhost:3000";
 
 export async function sendVerificationEmail(user: User) {
@@ -22,7 +22,7 @@ export async function sendVerificationEmail(user: User) {
     await resend.emails.send({
         from: "Jack <no-reply@jackquinlan.co>",
         to: [user.email],
-        subject: "Workspace - Verify your email",
+        subject: "Verify your email",
         react: VerifyAccountEmail({ verifyLink: verifyLink }),
     });
 }
