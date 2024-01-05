@@ -1,5 +1,5 @@
-import { TRPCError } from "@trpc/server";
 import { addHours } from "date-fns";
+import { TRPCError } from "@trpc/server";
 import { Resend } from "resend";
 import * as z from "zod";
 
@@ -77,8 +77,8 @@ export const userRouter = createRouter({
         return await resend.emails.send({
             from: "Jack <no-reply@jackquinlan.co>",
             to: [userExists.email],
-            subject: "Workspace - Reset your password",
-            react: ResetPasswordEmail({ name: userExists.name ?? "User", resetLink: resetLink }),
+            subject: "Reset your password",
+            react: ResetPasswordEmail({ resetLink: resetLink }),
         });
     }),
     sendVerificationEmail: publicProcedure.input(verifyEmailSchema).mutation(async (opts) => {

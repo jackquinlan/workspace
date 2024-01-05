@@ -8,6 +8,7 @@ declare module "next-auth" {
         id: string;
         email: string;
         emailVerified?: string | null;
+        workspace?: string | null;
     }
 }
 
@@ -16,5 +17,6 @@ declare module "next-auth/jwt" {
         id: string;
         email: string;
         emailVerified?: string | null;
+        workspace?: string | null;
     }
 }

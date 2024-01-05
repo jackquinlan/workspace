@@ -10,6 +10,7 @@ import { z } from "zod";
 import { 
     Alert,
     Button, 
+    CancelButton,
     Dialog, 
     DialogContent,
     DialogDescription,
@@ -143,12 +144,7 @@ export function AddPasswordForm({ close }: { close: () => void }) {
                     )}
                 />
                 <DialogFooter className="pt-2">
-                    <Button size="sm" variant="outline" onClick={(e) => {
-                        e.preventDefault();
-                        close();
-                    }}>
-                        Cancel
-                    </Button>
+                    <CancelButton close={close} size="sm" variant="outline">Cancel</CancelButton>
                     <Button type="submit" size="sm">
                         {isLoading ? <Loader size="sm" /> : "Add password"}
                     </Button>

@@ -3,10 +3,11 @@ import { redirect } from "next/navigation";
 
 import { getServerAuthSession } from "@workspace/auth";
 
-import { LockBodyScroll } from "@/components/layout/lock-body-scroll";
+import { api } from "@/trpc/server";
+import { cn } from "@/lib/utils";
+import { LockScroll } from "@/components/lock-scroll";
 import { Sidebar } from "@/components/layout/sidebar";
 import { VerifyEmailBanner } from "@/components/verify-email-banner";
-import { cn } from "@/lib/utils";
 
 interface DashboardLayoutProps {
     children: React.ReactNode;
@@ -17,6 +18,7 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
     if (!session) {
         return redirect("/login");
     }
+    const workspaces = (await api.workspace.getWorkspaces.query()).map((workspace) => (workspace.workspace));
     return (
         <div className="flex min-h-screen flex-col">
             {!session.user.emailVerified && <VerifyEmailBanner email={session.user.email} />}
@@ -26,10 +28,10 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
                     !session.user.emailVerified ? "h-[calc(100vh-40px)]" : "h-screen",
                 )}
             >
-                <Sidebar user={session.user} />
+                <Sidebar user={session.user} workspaces={workspaces} />
                 <main className="grow">{children}</main>
             </div>
-            <LockBodyScroll />
+            <LockScroll />
         </div>
     );
 }
