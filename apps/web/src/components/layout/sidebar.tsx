@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import Link from "next/link";
 
@@ -8,6 +10,7 @@ import type { Workspace } from "@workspace/db";
 import { Separator } from "@workspace/ui";
 
 import { cn } from "@/lib/utils";
+import { useSidebarContext } from "@/app/(dashboard)/_providers";
 import { SettingsMenu } from "@/components/layout/settings-menu";
 import { WorkspaceSelector } from "@/components/layout/workspace-selector";
 
@@ -16,10 +19,14 @@ interface Props {
     user: User;
 }
 
-export async function Sidebar({ user, workspaces }: Props) {
-    
+export function Sidebar({ user, workspaces }: Props) {
+    const { open } = useSidebarContext();
+
     return (
-        <aside className="border-r-border bg-sidebar hidden w-[300px] border-r md:block">
+        <aside className={cn(
+            !open ? "hidden" : "visible",
+            "border-r-border bg-sidebar w-[300px] border-r",
+        )}>
             <div className="flex items-center justify-between p-2">
                 <WorkspaceSelector workspaces={workspaces} activeId={user.workspace ?? workspaces[0].id} />
                 <SettingsMenu user={user} />

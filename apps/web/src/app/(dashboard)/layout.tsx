@@ -6,8 +6,10 @@ import { getServerAuthSession } from "@workspace/auth";
 import { api } from "@/trpc/server";
 import { cn } from "@/lib/utils";
 import { LockScroll } from "@/components/lock-scroll";
+import { SidebarToggleButton } from "@/components/layout/sidebar-toggle";
 import { Sidebar } from "@/components/layout/sidebar";
 import { VerifyEmailBanner } from "@/components/verify-email-banner";
+import { SidebarProvider } from "./_providers";
 
 interface DashboardLayoutProps {
     children: React.ReactNode;
@@ -28,8 +30,11 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
                     !session.user.emailVerified ? "h-[calc(100vh-40px)]" : "h-screen",
                 )}
             >
-                <Sidebar user={session.user} workspaces={workspaces} />
-                <main className="grow">{children}</main>
+                <SidebarProvider>
+                    <Sidebar user={session.user} workspaces={workspaces} />
+                    <SidebarToggleButton />
+                    <main className="grow">{children}</main>
+                </SidebarProvider>
             </div>
             <LockScroll />
         </div>

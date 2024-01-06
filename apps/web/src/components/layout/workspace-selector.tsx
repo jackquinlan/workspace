@@ -159,7 +159,7 @@ export function WorkspaceInfo({ activeId, workspace }: { activeId: string, works
                 <Avatar className="h-6 w-6">
                     <AvatarFallback className={cn("border border-border", theme)} />
                 </Avatar>
-                <h1 className="font-medium text-sm">{workspace.name}</h1>
+                <h1 className="font-medium text-xs">{workspace.name}</h1>
             </div>
             {activeId === workspace.id && <Check className="w-4 h-4" />}
         </div>
