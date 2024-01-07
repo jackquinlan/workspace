@@ -1,4 +1,3 @@
-
 export const themeColors = {
     orange: "bg-gradient-to-b from-orange-400 to-orange-200",
     yellow: "bg-gradient-to-b from-yellow-400 to-yellow-200",

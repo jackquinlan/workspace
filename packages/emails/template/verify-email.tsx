@@ -1,13 +1,4 @@
-import {
-    Body,
-    Link,
-    Head,
-    Html,
-    Preview,
-    Section,
-    Tailwind,
-    Text,
-} from "@react-email/components";
+import { Body, Head, Html, Link, Preview, Section, Tailwind, Text } from "@react-email/components";
 
 interface Props {
     verifyLink: string;
@@ -24,18 +15,16 @@ export function VerifyAccountEmail({ verifyLink }: Props) {
                     <Section>
                         <Text>Welcome to Workspace!</Text>
                         <Text>
-                            Before you get started, please verify your email address by clicking
-                            the link below.
+                            Before you get started, please verify your email address by clicking the
+                            link below.
                         </Text>
                         <Link
-                            className="text-blue-500 text-sm font-medium underlined"
+                            className="underlined text-sm font-medium text-blue-500"
                             href={verifyLink}
                         >
                             Verify your email
                         </Link>
-                        <Text>
-                            This token is only valid for the next 2 hours.
-                        </Text>
+                        <Text>This token is only valid for the next 2 hours.</Text>
                     </Section>
                 </Body>
             </Tailwind>

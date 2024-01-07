@@ -1,4 +1,5 @@
 import React from "react";
+import { cookies }  from "next/headers";
 import { redirect } from "next/navigation";
 
 import { getServerAuthSession } from "@workspace/auth";
@@ -6,8 +7,9 @@ import { getServerAuthSession } from "@workspace/auth";
 import { api } from "@/trpc/server";
 import { cn } from "@/lib/utils";
 import { LockScroll } from "@/components/lock-scroll";
-import { Sidebar } from "@/components/layout/sidebar";
 import { VerifyEmailBanner } from "@/components/verify-email-banner";
+import { ResizeableContent } from "@/components/layout/resizeable-content";
+import { SidebarProvider } from "./_providers";
 
 interface DashboardLayoutProps {
     children: React.ReactNode;
@@ -18,7 +20,12 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
     if (!session) {
         return redirect("/login");
     }
-    const workspaces = (await api.workspace.getWorkspaces.query()).map((workspace) => (workspace.workspace));
+    const workspaces = (await api.workspace.getWorkspaces.query()).map(
+        (workspace) => workspace.workspace,
+    );
+    const layout = cookies().get("react-resizable-panels:layout");
+    const defaultLayout = layout ? JSON.parse(layout.value) : undefined;
+
     return (
         <div className="flex min-h-screen flex-col">
             {!session.user.emailVerified && <VerifyEmailBanner email={session.user.email} />}
@@ -28,8 +35,11 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
                     !session.user.emailVerified ? "h-[calc(100vh-40px)]" : "h-screen",
                 )}
             >
-                <Sidebar user={session.user} workspaces={workspaces} />
-                <main className="grow">{children}</main>
+                <SidebarProvider>
+                    <ResizeableContent user={session.user} workspaces={workspaces} defaultLayout={defaultLayout}>
+                        {children}
+                    </ResizeableContent>
+                </SidebarProvider>
             </div>
             <LockScroll />
         </div>

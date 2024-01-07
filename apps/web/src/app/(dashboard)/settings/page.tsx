@@ -19,16 +19,12 @@ export default async function SettingsPage() {
     return (
         <React.Fragment>
             <div className="px-4">
-                <h1 className="text-[28px] pt-[3px] font-semibold">Settings</h1>
+                <h1 className="pt-[3px] text-[28px] font-semibold">Settings</h1>
             </div>
             <Tabs className="container" defaultValue="account">
                 <TabsList className="-mx-4 my-2">
-                    <TabsTrigger value="account">
-                        Account
-                    </TabsTrigger>
-                    <TabsTrigger value="workspace">
-                        Workspace
-                    </TabsTrigger>
+                    <TabsTrigger value="account">Account</TabsTrigger>
+                    <TabsTrigger value="workspace">Workspace</TabsTrigger>
                 </TabsList>
                 <TabsContent value="account" className="w-full space-y-4 md:w-2/3">
                     <div className="relative -left-3 top-2 space-y-4">
