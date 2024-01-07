@@ -16,11 +16,9 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
         setOpen(!open);
     };
     return (
-        <SidebarContext.Provider value={{ open, toggleOpen }}>
-            {children}
-        </SidebarContext.Provider>
+        <SidebarContext.Provider value={{ open, toggleOpen }}>{children}</SidebarContext.Provider>
     );
-};
+}
 
 export const useSidebarContext = () => useContext(SidebarContext);
 export { SidebarContext };

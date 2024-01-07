@@ -9,11 +9,11 @@ import { useSidebarContext } from "@/app/(dashboard)/_providers";
 export function SidebarToggleButton() {
     const { toggleOpen } = useSidebarContext();
     return (
-        <div 
-            className="relative top-2.5 left-2 p-1 h-fit rounded-md cursor-pointer hover:bg-accent"
+        <div
+            className="hover:bg-accent relative left-2.5 top-2.5 h-fit w-fit cursor-pointer rounded-md p-1"
             onClick={() => toggleOpen()}
         >
-            <PanelLeft className="h-5 w-5" />
+            <PanelLeft className="stroke-1 h-5 w-5" />
         </div>
     );
 }

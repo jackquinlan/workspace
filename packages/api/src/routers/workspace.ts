@@ -1,5 +1,5 @@
-import { addWorkspaceSchema, switchWorkspaceSchema } from "@workspace/lib/validators/workspace";
 import { ThemeColor } from "@workspace/db";
+import { addWorkspaceSchema, switchWorkspaceSchema } from "@workspace/lib/validators/workspace";
 
 import { createRouter, protectedProcedure } from "../trpc";
 

@@ -49,16 +49,14 @@ export function DeleteAccount({ user }: Props) {
     return (
         <Shell className="flex flex-col space-y-2 border-[#FFA9A9] bg-[#FFF3F3] dark:border-[#7F1F1F] dark:bg-[#1F0E0E] sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
             <div>
-                <h1 className="text-destructive font-medium">
-                    Delete your account
-                </h1>
+                <h1 className="text-destructive font-medium">Delete your account</h1>
                 <h2 className="text-sm">
                     This action is irreversible. All your data will be deleted.
                 </h2>
             </div>
             <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
                 <AlertDialogTrigger className={getButtonClasses({ variant: "danger", size: "sm" })}>
-                    Delete your account 
+                    Delete your account
                 </AlertDialogTrigger>
                 <AlertDialogContent className="top-[25%]">
                     <AlertDialogHeader>

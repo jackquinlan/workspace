@@ -6,9 +6,7 @@ import { VerifyAccountEmail } from "@workspace/emails";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 export const url =
-    process.env.NODE_ENV === "production"
-        ? "https://work.jackquinlan.co"
-        : "http://localhost:3000";
+    process.env.NODE_ENV === "production" ? "https://work.jackquinlan.co" : "http://localhost:3000";
 
 export async function sendVerificationEmail(user: User) {
     const token = await db.verificationToken.create({

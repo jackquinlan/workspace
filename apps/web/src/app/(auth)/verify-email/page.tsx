@@ -6,7 +6,7 @@ import { Anchor, Mail } from "lucide-react";
 
 import { getServerAuthSession } from "@workspace/auth";
 import { verifyEmail } from "@workspace/lib/auth/verify-email";
-import { Alert} from "@workspace/ui";
+import { Alert } from "@workspace/ui";
 
 import { Shell } from "@/components/shell";
 
@@ -38,7 +38,7 @@ export default async function VerifyEmail({
                 <Shell className="-mt-32 w-full space-y-4 p-4 px-6 pb-4 md:w-1/2 xl:w-1/3">
                     <div className="pt-2">
                         <h1 className="flex items-center text-xl font-medium">
-                            <Mail className="w-5 h-5 mr-1" />
+                            <Mail className="mr-1 h-5 w-5" />
                             Verify your email
                         </h1>
                     </div>
@@ -49,16 +49,14 @@ export default async function VerifyEmail({
                             </Alert>
                         ) : (
                             <Alert variant="danger">
-                                Your verification has expired or is invalid. Please request a new verification token.
+                                Your verification has expired or is invalid. Please request a new
+                                verification token.
                             </Alert>
                         )}
                     </div>
                 </Shell>
                 <div className="w-full text-center">
-                    <Link
-                        href="/inbox"
-                        className="hover:underline hover:underline-offset-4"
-                    >
+                    <Link href="/inbox" className="hover:underline hover:underline-offset-4">
                         Go back to your inbox
                     </Link>
                 </div>

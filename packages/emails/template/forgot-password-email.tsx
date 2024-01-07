@@ -1,13 +1,4 @@
-import {
-    Body,
-    Link,
-    Head,
-    Html,
-    Preview,
-    Section,
-    Tailwind,
-    Text,
-} from "@react-email/components";
+import { Body, Head, Html, Link, Preview, Section, Tailwind, Text } from "@react-email/components";
 
 interface Props {
     resetLink: string;
@@ -27,7 +18,7 @@ export function ResetPasswordEmail({ resetLink }: Props) {
                             account. Click the link below to reset it.
                         </Text>
                         <Link
-                            className="text-blue-500 text-sm font-medium underline underline-offset-2"
+                            className="text-sm font-medium text-blue-500 underline underline-offset-2"
                             href={resetLink}
                         >
                             Reset password
@@ -36,9 +27,7 @@ export function ResetPasswordEmail({ resetLink }: Props) {
                             If you did not request a password reset, please ignore this email or
                             reach out to support.
                         </Text>
-                        <Text>
-                            This token is only valid for the next 2 hours.
-                        </Text>
+                        <Text>This token is only valid for the next 2 hours.</Text>
                     </Section>
                 </Body>
             </Tailwind>

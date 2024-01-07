@@ -4,16 +4,21 @@ interface CancelButtonProps extends ButtonProps {
     close: () => void;
 }
 
-export function CancelButton({ close, variant = "outline", size = "xs", ...props }: CancelButtonProps) {
+export function CancelButton({
+    close,
+    variant = "outline",
+    size = "xs",
+    ...props
+}: CancelButtonProps) {
     return (
-        <Button 
+        <Button
             type="button"
             size={size}
             variant={variant}
             onClick={(e) => {
                 e.preventDefault();
                 close();
-            }} 
+            }}
             {...props}
         >
             Cancel

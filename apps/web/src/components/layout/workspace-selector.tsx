@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Check, ChevronsUpDown, Plus } from "lucide-react";
@@ -8,19 +8,20 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 import type { Workspace } from "@workspace/db";
+import { addWorkspaceSchema } from "@workspace/lib/validators/workspace";
 import {
     Avatar,
     AvatarFallback,
     Button,
     CancelButton,
+    Dialog,
+    DialogContent,
+    DialogFooter,
+    DialogTitle,
+    DialogTrigger,
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuTrigger,
-    Dialog,
-    DialogContent,
-    DialogTrigger,
-    DialogFooter,
-    DialogTitle,
     Form,
     FormControl,
     FormField,
@@ -29,13 +30,13 @@ import {
     FormMessage,
     getButtonClasses,
     Input,
+    Separator,
     useZodForm,
 } from "@workspace/ui";
-import { addWorkspaceSchema } from "@workspace/lib/validators/workspace";
 
 import { api } from "@/trpc/react";
-import { themeColors } from "@/lib/colors";
 import { cn } from "@/lib/utils";
+import { themeColors } from "@/lib/colors";
 
 interface Props {
     activeId: string;
@@ -43,24 +44,28 @@ interface Props {
 }
 
 export function WorkspaceSelector({ activeId, workspaces }: Props) {
+    const [open, setOpen] = useState<boolean>(false);
     const activeWorkspace = workspaces.find((workspace) => workspace.id === activeId);
     if (!activeWorkspace) {
         return null;
     }
     const theme = themeColors[activeWorkspace.color];
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-2 py-1 px-2 rounded-md outline-none hover:bg-accent">
-                <Avatar className="h-6 w-6">
-                    <AvatarFallback className={cn("border border-border", theme)} />
-                </Avatar>
-                <h1 className="font-semibold">{activeWorkspace.name}</h1>
-                <ChevronsUpDown className="w-3 h-3" />
+        <DropdownMenu open={open} onOpenChange={setOpen}>
+            <DropdownMenuTrigger className="flex items-center gap-2 rounded-md px-2 py-1 outline-none max-w-2/3 hover:bg-accent">
+                <div className="flex items-center gap-2">
+                    <Avatar className="h-6 w-6">
+                        <AvatarFallback className={cn("border-border border", theme)} />
+                    </Avatar>
+                    <p className="overflow-hidden truncate w-full font-semibold">{activeWorkspace.name}</p>
+                </div>
+                <ChevronsUpDown className="h-3 w-3" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="flex flex-col gap-1 w-72" align="start" side="bottom">
+            <DropdownMenuContent className="flex w-72 flex-col gap-1" align="start" side="bottom">
                 {workspaces.map((workspace) => (
-                    <WorkspaceInfo key={workspace.id} activeId={activeWorkspace.id} workspace={workspace} />
+                    <WorkspaceInfo key={workspace.id} activeId={activeWorkspace.id} workspace={workspace} close={() => setOpen(false)} />
                 ))}
+                <Separator />
                 <AddWorkspace />
             </DropdownMenuContent>
         </DropdownMenu>
@@ -74,12 +79,12 @@ export function AddWorkspace() {
         onSuccess: () => router.refresh(),
     });
 
-    const form = useZodForm({ 
-        schema: addWorkspaceSchema, 
-        defaultValues: { 
-            color: Object.keys(themeColors)[(Math.random() * Object.keys(themeColors).length) | 0], 
-            name: "", 
-            type: "personal" 
+    const form = useZodForm({
+        schema: addWorkspaceSchema,
+        defaultValues: {
+            color: Object.keys(themeColors)[(Math.random() * Object.keys(themeColors).length) | 0],
+            name: "",
+            type: "personal",
         },
     });
     async function handleAddWorkspace(data: z.infer<typeof addWorkspaceSchema>) {
@@ -91,25 +96,23 @@ export function AddWorkspace() {
             if (error instanceof Error) {
                 toast.error(error.message);
             }
-        } 
+        }
         setOpen(false);
-    }    
+    }
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger 
+            <DialogTrigger
                 className={cn(
-                    getButtonClasses({ variant: "ghost", size: "sm" }), 
-                    "flex items-center justify-start px-1.5 gap-1",
-                )} 
+                    getButtonClasses({ variant: "ghost", size: "sm" }),
+                    "flex items-center justify-start gap-1 px-1.5",
+                )}
             >
-                <Plus className="w-4 h-4" />
-                Add workspace 
+                <Plus className="h-4 w-4" />
+                Add workspace
             </DialogTrigger>
             <DialogContent className="w-1/3">
-                <DialogTitle className="flex items-center gap-2">
-                    Create new workspace
-                </DialogTitle>
+                <DialogTitle className="flex items-center gap-2">Create new workspace</DialogTitle>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(handleAddWorkspace)} className="space-y-2">
                         <FormField
@@ -126,9 +129,11 @@ export function AddWorkspace() {
                             )}
                         />
                         <DialogFooter className="pt-2">
-                            <CancelButton close={() => setOpen(false)} size="sm">Cancel</CancelButton>
+                            <CancelButton close={() => setOpen(false)} size="sm">
+                                Cancel
+                            </CancelButton>
                             <Button type="submit" size="sm">
-                                Create workspace 
+                                Create workspace
                             </Button>
                         </DialogFooter>
                     </form>
@@ -138,8 +143,7 @@ export function AddWorkspace() {
     );
 }
 
-export function WorkspaceInfo({ activeId, workspace }: { activeId: string, workspace: Workspace }) {
-    
+export function WorkspaceInfo({ close, activeId, workspace }: { activeId: string; workspace: Workspace, close: () => void }) {
     const router = useRouter();
     const switchWorkspace = api.workspace.switchWorkspace.useMutation({
         onSuccess: () => router.refresh(),
@@ -151,17 +155,20 @@ export function WorkspaceInfo({ activeId, workspace }: { activeId: string, works
     }
     const theme = themeColors[workspace.color];
     return (
-        <div 
-            className="flex items-center justify-between p-1 rounded-md outline-none cursor-pointer hover:bg-accent"
-            onClick={handleSwitch}
+        <div
+            className="hover:bg-accent flex cursor-pointer items-center justify-between rounded-md p-1 outline-none"
+            onClick={() => {
+                handleSwitch();
+                close();
+            }}
         >
             <div className="flex items-center gap-2">
                 <Avatar className="h-6 w-6">
-                    <AvatarFallback className={cn("border border-border", theme)} />
+                    <AvatarFallback className={cn("border-border border", theme)} />
                 </Avatar>
-                <h1 className="font-medium text-xs">{workspace.name}</h1>
+                <h1 className="text-sm">{workspace.name}</h1>
             </div>
-            {activeId === workspace.id && <Check className="w-4 h-4" />}
+            {activeId === workspace.id && <Check className="h-4 w-4" />}
         </div>
     );
 }
