@@ -128,6 +128,7 @@ model Workspace {
   type WorkspaceType @default(personal)
 
   members WorkspaceMember[]
+  views   View[]
 
   @@index([id])
   @@map(name: "workspaces")
@@ -156,4 +157,20 @@ model WorkspaceMember {
   @@index([workspaceId])
   @@index([userId])
   @@map(name: "workspace_members")
+}
+
+model View {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  color ThemeColor @default(red)
+  name  String
+
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String
+
+  @@index([workspaceId])
+  @@index([id])
+  @@map(name: "views")
 }

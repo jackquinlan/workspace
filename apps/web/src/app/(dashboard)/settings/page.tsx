@@ -18,7 +18,7 @@ export default async function SettingsPage() {
 
     return (
         <React.Fragment>
-            <div className="px-4">
+            <div className="container px-4">
                 <h1 className="pt-[3px] text-[28px] font-semibold">Settings</h1>
             </div>
             <Tabs className="container" defaultValue="account">

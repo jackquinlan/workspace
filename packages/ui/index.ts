@@ -17,3 +17,5 @@ export * from "./components/textarea";
 export * from "./components/dialog";
 export * from "./components/switch";
 export * from "./components/resizeable";
+export * from "./components/tooltip";
+export * from "./components/select";

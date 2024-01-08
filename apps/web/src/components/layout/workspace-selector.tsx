@@ -36,7 +36,7 @@ import {
 
 import { api } from "@/trpc/react";
 import { cn } from "@/lib/utils";
-import { themeColors } from "@/lib/colors";
+import { themeColorsGradient } from "@/lib/colors";
 
 interface Props {
     activeId: string;
@@ -49,7 +49,7 @@ export function WorkspaceSelector({ activeId, workspaces }: Props) {
     if (!activeWorkspace) {
         return null;
     }
-    const theme = themeColors[activeWorkspace.color];
+    const theme = themeColorsGradient[activeWorkspace.color];
     return (
         <DropdownMenu open={open} onOpenChange={setOpen}>
             <DropdownMenuTrigger className="flex items-center gap-2 rounded-md px-2 py-1 outline-none max-w-2/3 hover:bg-accent">
@@ -82,7 +82,7 @@ export function AddWorkspace() {
     const form = useZodForm({
         schema: addWorkspaceSchema,
         defaultValues: {
-            color: Object.keys(themeColors)[(Math.random() * Object.keys(themeColors).length) | 0],
+            color: Object.keys(themeColorsGradient)[(Math.random() * Object.keys(themeColorsGradient).length) | 0],
             name: "",
             type: "personal",
         },
@@ -153,7 +153,7 @@ export function WorkspaceInfo({ close, activeId, workspace }: { activeId: string
             return await switchWorkspace.mutateAsync({ oldId: activeId, newId: workspace.id });
         }
     }
-    const theme = themeColors[workspace.color];
+    const theme = themeColorsGradient[workspace.color];
     return (
         <div
             className="hover:bg-accent flex cursor-pointer items-center justify-between rounded-md p-1 outline-none"

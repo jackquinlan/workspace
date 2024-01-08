@@ -20,9 +20,14 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
     if (!session) {
         return redirect("/login");
     }
+    if (!session.user.workspace) {
+        return redirect("/welcome");
+    }
     const workspaces = (await api.workspace.getWorkspaces.query()).map(
         (workspace) => workspace.workspace,
     );
+    const views = await api.view.getViewsByActiveWorkspace.query();
+
     const layout = cookies().get("react-resizable-panels:layout");
     const defaultLayout = layout ? JSON.parse(layout.value) : undefined;
 
@@ -36,7 +41,7 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
                 )}
             >
                 <SidebarProvider>
-                    <ResizeableContent user={session.user} workspaces={workspaces} defaultLayout={defaultLayout}>
+                    <ResizeableContent user={session.user} workspaces={workspaces} views={views} defaultLayout={defaultLayout}>
                         {children}
                     </ResizeableContent>
                 </SidebarProvider>
