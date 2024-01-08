@@ -4,7 +4,6 @@ import Link from "next/link";
 import { 
     Bell, 
     Calendar, 
-    MoreHorizontal,
     Inbox, 
     Search, 
     Zap
@@ -19,6 +18,7 @@ import { cn } from "@/lib/utils";
 import { CreateViewButton } from "@/components/views/create-new-view";
 import { SettingsMenu } from "@/components/layout/settings-menu";
 import { WorkspaceSelector } from "@/components/layout/workspace-selector";
+import { ViewSettings } from "@/components/views/view-settings-menu";
 
 interface Props {
     workspaces: Workspace[];
@@ -26,7 +26,7 @@ interface Props {
     views: View[];
 }
 
-export async function Sidebar({ user, workspaces, views }: Props) {
+export function Sidebar({ user, workspaces, views }: Props) {
     return (
         <aside className="h-full bg-sidebar">
             <div className="flex items-center justify-between p-2">
@@ -70,7 +70,7 @@ export async function Sidebar({ user, workspaces, views }: Props) {
                             <div className="border-border h-2.5 w-2.5 rounded-sm border" style={{ backgroundColor: themeColorsMap[view.color] }} />
                             {view.name}
                         </h1>
-                        <MoreHorizontal className="mr-0.5 h-4 w-4" />
+                        <ViewSettings view={view} />
                     </SidebarItem>
                 ))}
             </div>

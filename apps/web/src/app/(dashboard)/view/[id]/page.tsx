@@ -1,18 +1,17 @@
-import * as React from "react";
-import { redirect } from "next/navigation";
+import React from "react";
 
 import { db } from "@workspace/db";
 
-export default async function ViewPage({ params }: { params: { id: string } }) {
+import { NoViewFound } from "./no-view-found";
+
+export default async function View({ params }: { params: { id: string } }) {
     const view = await db.view.findFirst({
         where: {
             id: params.id,
         },
-    });
+    }); 
     if (!view) {
-        return redirect("/inbox");
+        return <NoViewFound />;
     }
-    return (
-        <div className="flex flex-col space-y-2">{view.name}</div>
-    );
+    return <div className="container">{view.name}</div>;
 }

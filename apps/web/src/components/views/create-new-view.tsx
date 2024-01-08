@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Plus, Layers } from "lucide-react";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { addViewSchema } from "@workspace/lib/validators/view";
@@ -40,13 +41,17 @@ export function CreateViewButton() {
         },
     });
     const addView = api.view.addView.useMutation({
-        onSuccess: () => {
-            router.refresh();
+        onSuccess: (data) => {
+            if (!(data instanceof Error)) {
+                router.push(`/view/${data.id}`);
+            }
+            form.reset();
             setOpen(false);
         },
     });
     async function handleAddView(data: z.infer<typeof addViewSchema>) {        
         await addView.mutateAsync({ name: data.name, color: data.color.split("|")[0] });
+        router.refresh();
     }
 
     return (
