@@ -1,0 +1,15 @@
+.next
+public
+**/**/node_modules
+**/**/.next
+**/**/public
+
+*.lock
+*.log
+*.test.ts
+
+.gitignore
+.npmignore
+.prettierignore
+.DS_Store
+.eslintignore

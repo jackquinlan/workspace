@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --background: 0 0% 100%;
+        --foreground: 240 10% 3.9%;
+
+        --sidebar: 60, 11%, 98%;
+
+        --card: 0 0% 100%;
+        --card-foreground: 240 10% 3.9%;
+
+        --popover: 0 0% 100%;
+        --popover-foreground: 240 10% 3.9%;
+
+        /* --primary: 239, 84%, 67%; */
+        --primary: 234, 89%, 74%;
+        --primary-foreground: 0 0% 98%;
+
+        --secondary: 240 4.8% 95.9%;
+        --secondary-foreground: 240 5.9% 10%;
+
+        --muted: 60, 3%, 94%;
+        --muted-foreground: 240 3.8% 46.1%;
+
+        --accent: 240 4.8% 95.9%;
+        --accent-foreground: 240 5.9% 10%;
+
+        --warning: 45, 100%, 94%;
+        --warning-foreground: 35, 92%, 33%;
+
+        --destructive: 346.8 77.2% 49.8%;
+        --destructive-foreground: 355.7 100% 97.3%;
+
+        --border: 240 5.9% 90%;
+
+        --input: 240 5.9% 90%;
+
+        --ring: 346.8 77.2% 49.8%;
+
+        --radius: 0.4rem;
+    }
+ 
+    .dark {
+        --background: 0, 0%, 13%;
+        --foreground: 0 0% 95%;
+        --sidebar: 0, 0%, 15%;
+
+        --card: 24 9.8% 10%;
+        --card-foreground: 0 0% 95%;
+
+        --popover: 0 0% 9%;
+        --popover-foreground: 0 0% 95%;
+
+        /* --primary: 239, 84%, 67%; */
+        --primary: 234, 89%, 74%;
+        --primary-foreground: 240 5.9% 10%;
+
+        --secondary: 240 3.7% 15.9%;
+        --secondary-foreground: 0 0% 98%;
+
+        --muted: 0, 0%, 20%;
+        --muted-foreground: 240 5% 64.9%;
+
+        --accent: 12 6.5% 15.1%;
+        --accent-foreground: 0 0% 98%;
+
+        --warning: 45, 100%, 94%;
+        --warning-foreground: 35, 92%, 33%;
+
+        --destructive: 346.8 77.2% 49.8%;
+        --destructive-foreground: 355.7 100% 97.3%;
+
+        --border: 240 3.7% 15.9%;
+
+        --input: 240 3.7% 15.9%;
+
+        --ring: 346.8 77.2% 49.8%;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+    /**
+    * Update default highlight color
+    */
+    ::selection {
+        background-color: #6366f1;
+        color: white;
+    }
+}
