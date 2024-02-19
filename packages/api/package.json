@@ -1,0 +1,22 @@
+{
+    "name": "@workspace/api",
+    "version": "0.0.1",
+    "dependencies": {
+        "@tanstack/react-query": "^4.32.0",
+        "@trpc/client": "^10.45.1",
+        "@trpc/next": "^10.45.1",
+        "@trpc/react-query": "^10.45.1",
+        "@trpc/server": "^10.45.1",
+        "@workspace/db": "workspace:*",
+        "@workspace/lib": "workspace:*",
+        "@workspace/tsconfig": "workspace:*",
+        "next": "14.1.0",
+        "next-auth": "^4.24.6",
+        "react": "18.2.0",
+        "superjson": "^2.2.1",
+        "zod": "^3.22.4"
+    },
+    "devDependencies": {
+        "@types/react": "18.2.18"
+    }
+}
