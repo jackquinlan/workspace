@@ -1,0 +1,14 @@
+{
+    "name": "@workspace/lib",
+    "version": "0.0.1",
+    "devDependencies": {
+        "@next-auth/prisma-adapter": "^1.0.7",
+        "@workspace/db": "workspace:*",
+        "@workspace/tsconfig": "workspace:*",
+        "hash-wasm": "^4.11.0",
+        "next-auth": "^4.24.6"
+    },
+    "dependencies": {
+        "zod": "^3.22.4"
+    }
+}

@@ -25,7 +25,7 @@ export const classes = {
         primary: "bg-primary text-primary-foreground shadow hover:opacity-90",
         ghost: "hover:bg-accent hover:text-foreground",
         success: "bg-green-500 text-white hover:bg-green-600",
-        outline: 
+        outline:
             "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
         danger: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         link: "text-primary underline-offset-4 hover:underline",

@@ -16,7 +16,7 @@ module.exports = {
         "^next(/.*)?$",
         "<THIRD_PARTY_MODULES>",
         "^@workspace/(.*)$",
-        "^~/(.*)$",
+        "^@/(.*)$",
         "^[./]",
     ],
     importOrderSeparation: true,

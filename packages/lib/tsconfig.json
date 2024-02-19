@@ -1,5 +1,5 @@
 {
     "extends": "@workspace/tsconfig/lib.json",
-    "include": ["."],
+    "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts"],
     "exclude": ["dist", "build", "node_modules"]
 }
