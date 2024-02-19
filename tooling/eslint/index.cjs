@@ -21,11 +21,7 @@ const config = {
         ],
         "@typescript-eslint/restrict-template-expressions": "off",
         "@typescript-eslint/ban-types": "off",
-        "@typescript-eslint/consistent-type-imports": [
-            "error",
-            { prefer: "type-imports", fixStyle: "separate-type-imports", disallowTypeAnnotations: false },
-        ],
-        "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
+
     },
     parserOptions: {
         ecmaFeatures: {

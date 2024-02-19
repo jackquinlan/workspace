@@ -1,22 +1,32 @@
 {
     "name": "@workspace/ui",
     "version": "0.0.1",
+    "sideEffects": false,
+    "scripts": {
+        "lint": "eslint \"**/*.ts*\""
+    },
     "devDependencies": {
-        "@workspace/eslint": "workspace:*",
-        "@workspace/tailwind": "workspace:*",
-        "@workspace/tsconfig": "workspace:*",
         "@types/node": "20.8.0",
         "@types/react": "18.2.18",
         "@types/react-dom": "18.2.7",
+        "@workspace/eslint-config": "workspace:*",
+        "@workspace/tailwind": "workspace:*",
+        "@workspace/tsconfig": "workspace:*",
         "react": "18.2.0",
         "typescript": "5.2.2"
     },
     "dependencies": {
+        "@hookform/resolvers": "^3.3.4",
+        "@radix-ui/react-label": "^2.0.2",
+        "@radix-ui/react-separator": "^1.0.3",
         "@radix-ui/react-slot": "^1.0.2",
         "class-variance-authority": "^0.6.0",
         "clsx": "^1.2.1",
+        "lucide-react": "^0.334.0",
+        "react-hook-form": "^7.50.1",
         "tailwind-merge": "^1.14.0",
-        "tailwindcss": "3.3.2"
+        "tailwindcss": "3.3.2",
+        "zod": "^3.22.4"
     },
     "publishConfig": {
         "access": "public"

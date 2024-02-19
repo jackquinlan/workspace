@@ -1,16 +1,17 @@
 {
     "extends": "@workspace/tsconfig/nextjs.json",
     "compilerOptions": {
-        "baseUrl": ".",
-        "allowJs": true,
-        "plugins": [{ "name": "next" }],
-        "paths": {
-            "@/*": ["./src/*"],
-        },
-        // TODO
-        // "types": ["@workspace/lib/types/next-auth.d.ts"],
         "strictNullChecks": true,
-        "incremental": false
+        "strict": true,
+        "plugins": [{ "name": "next" }],
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"],
+        },
+        "allowImportingTsExtensions": true,
+        "types": ["@workspace/lib/types/next-auth.d.ts"],
+        "incremental": false,
+        "allowJs": true
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.d.ts", ".next/types/**/*.ts"],
     "exclude": ["node_modules"]
