@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { Suspense } from "react";
 
 import Link from "next/link";
 
@@ -6,7 +6,6 @@ import { Shell } from "@/components/shell";
 
 import { GithubButton } from "../components/github-button";
 import { LoginForm } from "../components/login-form";
-import { Loader } from "@/components/loading-animation";
 
 export default function Login() {
     return (
@@ -28,7 +27,9 @@ export default function Login() {
                     </div>
                 </div>
                 <div className="my-2">
-                    <GithubButton />
+                    <Suspense>
+                        <GithubButton />
+                    </Suspense>
                 </div>
             </Shell>
             <Link href="/signup" className="hover:underline hover:underline-offset-4">

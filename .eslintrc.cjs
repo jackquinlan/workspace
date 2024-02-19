@@ -1,7 +1,7 @@
 /** @type {import("eslint").Linter.Config} */
 const config = {
     root: true,
-    extends: ["@workspace"], // uses the config in `tooling/eslint-config`
+    extends: ["@workspace/eslint-config"], // uses the config in `tooling/eslint-config`
     parser: "@typescript-eslint/parser",
     parserOptions: {
         ecmaVersion: "latest",
