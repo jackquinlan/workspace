@@ -3,9 +3,12 @@ import * as React from "react";
 import { GeistSans } from "geist/font/sans";
 import { Toaster } from "sonner";
 
-import { cn } from "@/lib/utils";
+import { TRPCProvider } from "@workspace/api/react";
+
+import { cn, constructMetadata } from "@/lib/utils";
 import "@/styles/globals.css";
 
+export const metadata = constructMetadata();
 interface Props {
     children: React.ReactNode;
 }
@@ -15,9 +18,11 @@ export default function RootLayout({ children }: Props) {
         <html lang="en">
             <head />
             <body className={cn(GeistSans.className, GeistSans.variable)}>
-                <div className="flex min-h-screen flex-col">
-                    <main className="flex-1">{children}</main>
-                </div>
+                <TRPCProvider>
+                    <div className="flex min-h-screen flex-col">
+                        <main className="flex-1">{children}</main>
+                    </div>
+                </TRPCProvider>
                 <Toaster position="bottom-right" visibleToasts={6} />
             </body>
         </html>

@@ -97,3 +97,11 @@ model ResetPasswordToken {
   @@index([userId])
   @@map(name: "reset_password_tokens")
 }
+
+model Test {
+  id   String @id @default(uuid())
+  text String
+
+  @@index([id])
+  @@map(name: "tests")
+}
