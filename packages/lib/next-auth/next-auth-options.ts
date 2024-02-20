@@ -15,9 +15,9 @@ const authOptions: NextAuthOptions = {
                 ...session,
                 user: {
                     id: token.id,
+                    image: token.picture,
                     email: token.email,
                     emailVerified: token.emailVerified,
-                    image: token.picture,
                     name: token.name,
                 },
             };
@@ -35,12 +35,12 @@ const authOptions: NextAuthOptions = {
             }
             return {
                 id: userFromPrisma.id,
+                picture: userFromPrisma.image,
                 name: userFromPrisma.name,
                 email: userFromPrisma.email,
                 emailVerified: userFromPrisma.emailVerified
                     ? new Date(userFromPrisma.emailVerified).toISOString()
                     : null,
-                picture: userFromPrisma.image,
             } satisfies JWT;
         },
     },

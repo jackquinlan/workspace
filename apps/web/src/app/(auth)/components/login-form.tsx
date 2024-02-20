@@ -5,9 +5,9 @@ import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { ChevronsRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { signIn } from "next-auth/react";
-import { toast } from "sonner";
+import { toast }  from "sonner";
 import { z } from "zod";
 
 import { loginSchema } from "@workspace/lib/validators/auth";
@@ -94,7 +94,7 @@ export function LoginForm() {
                         <Loader size="sm" />
                     ) : (
                         <div className="flex items-center gap-1">
-                            Log In <ChevronsRight className="h-4 w-4" />
+                            Login <ArrowRight className="h-4 w-4" />
                         </div>
                     )}
                 </Button>

@@ -16,7 +16,7 @@
         --popover-foreground: 240 10% 3.9%;
 
         /* --primary: 239, 84%, 67%; */
-        --primary: 234, 89%, 74%;
+        --primary: 0, 84%, 60%;
         --primary-foreground: 0 0% 98%;
 
         --secondary: 240 4.8% 95.9%;
@@ -55,7 +55,7 @@
         --popover-foreground: 0 0% 95%;
 
         /* --primary: 239, 84%, 67%; */
-        --primary: 234, 89%, 74%;
+        --primary: 0, 84%, 60%;
         --primary-foreground: 240 5.9% 10%;
 
         --secondary: 240 3.7% 15.9%;
@@ -92,7 +92,7 @@
     * Update default highlight color
     */
     ::selection {
-        background-color: #6366f1;
+        background-color: #ef4444;
         color: white;
     }
 }

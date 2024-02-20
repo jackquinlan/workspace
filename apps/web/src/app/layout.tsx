@@ -5,9 +5,10 @@ import { Toaster } from "sonner";
 
 import { TRPCProvider } from "@workspace/api/react";
 
-import { cn } from "@/lib/utils";
+import { cn, constructMetadata } from "@/lib/utils";
 import "@/styles/globals.css";
 
+export const metadata = constructMetadata();
 interface Props {
     children: React.ReactNode;
 }
