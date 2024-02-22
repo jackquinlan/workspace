@@ -1,19 +1,19 @@
 "use client";
 
 import * as React from "react";
-
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { signIn } from "next-auth/react";
 import { toast }  from "sonner";
 import { z } from "zod";
 
-import { loginSchema } from "@workspace/lib/validators/auth";
+import { api } from "@workspace/api/react";
+import { signUpSchema } from "@workspace/lib/validators/auth";
 import {
     Button,
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -24,29 +24,37 @@ import {
 
 import { Loader } from "@/components/loading-animation";
 
-export function LoginForm() {
+export function SignupForm() {
     const [isLoading, startTransition] = React.useTransition();
-    const form = useZodForm({ schema: loginSchema, defaultValues: { email: "", password: "" } });
+    const form = useZodForm({ schema: signUpSchema, defaultValues: { email: "", password: "" } });
 
     const router = useRouter();
-    async function loginWithCredentials(data: z.infer<typeof loginSchema>) {
-        startTransition(async () => {
-            const res = await signIn<"credentials">("credentials", {
-                email: data.email,
-                password: data.password,
+    const signUp = api.user.signUp.useMutation({
+        onSuccess: async () => {
+            const res = await signIn("credentials", {
+                email: form.getValues("email"),
+                password: form.getValues("password"),
                 redirect: false,
             });
             if (res?.error) {
-                toast.error(res.error);
+                toast.error("Failed to sign in.");
                 return;
             }
             router.push("/inbox");
+        },
+        onError: (error) => {
+            toast.error(error.message);
+        },
+    });
+    async function handleSubmit(data: z.infer<typeof signUpSchema>) {
+        startTransition(async () => {
+            await signUp.mutateAsync(data);
         });
     }
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(loginWithCredentials)} className="space-y-3 py-2">
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-3 py-2">
                 <FormField
                     control={form.control}
                     name="email"
@@ -54,11 +62,7 @@ export function LoginForm() {
                         <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
-                                <Input
-                                    autoComplete="email"
-                                    placeholder="you@email.com"
-                                    {...field}
-                                />
+                                <Input placeholder="you@email.com" autoComplete="email" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -71,29 +75,18 @@ export function LoginForm() {
                         <FormItem>
                             <FormLabel>Password</FormLabel>
                             <FormControl>
-                                <Input
-                                    autoComplete="off"
-                                    placeholder="••••••••••"
-                                    type="password"
-                                    {...field}
-                                />
+                                <Input placeholder="••••••••••" type="password" {...field} />
                             </FormControl>
+                            <FormDescription>
+                                Password must contain at least one uppercase letter, one number, and
+                                one special character.
+                            </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-                <Link
-                    href="/forgot-password"
-                    className="flex w-full text-sm hover:underline hover:underline-offset-4"
-                >
-                    Forgot your password?
-                </Link>
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? (
-                        <Loader size="sm" />
-                    ) : (
-                        "Login"
-                    )}
+                    {isLoading ? <Loader size="sm" /> : "Create your account"}
                 </Button>
             </form>
         </Form>

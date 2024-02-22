@@ -10,6 +10,7 @@
         "@workspace/db": "workspace:*",
         "@workspace/lib": "workspace:*",
         "@workspace/tsconfig": "workspace:*",
+        "date-fns": "^3.3.1",
         "next": "14.1.0",
         "next-auth": "^4.24.6",
         "react": "18.2.0",
