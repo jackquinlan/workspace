@@ -3,7 +3,6 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 
-import { TRPCError } from "@trpc/server";
 import { signIn } from "next-auth/react";
 import { toast }  from "sonner";
 import { z } from "zod";

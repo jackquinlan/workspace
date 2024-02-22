@@ -11,13 +11,13 @@
         "lint": "eslint . --max-warnings 0"
     },
     "dependencies": {
-        "@prisma/client": "^5.9.1"
+        "@prisma/client": "^5.10.2"
     },
     "devDependencies": {
         "@workspace/eslint-config": "workspace:*",
         "@workspace/tsconfig": "workspace:*",
         "eslint": "^8.56.0",
-        "prisma": "^5.9.1",
+        "prisma": "^5.10.2",
         "typescript": "5.2.2"
     }
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -47,7 +47,9 @@ export default function Signup() {
                         </div>
                     </div>
                     <div className="flex gap-2 my-2">
-                        <GithubButton />
+                        <Suspense>
+                            <GithubButton />
+                        </Suspense>
                     </div>
                 </div>
             </div>
