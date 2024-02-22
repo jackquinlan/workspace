@@ -1,7 +1,3 @@
-// import * as trpc from "@workspace/api/adapters/next";
-// import { appRouter } from "@workspace/api/trpc/root";
-// import { createTRPCContext } from "@workspace/api/trpc/trpc";
-
 import type { NextRequest } from "next/server";
 
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";

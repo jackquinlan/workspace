@@ -9,9 +9,12 @@ export default withAuth(
 
         const isAuthPage =
             req.nextUrl.pathname.startsWith("/signup") ||
-            req.nextUrl.pathname.startsWith("/login") ||
+            req.nextUrl.pathname.startsWith("/login")  ||
             req.nextUrl.pathname.startsWith("/forgot-password");
 
+        if (req.nextUrl.pathname === "/reset-password") {
+            return NextResponse.next();
+        }
         if (req.nextUrl.pathname === "/") {
             return NextResponse.redirect(new URL("/inbox", req.url));
         }
