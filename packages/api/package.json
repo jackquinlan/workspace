@@ -8,6 +8,7 @@
         "@trpc/react-query": "^10.45.1",
         "@trpc/server": "^10.45.1",
         "@workspace/db": "workspace:*",
+        "@workspace/emails": "workspace:*",
         "@workspace/lib": "workspace:*",
         "@workspace/tsconfig": "workspace:*",
         "date-fns": "^3.3.1",

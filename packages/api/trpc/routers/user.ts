@@ -2,6 +2,7 @@ import { addHours } from "date-fns";
 
 import { hashPassword } from "@workspace/lib/next-auth/hash";
 import { signUpSchema, forgotPasswordSchema, resetPasswordSchema } from "@workspace/lib/validators/auth";
+import { sendEmail } from "@workspace/emails/send";
 
 import { createRouter, publicProcedure } from "../trpc";
 
