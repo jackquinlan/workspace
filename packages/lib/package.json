@@ -5,10 +5,12 @@
         "@next-auth/prisma-adapter": "^1.0.7",
         "@workspace/db": "workspace:*",
         "@workspace/tsconfig": "workspace:*",
+        "@workspace/emails": "workspace:*",
         "hash-wasm": "^4.11.0",
         "next-auth": "^4.24.6"
     },
     "dependencies": {
+        "date-fns": "^3.3.1",
         "next": "14.1.0",
         "zod": "^3.22.4"
     }
