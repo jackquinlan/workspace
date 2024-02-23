@@ -1,7 +1,11 @@
 import { addHours } from "date-fns";
 
 import { hashPassword } from "@workspace/lib/next-auth/hash";
-import { signUpSchema, forgotPasswordSchema, resetPasswordSchema } from "@workspace/lib/validators/auth";
+import { signUpSchema, forgotPasswordSchema, resetPasswordSchema, verifyEmailSchema } from "@workspace/lib/validators/auth";
+import { sendEmail } from "@workspace/emails/send";
+import { ForgotPasswordTemplate } from "@workspace/emails/templates";
+import { getBaseUrl } from "@workspace/lib/utils/get-base-url";
+import { sendVerificationEmail } from "@workspace/lib/next-auth/send-verification-email";
 
 import { createRouter, publicProcedure } from "../trpc";
 
@@ -41,13 +45,13 @@ export const userRouter = createRouter({
                 expiresAt: addHours(Date.now(), 2),
             },
         });
-        // const resetLink = `${url}/reset-password?token=${token.id}`;
-        // return await resend.emails.send({
-        //     from: "Jack <no-reply@jackquinlan.co>",
-        //     to: [userExists.email],
-        //     subject: "Reset your password",
-        //     react: ResetPasswordEmail({ resetLink: resetLink }),
-        // });
+        const resetLink = `${getBaseUrl()}/reset-password?token=${token.id}`;
+        return await sendEmail({
+            react: ForgotPasswordTemplate({ resetLink: resetLink }),
+            subject: "Reset your password",
+            to: [userExists.email],
+            from: process.env.SENDER_EMAIL_ADDRESS!,
+        })
     }),
     resetPassword: publicProcedure.input(resetPasswordSchema).mutation(async (opts) => {
         const token = await opts.ctx.db.resetPasswordToken.findFirst({
@@ -83,5 +87,16 @@ export const userRouter = createRouter({
                 used: true,
             },
         });
+    }),
+    sendVerificationEmail: publicProcedure.input(verifyEmailSchema).mutation(async (opts) => {
+        const userExists = await opts.ctx.db.user.findFirst({
+            where: {
+                email: opts.input.email,
+            },
+        });
+        if (!userExists) {
+            throw new Error("User does not exist.");
+        }
+        return await sendVerificationEmail(userExists);
     }),
 });

@@ -7,6 +7,7 @@ import GithubProvider from "next-auth/providers/github";
 import { db } from "@workspace/db";
 
 import { verifyPassword } from "./hash";
+import { sendVerificationEmail } from "./send-verification-email";
 
 const authOptions: NextAuthOptions = {
     callbacks: {
@@ -72,6 +73,19 @@ const authOptions: NextAuthOptions = {
                 }
                 if (!(await verifyPassword(user.hashedPassword, password))) {
                     throw new Error("Invalid email or password.");
+                }
+                if (!user.emailVerified) {
+                    const token = await db.verificationToken.findFirst({
+                        where: {
+                            userId: user.id,
+                        },
+                        orderBy: {
+                            createdAt: "desc",
+                        },
+                    });
+                    if (!token) {
+                        await sendVerificationEmail(user);
+                    }
                 }
                 return {
                     id: user.id,

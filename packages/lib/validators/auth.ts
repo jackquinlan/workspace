@@ -35,3 +35,7 @@ export const resetPasswordSchema = z
         }, { path: ["password"], message: "Password must have one uppercase letter, one number, and one special character." },
     )
     .refine((data) => data.password === data.confirmPassword, { path: ["confirmPassword"], message: "Passwords must match." });
+
+export const verifyEmailSchema = z.object({
+    email: z.string().email(),
+});
