@@ -11,7 +11,7 @@ import { SignupForm } from "../components/signup-form";
 
 export default function Signup() {
     return (
-        <div className="container relative hidden h-screen flex-col items-center bg-zinc-50 md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+        <div className="relative flex h-screen flex-col items-center justify-center bg-zinc-50 px-12 md:px-0 lg:grid lg:grid-cols-2">
             <Link
                 href="/login"
                 className={cn(

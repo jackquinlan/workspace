@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import { CheckIcon, ChevronRightIcon, DotFilledIcon } from "@radix-ui/react-icons";
@@ -83,7 +84,7 @@ const DropdownMenuItem = React.forwardRef<
     <DropdownMenuPrimitive.Item
         ref={ref}
         className={cn(
-            "focus:bg-accent focus:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+            "focus:bg-accent focus:text-accent-foreground relative flex gap-2 cursor-pointer select-none items-center rounded-sm px-2 py-1 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
             inset && "pl-8",
             className,
         )}
@@ -91,6 +92,18 @@ const DropdownMenuItem = React.forwardRef<
     />
 ));
 DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName;
+
+const DropdownMenuLink = React.forwardRef<
+    React.ElementRef<typeof DropdownMenuPrimitive.Item>,
+    React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
+        href?: string;
+    }
+>(({ className, href = "", ...props }, ref) => (
+    <Link href={href}>
+        <DropdownMenuItem ref={ref} className={className} {...props} />
+    </Link>
+));
+DropdownMenuLink.displayName = "DropdownMenuLink";
 
 const DropdownMenuCheckboxItem = React.forwardRef<
     React.ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
@@ -175,6 +188,7 @@ export {
     DropdownMenuTrigger,
     DropdownMenuContent,
     DropdownMenuItem,
+    DropdownMenuLink,
     DropdownMenuCheckboxItem,
     DropdownMenuRadioItem,
     DropdownMenuLabel,

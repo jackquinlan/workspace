@@ -2,19 +2,23 @@
 
 import React from "react";
 
+import type { User } from "next-auth";
+
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup, ScrollArea } from "@workspace/ui";
 
 import { Sidebar } from "@/components/layout/sidebar";
-import { useSidebarContext } from "./use-sidebar-context";
+import { SidebarToggleButton } from "@/components/layout/sidebar-toggle";
 import { cn } from "@/lib/utils";
+import { useSidebar } from "@/hooks/use-sidebar";
 
 interface Props {
     children: React.ReactNode;
     defaultLayout?: number[];
+    user: User;
 }
 
-export function ResizeLayoutWrapper({ children, defaultLayout = [33, 67] }: Props) {
-    const { open } = useSidebarContext();
+export function ResizeLayoutWrapper({ children, defaultLayout = [33, 67], user }: Props) {
+    const { open } = useSidebar();
     return (
         <ResizablePanelGroup
             className="h-full items-stretch"
@@ -30,9 +34,10 @@ export function ResizeLayoutWrapper({ children, defaultLayout = [33, 67] }: Prop
                 maxSize={25}
                 defaultSize={defaultLayout[0]}
             >
-                <Sidebar />
+                <Sidebar user={user} />
             </ResizablePanel>
             <ResizableHandle className={cn(!open ? "hidden" : "visible")} />
+            <SidebarToggleButton />
             <ResizablePanel id="content" defaultSize={defaultLayout[1]} order={2}>
                 <ScrollArea className="h-full w-full">
                     <main className="container grow">{children}</main>
