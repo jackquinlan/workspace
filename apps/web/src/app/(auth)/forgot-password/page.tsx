@@ -16,12 +16,12 @@ export default function ForgotPassword() {
                     getButtonClasses({ variant: "outline", size: "default" }),
                 )}
             >
-                Login 
+                Login
             </Link>
             <div className="w-full pt-[8%] md:w-1/2 xl:w-1/3">
                 <div className="py-2">
                     <h1 className="text-xl font-medium">Forgot password</h1>
-                    <h2 className="text-sm text-zinc-500 leading-4">
+                    <h2 className="text-sm leading-4 text-zinc-500">
                         Enter your email below to reset your password
                     </h2>
                     <hr className="mt-2" />

@@ -1,9 +1,9 @@
 "use client";
 
-import { createTRPCReact } from '@trpc/react-query';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { httpBatchLink, loggerLink } from '@trpc/client';
-import SuperJSON from 'superjson';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { httpBatchLink, loggerLink } from "@trpc/client";
+import { createTRPCReact } from "@trpc/react-query";
+import SuperJSON from "superjson";
 
 import { getBaseUrl } from "@workspace/lib/utils/get-base-url";
 
@@ -21,7 +21,7 @@ export const api = createTRPCReact<AppRouter>({
 });
 
 const queryClient = new QueryClient();
-const trpcClient  = api.createClient({
+const trpcClient = api.createClient({
     links: [
         loggerLink({
             enabled: () => true,
@@ -31,7 +31,7 @@ const trpcClient  = api.createClient({
         }),
     ],
     transformer: SuperJSON,
-})
+});
 
 export interface ProviderProps {
     children: React.ReactNode;

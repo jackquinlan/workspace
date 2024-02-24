@@ -42,10 +42,10 @@ const config: Omit<Config, "content"> = {
                 "destructive-foreground": "hsl(var(--destructive-foreground)",
 
                 border: "hsl(var(--border))",
-                input:  "hsl(var(--input))",
+                input: "hsl(var(--input))",
             },
             fontFamily: {
-                sans:  ["var(--font-geist-sans)"],
+                sans: ["var(--font-geist-sans)"],
                 rubik: ["var(--font-rubik)"],
             },
         },

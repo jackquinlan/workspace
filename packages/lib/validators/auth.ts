@@ -15,7 +15,13 @@ export const signUpSchema = z
             return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/.test(
                 data.password,
             );
-        }, { path: ["password"], message: "Password must have one uppercase letter, one number, and one special character." });
+        },
+        {
+            path: ["password"],
+            message:
+                "Password must have one uppercase letter, one number, and one special character.",
+        },
+    );
 
 export const forgotPasswordSchema = z.object({
     email: z.string().email(),
@@ -32,9 +38,17 @@ export const resetPasswordSchema = z
             return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/.test(
                 data.password,
             );
-        }, { path: ["password"], message: "Password must have one uppercase letter, one number, and one special character." },
+        },
+        {
+            path: ["password"],
+            message:
+                "Password must have one uppercase letter, one number, and one special character.",
+        },
     )
-    .refine((data) => data.password === data.confirmPassword, { path: ["confirmPassword"], message: "Passwords must match." });
+    .refine((data) => data.password === data.confirmPassword, {
+        path: ["confirmPassword"],
+        message: "Passwords must match.",
+    });
 
 export const verifyEmailSchema = z.object({
     email: z.string().email(),

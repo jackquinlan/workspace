@@ -7,18 +7,19 @@ module.exports = {
     trailingComma: "all",
     singleQuote: false,
     plugins: [
-        "@trivago/prettier-plugin-sort-imports",
-        "prettier-plugin-tailwindcss",
+        "@ianvs/prettier-plugin-sort-imports",
+        "prettier-plugin-tailwindcss"
     ],
+    importOrderTypeScriptVersion: "4.4.0",
     importOrder: [
-        "^server-only|client-only$",
-        "^react$",
-        "^next(/.*)?$",
+        "^(react/(.*)$)|^(react$)",
+        "^(next/(.*)$)|^(next$)",
+        "",
         "<THIRD_PARTY_MODULES>",
+        "",
         "^@workspace/(.*)$",
+        "",
         "^@/(.*)$",
-        "^[./]",
-    ],
-    importOrderSeparation: true,
-    importOrderSortSpecifiers: true,
+        "^[./]"
+    ]
 };

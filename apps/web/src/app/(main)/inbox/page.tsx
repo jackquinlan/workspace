@@ -12,7 +12,7 @@ export default function Inbox() {
     return (
         <div>
             <Button onClick={() => signOut({ callbackUrl: "/" })}>Sign Out</Button>
-            {tests && tests.map(test => <h1 key={test.id}>{test.text}</h1>)}
+            {tests && tests.map((test) => <h1 key={test.id}>{test.text}</h1>)}
         </div>
     );
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-
 import { useSearchParams } from "next/navigation";
 
 import { GitHubLogoIcon } from "@radix-ui/react-icons";

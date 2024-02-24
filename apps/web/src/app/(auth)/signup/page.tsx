@@ -4,11 +4,10 @@ import Link from "next/link";
 
 import { getButtonClasses } from "@workspace/ui";
 
-import { cn } from "@/lib/utils";
-
 import { StarsField } from "@/components/star-field";
-import { SignupForm } from "../components/signup-form";
+import { cn } from "@/lib/utils";
 import { GithubButton } from "../components/github-button";
+import { SignupForm } from "../components/signup-form";
 
 export default function Signup() {
     return (
@@ -33,7 +32,7 @@ export default function Signup() {
                             <Image src="/logo.svg" width="28" height="28" alt="" />
                             Create a free account
                         </h1>
-                        <h2 className="text-sm pt-1 text-zinc-500">
+                        <h2 className="pt-1 text-sm text-zinc-500">
                             Join us and create a workspace that works for you
                         </h2>
                     </div>
@@ -43,10 +42,12 @@ export default function Signup() {
                             <span className="w-full border-t" />
                         </div>
                         <div className="relative flex justify-center text-sm">
-                            <p className="bg-zinc-50 text-muted-foreground px-2">Or continue with</p>
+                            <p className="text-muted-foreground bg-zinc-50 px-2">
+                                Or continue with
+                            </p>
                         </div>
                     </div>
-                    <div className="flex gap-2 my-2">
+                    <div className="my-2 flex gap-2">
                         <Suspense>
                             <GithubButton />
                         </Suspense>

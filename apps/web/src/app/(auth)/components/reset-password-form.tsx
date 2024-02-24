@@ -38,7 +38,7 @@ export function ResetPasswordForm({ token }: { token: string }) {
         },
         onError: (error) => {
             toast.error(error.message);
-        }
+        },
     });
 
     async function handleSubmit(data: z.infer<typeof resetPasswordSchema>) {
@@ -58,15 +58,11 @@ export function ResetPasswordForm({ token }: { token: string }) {
                             <FormItem>
                                 <FormLabel>New password</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        placeholder="••••••••••"
-                                        type="password"
-                                        {...field}
-                                    />
+                                    <Input placeholder="••••••••••" type="password" {...field} />
                                 </FormControl>
                                 <FormDescription>
-                                    Password must contain at least one uppercase letter, one number, and
-                                    one special character.
+                                    Password must contain at least one uppercase letter, one number,
+                                    and one special character.
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>
@@ -79,11 +75,7 @@ export function ResetPasswordForm({ token }: { token: string }) {
                             <FormItem>
                                 <FormLabel>Confirm new password</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        placeholder="••••••••••"
-                                        type="password"
-                                        {...field}
-                                    />
+                                    <Input placeholder="••••••••••" type="password" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
