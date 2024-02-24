@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 import { TRPCProvider } from "@workspace/api/react";
 
 import { cn, constructMetadata } from "@/lib/utils";
+
 import "@/styles/globals.css";
 
 const rubik = Rubik({ subsets: ["latin"], weight: ["500"], variable: "--font-rubik" });

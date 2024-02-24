@@ -4,7 +4,7 @@ import * as React from "react";
 import { useRouter } from "next/navigation";
 
 import { signIn } from "next-auth/react";
-import { toast }  from "sonner";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { api } from "@workspace/api/react";
@@ -62,7 +62,11 @@ export function SignupForm() {
                         <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
-                                <Input placeholder="you@email.com" autoComplete="email" {...field} />
+                                <Input
+                                    placeholder="you@email.com"
+                                    autoComplete="email"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>

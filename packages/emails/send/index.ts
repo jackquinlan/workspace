@@ -6,7 +6,7 @@ export interface IEmailType {
     react: JSX.Element;
     subject: string;
     to: string[];
-    from: string;   
+    from: string;
 }
 
 export async function sendEmail(email: IEmailType) {

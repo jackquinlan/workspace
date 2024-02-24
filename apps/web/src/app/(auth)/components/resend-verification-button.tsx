@@ -3,8 +3,8 @@
 import React, { useTransition } from "react";
 import { useRouter } from "next/navigation";
 
-import { toast } from "sonner";
 import { RefreshCcw } from "lucide-react";
+import { toast } from "sonner";
 
 import { api } from "@workspace/api/react";
 import { Button } from "@workspace/ui";
@@ -33,16 +33,12 @@ export function ResendVerificationButton({ email }: Props) {
         });
     }
     return (
-        <Button
-            variant="outline"
-            onClick={() => handleResendVerification()}
-            disabled={isLoading}
-        >
+        <Button variant="outline" onClick={() => handleResendVerification()} disabled={isLoading}>
             {isLoading ? (
                 <Loader />
             ) : (
                 <div className="flex items-center gap-1">
-                    <RefreshCcw className="w-4 h-4" />
+                    <RefreshCcw className="h-4 w-4" />
                     Resend verification email
                 </div>
             )}

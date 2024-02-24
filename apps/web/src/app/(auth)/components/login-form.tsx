@@ -1,12 +1,11 @@
 "use client";
 
 import * as React from "react";
-
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { signIn } from "next-auth/react";
-import { toast }  from "sonner";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { loginSchema } from "@workspace/lib/validators/auth";
@@ -89,11 +88,7 @@ export function LoginForm() {
                     Forgot your password?
                 </Link>
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? (
-                        <Loader size="sm" />
-                    ) : (
-                        "Login"
-                    )}
+                    {isLoading ? <Loader size="sm" /> : "Login"}
                 </Button>
             </form>
         </Form>

@@ -1,11 +1,16 @@
 import { addHours } from "date-fns";
 
-import { hashPassword } from "@workspace/lib/next-auth/hash";
-import { signUpSchema, forgotPasswordSchema, resetPasswordSchema, verifyEmailSchema } from "@workspace/lib/validators/auth";
 import { sendEmail } from "@workspace/emails/send";
 import { ForgotPasswordTemplate } from "@workspace/emails/templates";
-import { getBaseUrl } from "@workspace/lib/utils/get-base-url";
+import { hashPassword } from "@workspace/lib/next-auth/hash";
 import { sendVerificationEmail } from "@workspace/lib/next-auth/send-verification-email";
+import { getBaseUrl } from "@workspace/lib/utils/get-base-url";
+import {
+    forgotPasswordSchema,
+    resetPasswordSchema,
+    signUpSchema,
+    verifyEmailSchema,
+} from "@workspace/lib/validators/auth";
 
 import { createRouter, publicProcedure } from "../trpc";
 
@@ -28,7 +33,7 @@ export const userRouter = createRouter({
         });
         if (!user) {
             throw new Error("Failed to create user.");
-        }  
+        }
     }),
     forgotPassword: publicProcedure.input(forgotPasswordSchema).mutation(async (opts) => {
         const userExists = await opts.ctx.db.user.findFirst({
@@ -51,7 +56,7 @@ export const userRouter = createRouter({
             subject: "Reset your password",
             to: [userExists.email],
             from: process.env.SENDER_EMAIL_ADDRESS!,
-        })
+        });
     }),
     resetPassword: publicProcedure.input(resetPasswordSchema).mutation(async (opts) => {
         const token = await opts.ctx.db.resetPasswordToken.findFirst({

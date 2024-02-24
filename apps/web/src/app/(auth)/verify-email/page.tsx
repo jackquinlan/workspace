@@ -38,12 +38,12 @@ export default async function VerifyEmail({
                     getButtonClasses({ variant: "outline", size: "default" }),
                 )}
             >
-                Inbox 
+                Inbox
             </Link>
             <div className="w-full pt-[8%] md:w-1/2 xl:w-1/3">
                 <div className="py-2">
                     <h1 className="flex items-center gap-2 text-xl font-medium">
-                        <Mail className="w-5 h-5" />
+                        <Mail className="h-5 w-5" />
                         Verify your email
                     </h1>
                     <hr className="my-2" />

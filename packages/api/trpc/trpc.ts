@@ -4,8 +4,8 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import { type Session } from "next-auth";
 import superjson from "superjson";
 
-import { getServerAuthSession } from "@workspace/lib/next-auth/get-server-session";
 import { db } from "@workspace/db";
+import { getServerAuthSession } from "@workspace/lib/next-auth/get-server-session";
 
 type CreateContextOptions = {
     session: Session | null;

@@ -1,6 +1,19 @@
-import { Body, Container, Html, Head, Preview, Tailwind, Section, Hr, Text, Link } from "@react-email/components";
+import {
+    Body,
+    Container,
+    Head,
+    Hr,
+    Html,
+    Link,
+    Preview,
+    Section,
+    Tailwind,
+    Text,
+} from "@react-email/components";
 
-const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : `http://localhost:${process.env.PORT ?? 3000}`;
+const url = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : `http://localhost:${process.env.PORT ?? 3000}`;
 
 interface Props {
     resetLink: string;
@@ -10,42 +23,51 @@ export function ForgotPasswordTemplate({ resetLink }: Props) {
     return (
         <Html>
             <Head />
-            <Preview>We have recieved a request to reset your password for your Workspace account</Preview>
+            <Preview>
+                We have recieved a request to reset your password for your Workspace account
+            </Preview>
             <Tailwind>
                 <Body style={main}>
-                    <Container className="bg-white my-0 mx-auto pt-[20px] pr-0 pb-[48px] mb-[64px]">
-                        <Section className="py-0 px-[48px]">
-                            <Text className="text-black text-[18px] font-bold">Workspace</Text>
-                            <Hr className="border border-[#e6ebf1] my-[20px] mx-0" />
-                            <Text className="text-[#525f7f] text-[16px] leading-[24px] text-left">
-                                We have recieved a request to reset your password for your Workspace account.
+                    <Container className="mx-auto my-0 mb-[64px] bg-white pb-[48px] pr-0 pt-[20px]">
+                        <Section className="px-[48px] py-0">
+                            <Text className="text-[18px] font-bold text-black">Workspace</Text>
+                            <Hr className="mx-0 my-[20px] border border-[#e6ebf1]" />
+                            <Text className="text-left text-[16px] leading-[24px] text-[#525f7f]">
+                                We have recieved a request to reset your password for your Workspace
+                                account.
                             </Text>
-                            <Text className="text-[#525f7f] text-[16px] leading-[24px] text-left">
-                                If it was you, you can reset your password by clicking the button below 👇.
+                            <Text className="text-left text-[16px] leading-[24px] text-[#525f7f]">
+                                If it was you, you can reset your password by clicking the button
+                                below 👇.
                             </Text>
-                            <Link className="bg-[#ef4444] rounded-[5px] text-white text-[16px] font-medium block text-center w-100 p-[10px]" href={resetLink}>
+                            <Link
+                                className="w-100 block rounded-[5px] bg-[#ef4444] p-[10px] text-center text-[16px] font-medium text-white"
+                                href={resetLink}
+                            >
                                 Reset your password
                             </Link>
-                            <Hr className="border border-[#e6ebf1] my-[20px] mx-0" />
-                            <Text className="text-[#525f7f] text-[16px] leading-[24px] text-left">
+                            <Hr className="mx-0 my-[20px] border border-[#e6ebf1]" />
+                            <Text className="text-left text-[16px] leading-[24px] text-[#525f7f]">
                                 If this wasn't you, please ignore this email or reach out to{" "}
                                 <Link className="text-[#ef4444]" href={url}>
-                                support
+                                    support
                                 </Link>{" "}
                                 for more assistance.
                             </Text>
-                            <Text className="text-[#525f7f] text-[16px] leading-[24px] text-left">
-                                To keep your account secure, please don't forward this email to anyone.
+                            <Text className="text-left text-[16px] leading-[24px] text-[#525f7f]">
+                                To keep your account secure, please don't forward this email to
+                                anyone.
                             </Text>
-                            <Text className="text-[#525f7f] text-[16px] leading-[24px] text-left">
+                            <Text className="text-left text-[16px] leading-[24px] text-[#525f7f]">
                                 Thank you for using Workspace!
                             </Text>
-                            <Text className="text-[#525f7f] text-[16px] leading-[24px] text-left">
+                            <Text className="text-left text-[16px] leading-[24px] text-[#525f7f]">
                                 — The Workspace Team
                             </Text>
-                            <Hr className="border border-[#e6ebf1] my-[20px] mx-0" />
-                            <Text className="text-[#8898aa] text-[12px] leading-[16px]">
-                                Workspace is an open-source platform for helping people orangize their work.
+                            <Hr className="mx-0 my-[20px] border border-[#e6ebf1]" />
+                            <Text className="text-[12px] leading-[16px] text-[#8898aa]">
+                                Workspace is an open-source platform for helping people orangize
+                                their work.
                             </Text>
                         </Section>
                     </Container>
@@ -57,5 +79,6 @@ export function ForgotPasswordTemplate({ resetLink }: Props) {
 
 const main = {
     backgroundColor: "#f6f9fc",
-    fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
+    fontFamily:
+        '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
 };
