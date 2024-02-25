@@ -30,7 +30,7 @@ export default function Login() {
                     </Suspense>
                 </div>
             </div>
-            <Link href="/signup" className="hover:underline hover:underline-offset-4">
+            <Link href="/signup" className="hover:underline hover:underline-offset-4 mt-4">
                 Don&apos;t have one? Create an account
             </Link>
         </div>

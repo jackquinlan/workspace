@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
 
-import type { User } from "next-auth";
 import { Bell, Calendar, Inbox, Search, Zap } from "lucide-react";
+import type { User } from "next-auth";
 
 import { Separator } from "@workspace/ui";
 
