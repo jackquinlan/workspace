@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 
+import { cn } from "@/lib/utils";
+
 type Star = {
     size: number;
     opacity: number;
@@ -39,6 +41,31 @@ export function StarsField() {
                     }}
                 />
             ))}
+            {/* <Meteors number={100} /> */}
         </div>
     );
 }
+
+export const Meteors = ({ number, className }: { number?: number; className?: string }) => {
+    const meteors = new Array(number || 20).fill(true);
+    return (
+        <React.Fragment>
+            {meteors.map((el, idx) => (
+                <span
+                    key={"meteor" + idx}
+                    className={cn(
+                        "animate-shooting-star absolute left-1/2 top-1/2 h-0.5 w-0.5 rotate-[215deg] rounded-[9999px] bg-indigo-500 shadow-[0_0_0_1px_#ffffff10]",
+                        "before:absolute before:top-1/2 before:h-[1px] before:w-[50px] before:-translate-y-[50%] before:transform before:bg-gradient-to-r before:from-[#64748b] before:to-transparent before:content-['']",
+                        className,
+                    )}
+                    style={{
+                        top: Math.floor(Math.random() * (1000 - -800) + -800) + "px",
+                        left: 0,
+                        animationDelay: Math.random() * (0.8 - 0.2) + 0.2 + "s",
+                        animationDuration: Math.floor(Math.random() * (20 - 2) + 2) + "s",
+                    }}
+                ></span>
+            ))}
+        </React.Fragment>
+    );
+};
