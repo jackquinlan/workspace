@@ -45,7 +45,7 @@ export function UserButton({ user }: UserButtonProps) {
                 </div>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                    <DropdownMenuLink href="/settings">
+                    <DropdownMenuLink href="/settings/profile">
                         <Settings className="h-4 w-4" />
                         Settings
                     </DropdownMenuLink>

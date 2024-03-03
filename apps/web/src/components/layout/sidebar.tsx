@@ -1,12 +1,11 @@
 import React from "react";
-import Link from "next/link";
 
 import { Bell, Calendar, Inbox, Search, Zap } from "lucide-react";
 import type { User } from "next-auth";
 
 import { Separator } from "@workspace/ui";
 
-import { cn } from "@/lib/utils";
+import { SidebarItem } from "./sidebar-item";
 import { UserButton } from "./user-button";
 
 interface SidebarProps {
@@ -32,38 +31,19 @@ export function Sidebar({ user }: SidebarProps) {
                     <Inbox className="h-4 w-4" />
                     Inbox
                 </SidebarItem>
-                <SidebarItem href="/inbox">
+                <SidebarItem href="/notifications">
                     <Bell className="h-4 w-4" />
                     Notifications
                 </SidebarItem>
-                <SidebarItem href="/inbox">
+                <SidebarItem href="/calendar">
                     <Calendar className="h-4 w-4" />
                     Calendar
                 </SidebarItem>
-                <SidebarItem href="/inbox">
+                <SidebarItem href="/automations">
                     <Zap className="h-4 w-4" />
                     Automations
                 </SidebarItem>
             </div>
         </aside>
-    );
-}
-
-interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
-    action?: () => void;
-    href: string;
-}
-
-export function SidebarItem({ className = "", children, href }: ItemProps) {
-    return (
-        <Link
-            href={href}
-            className={cn(
-                "hover:bg-muted flex items-center gap-2 rounded-md px-1 py-[3px] text-sm",
-                className,
-            )}
-        >
-            {children}
-        </Link>
     );
 }

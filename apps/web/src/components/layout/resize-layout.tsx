@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { usePathname } from "next/navigation";
 
 import type { User } from "next-auth";
 
@@ -10,6 +11,7 @@ import { Sidebar } from "@/components/layout/sidebar";
 import { SidebarToggleButton } from "@/components/layout/sidebar-toggle";
 import { useSidebar } from "@/hooks/use-sidebar";
 import { cn } from "@/lib/utils";
+import { SettingsSidebar } from "./settings-sidebar";
 
 interface Props {
     children: React.ReactNode;
@@ -18,6 +20,7 @@ interface Props {
 }
 
 export function ResizeLayoutWrapper({ children, defaultLayout = [33, 67], user }: Props) {
+    const pathname = usePathname();
     const { open } = useSidebar();
     return (
         <ResizablePanelGroup
@@ -34,7 +37,11 @@ export function ResizeLayoutWrapper({ children, defaultLayout = [33, 67], user }
                 maxSize={25}
                 defaultSize={defaultLayout[0]}
             >
-                <Sidebar user={user} />
+                {pathname.startsWith("/settings/") ? (
+                    <SettingsSidebar user={user} />
+                ) : (
+                    <Sidebar user={user} />
+                )}
             </ResizablePanel>
             <ResizableHandle className={cn(!open ? "hidden" : "visible")} />
             <SidebarToggleButton />
