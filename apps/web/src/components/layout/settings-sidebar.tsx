@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ArrowLeft, UserCircle } from "lucide-react";
+import { ArrowLeft, UserIcon } from "lucide-react";
 import type { User } from "next-auth";
 
 import { Separator } from "@workspace/ui";
@@ -22,7 +22,7 @@ export function SettingsSidebar({ user }: Props) {
             <Separator />
             <div className="flex flex-col space-y-1 mt-4 p-2">
                 <SidebarItem href="/settings/profile">
-                    <UserCircle className="h-4 w-4" />
+                    <UserIcon className="h-4 w-4" />
                     Profile
                 </SidebarItem>
             </div>
