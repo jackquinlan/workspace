@@ -1,10 +1,11 @@
 import React from "react";
-import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 import { getServerAuthSession } from "@workspace/lib/next-auth/get-server-session";
 
 import { ResizeLayoutWrapper } from "@/components/layout/resize-layout";
+import { LockScroll } from "@/components/lock-scroll";
 import { SidebarProvider } from "@/hooks/use-sidebar";
 import { NextAuthProvider } from "../_providers/session-provider";
 
@@ -23,11 +24,10 @@ export default async function MainLayout({ children }: MainLayoutProps) {
         <div className="flex h-screen">
             <SidebarProvider>
                 <ResizeLayoutWrapper defaultLayout={defaultLayout} user={session.user}>
-                    <NextAuthProvider session={session}>
-                        {children}
-                    </NextAuthProvider>
+                    <NextAuthProvider session={session}>{children}</NextAuthProvider>
                 </ResizeLayoutWrapper>
             </SidebarProvider>
+            <LockScroll />
         </div>
     );
 }

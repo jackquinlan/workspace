@@ -7,10 +7,10 @@ interface Props {
 
 export function PageHeader({ description, heading }: Props) {
     return (
-        <div className="flex flex-col w-full">
+        <div className="flex w-full flex-col">
             <div className="flex flex-col">
-                <h1 className="font-medium text-xl md:text-2xl">{heading}</h1>
-                {description && <p className="text-md text-muted-foreground">{description}</p>}
+                <h1 className="text-xl font-medium md:text-2xl">{heading}</h1>
+                {description && <p className="text-muted-foreground text-sm">{description}</p>}
             </div>
             <hr className="my-2" />
         </div>

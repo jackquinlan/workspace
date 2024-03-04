@@ -29,17 +29,17 @@ export function UserButton({ user }: UserButtonProps) {
             <DropdownMenuTrigger className="outline-none">
                 <Avatar className="h-7 w-7">
                     <AvatarImage src={user.image ?? undefined} />
-                    <AvatarFallback className="border-border border bg-accent" />
+                    <AvatarFallback className="border-border bg-accent border" />
                 </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-[250px]" align="start">
                 <div className="flex items-center gap-2 px-1 py-1.5">
                     <Avatar className="h-7 w-7">
                         <AvatarImage src={user.image ?? undefined} />
-                        <AvatarFallback className="border-border border bg-accent" />
+                        <AvatarFallback className="border-border bg-accent border" />
                     </Avatar>
                     <div className="flex flex-col text-left text-xs">
-                        <h1 className="font-medium text-md">@{user.name}</h1>
+                        <h1 className="text-md font-medium">@{user.name}</h1>
                         <h2>{user.email}</h2>
                     </div>
                 </div>

@@ -1,7 +1,5 @@
 import React from "react";
 
 export default function Inbox() {
-    return (
-        <div></div>
-    );
+    return <div></div>;
 }

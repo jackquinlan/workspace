@@ -1,4 +1,5 @@
 import { addHours } from "date-fns";
+import { User } from "next-auth";
 
 import { sendEmail } from "@workspace/emails/send";
 import { ForgotPasswordTemplate } from "@workspace/emails/templates";
@@ -11,10 +12,9 @@ import {
     signUpSchema,
     verifyEmailSchema,
 } from "@workspace/lib/validators/auth";
-import { editUserSchema } from "@workspace/lib/validators/user";
+import { deleteUserSchema, editUserSchema } from "@workspace/lib/validators/user";
 
 import { createRouter, protectedProcedure, publicProcedure } from "../trpc";
-import { User } from "next-auth";
 
 export const userRouter = createRouter({
     signUp: publicProcedure.input(signUpSchema).mutation(async (opts) => {
@@ -107,12 +107,31 @@ export const userRouter = createRouter({
         return await sendVerificationEmail(userExists);
     }),
     editUser: protectedProcedure.input(editUserSchema).mutation(async (opts) => {
-        return await opts.ctx.db.user.update({
+        const update = await opts.ctx.db.user.update({
             where: {
                 id: (opts.ctx.session.user as User).id,
             },
             data: {
                 name: opts.input.name,
+            },
+        });
+        if (!update) {
+            throw new Error("Failed to update user.");
+        }
+        return { name: update.name };
+    }),
+    deleteUser: protectedProcedure.input(deleteUserSchema).mutation(async (opts) => {
+        const user = await opts.ctx.db.user.findUnique({
+            where: {
+                id: opts.input.id,
+            },
+        });
+        if (!user) {
+            throw new Error("User does not exist.");
+        }
+        await opts.ctx.db.user.delete({
+            where: {
+                id: user.id,
             },
         });
     }),
