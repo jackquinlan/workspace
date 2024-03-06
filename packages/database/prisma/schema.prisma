@@ -65,9 +65,8 @@ model User {
   sessions           Session[]
   resetTokens        ResetPasswordToken[]
   verificationTokens VerificationToken[]
+  workspaces         WorkspaceMember[]
 
-  @@index([id])
-  @@index([email])
   @@map(name: "users")
 }
 
@@ -93,7 +92,43 @@ model ResetPasswordToken {
   userId    String
   used      Boolean  @default(false)
 
-  @@index([id])
   @@index([userId])
   @@map(name: "reset_password_tokens")
+}
+
+model Workspace {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  color String @default("#ef4444")
+  name  String
+
+  members WorkspaceMember[]
+
+  @@map(name: "workspaces")
+}
+
+enum WorkspaceMemberRole {
+  admin
+  owner
+  member
+}
+
+model WorkspaceMember {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  role WorkspaceMemberRole @default(member)
+
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
+  @@index([userId])
+  @@map(name: "workspace_members")
 }
