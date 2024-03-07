@@ -27,7 +27,7 @@ export const classes = {
         success: "bg-green-500 text-white hover:bg-green-600",
         outline:
             "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
-        danger: "bg-destructive text-white shadow-sm hover:bg-destructive/90",
+        danger: "bg-destructive text-white shadow-sm hover:bg-red-500",
         link: "text-primary underline-offset-4 hover:underline",
     },
 };

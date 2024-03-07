@@ -11,3 +11,4 @@ export * from "./components/label";
 export * from "./components/resizable";
 export * from "./components/scroll-area";
 export * from "./components/separator";
+export * from "./components/popover";

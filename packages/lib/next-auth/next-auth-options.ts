@@ -16,6 +16,7 @@ const authOptions: NextAuthOptions = {
                 ...session,
                 user: {
                     id: token.id,
+                    activeWorkspace: token.activeWorkspace,
                     image: token.picture,
                     email: token.email,
                     emailVerified: token.emailVerified,
@@ -36,6 +37,7 @@ const authOptions: NextAuthOptions = {
             }
             return {
                 id: userFromPrisma.id,
+                activeWorkspace: userFromPrisma.activeWorkspace ?? undefined,
                 picture: userFromPrisma.image,
                 name: userFromPrisma.name,
                 email: userFromPrisma.email,
@@ -89,6 +91,7 @@ const authOptions: NextAuthOptions = {
                 }
                 return {
                     id: user.id,
+                    activeWorkspace: undefined,
                     email: user.email,
                     emailVerified: user.emailVerified?.toISOString() ?? null,
                     name: user.name,

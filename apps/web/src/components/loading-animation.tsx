@@ -9,8 +9,10 @@ const loaderVariants = cva("animate-pulse rounded-full direction-alternate durat
         variant: {
             default: "bg-zinc-400",
             inverse: "bg-primary",
+            light: "bg-white",
         },
         size: {
+            xs: "h-[.25rem] w-[.25rem]",
             sm: "h-1 w-1",
             lg: "h-[1.5rem] w-[1.5rem]",
         },

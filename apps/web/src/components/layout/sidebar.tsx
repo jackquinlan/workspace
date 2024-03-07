@@ -7,6 +7,7 @@ import { Separator } from "@workspace/ui";
 
 import { SidebarItem } from "./sidebar-item";
 import { UserButton } from "./user-button";
+import { WorkspaceSelector } from "./workspace-selector";
 
 interface SidebarProps {
     user: User;
@@ -16,6 +17,7 @@ export function Sidebar({ user }: SidebarProps) {
     return (
         <aside className="bg-sidebar flex h-full flex-col">
             <div className="flex items-center justify-between p-2">
+                <WorkspaceSelector />
                 <UserButton user={user} />
             </div>
             <Separator />

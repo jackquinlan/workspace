@@ -80,7 +80,7 @@ export function EditProfileForm({ user }: Props) {
                     name="name"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Display Name</FormLabel>
+                            <FormLabel>Name</FormLabel>
                             <FormControl>
                                 <Input autoComplete="off" {...field} />
                             </FormControl>
@@ -90,7 +90,8 @@ export function EditProfileForm({ user }: Props) {
                 />
                 <div className="flex justify-start gap-2 pt-1">
                     <Button type="submit" size="sm" disabled={isLoading}>
-                        {isLoading ? <Loader size="sm" /> : "Update"}
+                        {isLoading && <Loader size="xs" variant="light" className="me-1" />}
+                        Update
                     </Button>
                     {watch !== user.name ? (
                         <Button

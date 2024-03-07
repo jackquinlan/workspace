@@ -7,7 +7,7 @@ interface ShellProps extends React.HTMLAttributes<HTMLDivElement> {}
 function Shell({ className = "", children, ...props }: ShellProps) {
     return (
         <div
-            className={cn("border-border bg-background rounded-lg border p-3", className)}
+            className={cn("border-border bg-background rounded-lg border p-3 shadow-sm", className)}
             {...props}
         >
             {children}

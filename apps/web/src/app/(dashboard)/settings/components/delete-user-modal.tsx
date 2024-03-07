@@ -2,7 +2,7 @@
 
 import React, { useState, useTransition } from "react";
 
-import { Trash } from "lucide-react";
+import { AlertTriangle, Trash } from "lucide-react";
 import type { User } from "next-auth";
 import { signOut } from "next-auth/react";
 import { toast } from "sonner";
@@ -58,20 +58,26 @@ export function DeleteUserModal({ user }: Props) {
             </AlertDialogTrigger>
             <AlertDialogContent className="top-[25%]">
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Delete your account</AlertDialogTitle>
+                    <AlertDialogTitle className="flex items-center gap-1">
+                        <AlertTriangle className="text-destructive h-4 w-4" /> Delete your account
+                    </AlertDialogTitle>
                 </AlertDialogHeader>
-                <AlertDialogDescription>
+                <AlertDialogDescription className="py-2">
                     Are you sure you want to delete your account? All data associated with your
                     account will deleted immediately.{" "}
                     <span className="text-destructive font-medium">
                         This action cannot be undone.
                     </span>
-                    <p className="pb-2 pt-4 text-sm font-normal">
+                    <div className="pb-2 pt-4 text-sm font-normal">
                         Enter your name <span className="font-mono">{user.name}</span> to confirm.
-                    </p>
+                    </div>
                     <Input autoFocus onChange={(e) => setConfirmName(e.target.value)} />
-                    <div className="flex items-center gap-2 mt-5 mb-2">
-                        <Checkbox id="confirm" checked={confirmChecked} onCheckedChange={() => setConfirmChecked(!confirmChecked)} />
+                    <div className="mb-2 mt-5 flex items-center gap-2">
+                        <Checkbox
+                            id="confirm"
+                            checked={confirmChecked}
+                            onCheckedChange={() => setConfirmChecked(!confirmChecked)}
+                        />
                         <Label htmlFor="confirm" className="text-sm">
                             I acknowledge that this action is permanent and cannot be undone.
                         </Label>
