@@ -30,7 +30,7 @@ export function StarsField() {
         <div className="pointer-events-none absolute left-0 top-0 z-[50] h-screen w-[200px]">
             {stars.map((star, i) => (
                 <div
-                    key={i}
+                    key={"star" + i}
                     className="absolute rounded-full bg-white"
                     style={{
                         top: star.y,

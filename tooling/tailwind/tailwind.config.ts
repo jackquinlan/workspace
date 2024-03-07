@@ -48,6 +48,11 @@ const config: Omit<Config, "content"> = {
                 sans: ["var(--font-geist-sans)"],
                 rubik: ["var(--font-rubik)"],
             },
+            borderRadius: {
+                lg: "6px",
+                md: "4px",
+                sm: "2px",
+            },
             animation: {
                 "shooting-star": "meteor 5s linear infinite",
             },

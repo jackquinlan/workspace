@@ -55,6 +55,8 @@ model User {
   image          String?
   hashedPassword String?
 
+  activeWorkspace String?
+
   plan                   Plan      @default(free)
   stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
   stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
@@ -65,9 +67,8 @@ model User {
   sessions           Session[]
   resetTokens        ResetPasswordToken[]
   verificationTokens VerificationToken[]
+  workspaces         WorkspaceMember[]
 
-  @@index([id])
-  @@index([email])
   @@map(name: "users")
 }
 
@@ -93,15 +94,43 @@ model ResetPasswordToken {
   userId    String
   used      Boolean  @default(false)
 
-  @@index([id])
   @@index([userId])
   @@map(name: "reset_password_tokens")
 }
 
-model Test {
-  id   String @id @default(uuid())
-  text String
+model Workspace {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
 
-  @@index([id])
-  @@map(name: "tests")
+  color String @default("#ef4444")
+  name  String
+
+  members WorkspaceMember[]
+
+  @@map(name: "workspaces")
+}
+
+enum WorkspaceMemberRole {
+  admin
+  owner
+  member
+}
+
+model WorkspaceMember {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  role WorkspaceMemberRole @default(member)
+
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
+  @@index([userId])
+  @@map(name: "workspace_members")
 }

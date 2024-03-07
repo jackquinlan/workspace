@@ -2,20 +2,21 @@
 
 import React from "react";
 
-import type { User } from "next-auth";
 import { LogOut, Settings, Star } from "lucide-react";
+import type { User } from "next-auth";
 import { signOut } from "next-auth/react";
 
 import {
     Avatar,
     AvatarFallback,
+    AvatarImage,
     DropdownMenu,
     DropdownMenuContent,
+    DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLink,
-    DropdownMenuTrigger,
     DropdownMenuSeparator,
-    DropdownMenuGroup
+    DropdownMenuTrigger,
 } from "@workspace/ui";
 
 interface UserButtonProps {
@@ -27,24 +28,29 @@ export function UserButton({ user }: UserButtonProps) {
         <DropdownMenu>
             <DropdownMenuTrigger className="outline-none">
                 <Avatar className="h-7 w-7">
-                    <AvatarFallback className="border border-border bg-indigo-500" />
+                    <AvatarImage src={user.image ?? undefined} />
+                    <AvatarFallback className="border-border bg-accent border" />
                 </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-[250px]" align="start">
                 <div className="flex items-center gap-2 px-1 py-1.5">
                     <Avatar className="h-7 w-7">
-                        <AvatarFallback className="border border-border bg-indigo-500" />
+                        <AvatarImage src={user.image ?? undefined} />
+                        <AvatarFallback className="border-border bg-accent border" />
                     </Avatar>
-                    <h1 className="font-medium">@{user.name}</h1>
+                    <div className="flex flex-col text-left text-xs">
+                        <h1 className="text-md font-medium">@{user.name}</h1>
+                        <h2>{user.email}</h2>
+                    </div>
                 </div>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                    <DropdownMenuLink href="/settings">
+                    <DropdownMenuLink href="/settings/profile">
                         <Settings className="h-4 w-4" />
                         Settings
                     </DropdownMenuLink>
                     <DropdownMenuItem>
-                        <Star className="text-yellow-400 h-4 w-4" />
+                        <Star className="h-4 w-4 text-yellow-400" />
                         Upgrade to Pro
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
