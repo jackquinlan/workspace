@@ -39,7 +39,7 @@ export function DeleteUserModal({ user }: Props) {
             toast.success("Account deleted successfully. Redirecting...");
             signOut({ callbackUrl: "/login" });
         },
-        onError: (err) => {
+        onError: () => {
             toast.error("Unable to delete your account.");
         },
     });

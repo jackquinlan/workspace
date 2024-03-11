@@ -40,7 +40,7 @@ export function ResizeLayoutWrapper({ children, defaultLayout = [33, 67], user, 
                 defaultSize={defaultLayout[0]}
             >
                 {pathname.startsWith("/settings/") ? (
-                    <SettingsSidebar user={user} />
+                    <SettingsSidebar />
                 ) : (
                     <Sidebar user={user} workspaces={workspaces} />
                 )}

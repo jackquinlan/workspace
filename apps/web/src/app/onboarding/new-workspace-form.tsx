@@ -59,7 +59,7 @@ export function NewWorkspaceForm({ user }: Props) {
         }
     }, [form.formState]);
     const createWorkspace = api.workspace.newWorkspace.useMutation({
-        onSuccess: (data) => {
+        onSuccess: () => {
             toast.success("Workspace created successfully");
             router.refresh();
             router.push("/inbox");
