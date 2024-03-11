@@ -7,9 +7,7 @@ import { RefreshCcw } from "lucide-react";
 import { toast } from "sonner";
 
 import { api } from "@workspace/api/react";
-import { Button } from "@workspace/ui";
-
-import { Loader } from "@/components/loading-animation";
+import { Button, LoadingDots } from "@workspace/ui";
 
 interface Props {
     email: string;
@@ -35,7 +33,7 @@ export function ResendVerificationButton({ email }: Props) {
     return (
         <Button variant="outline" onClick={() => handleResendVerification()} disabled={isLoading}>
             {isLoading ? (
-                <Loader />
+                <LoadingDots />
             ) : (
                 <div className="flex items-center gap-1">
                     <RefreshCcw className="h-4 w-4" />

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { db } from "@workspace/db";
-import { Alert, getButtonClasses } from "@workspace/ui";
+import { Alert, buttonVariants } from "@workspace/ui";
 
 import { cn } from "@/lib/utils";
 import { ResetPasswordForm } from "../components/reset-password-form";
@@ -30,7 +30,7 @@ export default async function ResetPassword({
                 href="/login"
                 className={cn(
                     "absolute left-3 top-3 md:left-6 md:top-6",
-                    getButtonClasses({ variant: "outline", size: "default" }),
+                    buttonVariants({ variant: "outline", size: "default" }),
                 )}
             >
                 Login

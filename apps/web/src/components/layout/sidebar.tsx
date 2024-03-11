@@ -3,6 +3,7 @@ import React from "react";
 import { Bell, Calendar, Inbox, Search, Zap } from "lucide-react";
 import type { User } from "next-auth";
 
+import type { Workspace } from "@workspace/db/client";
 import { Separator } from "@workspace/ui";
 
 import { SidebarItem } from "./sidebar-item";
@@ -11,13 +12,15 @@ import { WorkspaceSelector } from "./workspace-selector";
 
 interface SidebarProps {
     user: User;
+    workspaces: Workspace[];
 }
 
-export function Sidebar({ user }: SidebarProps) {
+export function Sidebar({ user, workspaces }: SidebarProps) {
+    const activeWorkspace = workspaces.find((w) => w.id === user.activeWorkspace);
     return (
         <aside className="bg-sidebar flex h-full flex-col">
             <div className="flex items-center justify-between p-2">
-                <WorkspaceSelector />
+                <WorkspaceSelector workspaces={workspaces} activeWorkspace={activeWorkspace!} />
                 <UserButton user={user} />
             </div>
             <Separator />

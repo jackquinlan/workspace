@@ -18,10 +18,9 @@ import {
     FormLabel,
     FormMessage,
     Input,
+    LoadingDots,
     useZodForm,
 } from "@workspace/ui";
-
-import { Loader } from "@/components/loading-animation";
 
 export function LoginForm() {
     const [isLoading, startTransition] = React.useTransition();
@@ -88,7 +87,7 @@ export function LoginForm() {
                     Forgot your password?
                 </Link>
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? <Loader size="sm" /> : "Login"}
+                    {isLoading ? <LoadingDots size="sm" /> : "Login"}
                 </Button>
             </form>
         </Form>

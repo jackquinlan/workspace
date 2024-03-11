@@ -22,9 +22,8 @@ import {
     Checkbox,
     Input,
     Label,
+    LoadingDots,
 } from "@workspace/ui";
-
-import { Loader } from "@/components/loading-animation";
 
 interface Props {
     user: User;
@@ -40,7 +39,7 @@ export function DeleteUserModal({ user }: Props) {
             toast.success("Account deleted successfully. Redirecting...");
             signOut({ callbackUrl: "/login" });
         },
-        onError: (err) => {
+        onError: () => {
             toast.error("Unable to delete your account.");
         },
     });
@@ -62,12 +61,14 @@ export function DeleteUserModal({ user }: Props) {
                         <AlertTriangle className="text-destructive h-4 w-4" /> Delete your account
                     </AlertDialogTitle>
                 </AlertDialogHeader>
-                <AlertDialogDescription className="py-2">
+                <AlertDialogDescription className="pt-2">
                     Are you sure you want to delete your account? All data associated with your
                     account will deleted immediately.{" "}
                     <span className="text-destructive font-medium">
                         This action cannot be undone.
                     </span>
+                </AlertDialogDescription>
+                <div className="-mt-4 px-5">
                     <div className="pb-2 pt-4 text-sm font-normal">
                         Enter your name <span className="font-mono">{user.name}</span> to confirm.
                     </div>
@@ -82,14 +83,14 @@ export function DeleteUserModal({ user }: Props) {
                             I acknowledge that this action is permanent and cannot be undone.
                         </Label>
                     </div>
-                </AlertDialogDescription>
+                </div>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <AlertDialogAction
                         onClick={handleDelete}
                         disabled={isLoading || confirmName !== user.name || !confirmChecked}
                     >
-                        {isLoading ? <Loader size="sm" /> : "Confirm Delete"}
+                        {isLoading ? <LoadingDots size="sm" /> : "Confirm Delete"}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

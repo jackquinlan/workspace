@@ -21,7 +21,7 @@ export default withAuth(
 
         if (isAuthPage) {
             if (!!token) {
-                return NextResponse.redirect(new URL("/login", req.url));
+                return NextResponse.redirect(new URL("/inbox", req.url));
             }
             return null;
         }

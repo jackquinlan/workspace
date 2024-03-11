@@ -17,10 +17,9 @@ import {
     FormLabel,
     FormMessage,
     Input,
+    LoadingDots,
     useZodForm,
 } from "@workspace/ui";
-
-import { Loader } from "@/components/loading-animation";
 
 export function ResetPasswordForm({ token }: { token: string }) {
     const [isLoading, startTransition] = useTransition();
@@ -83,7 +82,7 @@ export function ResetPasswordForm({ token }: { token: string }) {
                     />
                 </div>
                 <Button type="submit" className="w-full" disabled={success}>
-                    {isLoading ? <Loader size="sm" /> : "Reset password"}
+                    {isLoading ? <LoadingDots size="sm" /> : "Reset password"}
                 </Button>
             </form>
         </Form>

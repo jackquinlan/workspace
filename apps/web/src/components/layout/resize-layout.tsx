@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 import type { User } from "next-auth";
 
+import type { Workspace } from "@workspace/db/client";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup, ScrollArea } from "@workspace/ui";
 
 import { Sidebar } from "@/components/layout/sidebar";
@@ -17,9 +18,10 @@ interface Props {
     children: React.ReactNode;
     defaultLayout?: number[];
     user: User;
+    workspaces: Workspace[];
 }
 
-export function ResizeLayoutWrapper({ children, defaultLayout = [33, 67], user }: Props) {
+export function ResizeLayoutWrapper({ children, defaultLayout = [33, 67], user, workspaces }: Props) {
     const pathname = usePathname();
     const { open } = useSidebar();
     return (
@@ -38,9 +40,9 @@ export function ResizeLayoutWrapper({ children, defaultLayout = [33, 67], user }
                 defaultSize={defaultLayout[0]}
             >
                 {pathname.startsWith("/settings/") ? (
-                    <SettingsSidebar user={user} />
+                    <SettingsSidebar />
                 ) : (
-                    <Sidebar user={user} />
+                    <Sidebar user={user} workspaces={workspaces} />
                 )}
             </ResizablePanel>
             <ResizableHandle className={cn(!open ? "hidden" : "visible")} />

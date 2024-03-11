@@ -12,3 +12,6 @@ export * from "./components/resizable";
 export * from "./components/scroll-area";
 export * from "./components/separator";
 export * from "./components/popover";
+export * from "./components/loading-dots";
+export * from "./components/multi-tag-input";
+export * from "./components/select";

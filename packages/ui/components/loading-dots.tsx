@@ -2,13 +2,12 @@ import * as React from "react";
 
 import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 
-const loaderVariants = cva("animate-pulse rounded-full direction-alternate duration-700", {
+const loadingDotVariants = cva("animate-pulse rounded-full direction-alternate duration-700", {
     variants: {
         variant: {
             default: "bg-zinc-400",
-            inverse: "bg-primary",
             light: "bg-white",
         },
         size: {
@@ -23,14 +22,14 @@ const loaderVariants = cva("animate-pulse rounded-full direction-alternate durat
     },
 });
 
-interface Props extends React.ComponentProps<"div">, VariantProps<typeof loaderVariants> {}
+interface Props extends React.ComponentProps<"div">, VariantProps<typeof loadingDotVariants> {}
 
-export function Loader({ className, variant, size, ...props }: Props) {
+export function LoadingDots({ className, variant, size, ...props }: Props) {
     return (
         <div className={cn("flex items-center justify-center gap-1", className)} {...props}>
-            <div className={cn(loaderVariants({ variant, size }))} />
-            <div className={cn(loaderVariants({ variant, size }), "delay-150")} />
-            <div className={cn(loaderVariants({ variant, size }), "delay-300")} />
+            <div className={cn(loadingDotVariants({ variant, size }))} />
+            <div className={cn(loadingDotVariants({ variant, size }), "delay-150")} />
+            <div className={cn(loadingDotVariants({ variant, size }), "delay-300")} />
         </div>
     );
 }

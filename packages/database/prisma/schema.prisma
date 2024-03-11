@@ -105,6 +105,7 @@ model Workspace {
 
   color String @default("#ef4444")
   name  String
+  slug  String @unique
 
   members WorkspaceMember[]
 

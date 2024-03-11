@@ -22,3 +22,14 @@ export function constructMetadata({
         icons,
     };
 }
+
+export function slugify(text: string) {
+    return text
+        .toLowerCase()
+        .trim()
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+        .replace(/[^\p{L}\p{N}\p{Zs}\p{Emoji}]+/gu, "-")
+        .replace(/[\s_#]+/g, "-")
+        .replace(/^-+/, "");
+}
