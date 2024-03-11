@@ -17,10 +17,9 @@ import {
     FormLabel,
     FormMessage,
     Input,
+    LoadingDots,
     useZodForm,
 } from "@workspace/ui";
-
-import { Loader } from "@/components/loading-animation";
 
 export function ForgotPasswordForm() {
     const [success, setSuccess] = React.useState<boolean>(false);
@@ -68,7 +67,7 @@ export function ForgotPasswordForm() {
                     </Alert>
                 )}
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? <Loader size="sm" /> : "Reset password"}
+                    {isLoading ? <LoadingDots size="sm" /> : "Reset password"}
                 </Button>
             </form>
         </Form>

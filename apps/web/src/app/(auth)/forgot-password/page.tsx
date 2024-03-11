@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-import { getButtonClasses } from "@workspace/ui";
+import { buttonVariants } from "@workspace/ui";
 
 import { cn } from "@/lib/utils";
 import { ForgotPasswordForm } from "../components/forgot-password-form";
@@ -13,7 +13,7 @@ export default function ForgotPassword() {
                 href="/login"
                 className={cn(
                     "absolute left-3 top-3 md:left-6 md:top-6",
-                    getButtonClasses({ variant: "outline", size: "default" }),
+                    buttonVariants({ variant: "outline", size: "default" }),
                 )}
             >
                 Login

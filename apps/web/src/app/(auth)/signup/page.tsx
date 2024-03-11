@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { getButtonClasses } from "@workspace/ui";
+import { buttonVariants } from "@workspace/ui";
 
 import { StarsField } from "@/components/star-field";
 import { cn } from "@/lib/utils";
@@ -16,7 +16,7 @@ export default function Signup() {
                 href="/login"
                 className={cn(
                     "absolute right-3 top-3 md:right-6 md:top-6",
-                    getButtonClasses({ variant: "outline", size: "default" }),
+                    buttonVariants({ variant: "outline", size: "default" }),
                 )}
             >
                 Login

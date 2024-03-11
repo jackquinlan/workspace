@@ -21,8 +21,6 @@ import {
     useZodForm,
 } from "@workspace/ui";
 
-import { Loader } from "@/components/loading-animation";
-
 interface Props {
     user: User;
 }
@@ -89,8 +87,7 @@ export function EditProfileForm({ user }: Props) {
                     )}
                 />
                 <div className="flex justify-start gap-2 pt-1">
-                    <Button type="submit" size="sm" disabled={isLoading}>
-                        {isLoading && <Loader size="xs" variant="light" className="me-1" />}
+                    <Button type="submit" size="sm" disabled={isLoading} loading={isLoading}>
                         Update
                     </Button>
                     {watch !== user.name ? (

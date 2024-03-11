@@ -19,10 +19,9 @@ import {
     FormLabel,
     FormMessage,
     Input,
+    LoadingDots,
     useZodForm,
 } from "@workspace/ui";
-
-import { Loader } from "@/components/loading-animation";
 
 export function SignupForm() {
     const [isLoading, startTransition] = React.useTransition();
@@ -90,7 +89,7 @@ export function SignupForm() {
                     )}
                 />
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? <Loader size="sm" /> : "Create your account"}
+                    {isLoading ? <LoadingDots size="sm" /> : "Create your account"}
                 </Button>
             </form>
         </Form>

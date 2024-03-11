@@ -20,27 +20,28 @@ export default async function MainLayout({ children }: MainLayoutProps) {
         return redirect("/login");
     }
     if (!session.user.activeWorkspace) {
-        const workspaces = await db.workspaceMember.findMany({
+        const memberships = await db.workspaceMember.findMany({
             where: { userId: session.user.id },
         });
-        if (workspaces.length === 0) {
+        if (memberships.length === 0) {
             return redirect("/onboarding");
         }
         // update the active to the next available workspace
         await db.user.update({
             where: { id: session.user.id },
-            data:  { activeWorkspace: workspaces[0].id },
-        }); 
+            data: { activeWorkspace: memberships[0].id },
+        });
     }
+    const workspaces = await db.workspace.findMany({
+        where: { members: { some: { userId: session.user.id } } },
+    });
     const layout = cookies().get("react-resizable-panels:layout");
     const defaultLayout = layout ? JSON.parse(layout.value) : undefined;
     return (
         <div className="flex h-screen">
             <SidebarProvider>
-                <ResizeLayoutWrapper defaultLayout={defaultLayout} user={session.user}>
-                    <NextAuthProvider session={session}>
-                        {children}
-                    </NextAuthProvider>
+                <ResizeLayoutWrapper defaultLayout={defaultLayout} user={session.user} workspaces={workspaces}>
+                    <NextAuthProvider session={session}>{children}</NextAuthProvider>
                 </ResizeLayoutWrapper>
             </SidebarProvider>
             <LockScroll />

@@ -6,7 +6,7 @@ import { Mail } from "lucide-react";
 
 import { getServerAuthSession } from "@workspace/lib/next-auth/get-server-session";
 import { verifyEmail } from "@workspace/lib/next-auth/verify-email";
-import { Alert, getButtonClasses } from "@workspace/ui";
+import { Alert, buttonVariants } from "@workspace/ui";
 
 import { cn } from "@/lib/utils";
 import { ResendVerificationButton } from "../components/resend-verification-button";
@@ -35,7 +35,7 @@ export default async function VerifyEmail({
                 href="/inbox"
                 className={cn(
                     "absolute left-3 top-3 md:left-6 md:top-6",
-                    getButtonClasses({ variant: "outline", size: "default" }),
+                    buttonVariants({ variant: "outline", size: "default" }),
                 )}
             >
                 Inbox
