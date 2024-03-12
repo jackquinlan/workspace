@@ -13,6 +13,7 @@ export const switchWorkspaceSchema = z.object({
 });
 
 export const editWorkspaceSchema = z.object({
+    workspaceId: z.string().cuid(),
     name:  z.string().min(1, { message: "Required" }),
     slug:  z.string().min(1, { message: "Required" }),
     theme: z.string().min(1),

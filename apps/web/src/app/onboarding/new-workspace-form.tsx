@@ -3,7 +3,6 @@
 import React, { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
-import type { User } from "next-auth";
 import { Blocks } from "lucide-react";
 import { FieldValues, UseFormReturn, useFormState } from "react-hook-form";
 import { toast } from "sonner";
@@ -30,20 +29,18 @@ import {
 import { cn, slugify } from "@/lib/utils";
 import { ColorSelect } from "@/components/theme-select";
 
-const FORM_STEPS = ["Workspace info", "Invite teammates", "Integrations & templates"];
+const FORM_STEPS = ["Workspace info", "Invite teammates", "Templates & integrations"];
 
-interface Props {
-    user: User;
-}
+interface Props {}
 
-export function NewWorkspaceForm({ user }: Props) {
+export function NewWorkspaceForm({ }: Props) {
     const router = useRouter();
     const [step, setStep] = useState<number>(1);
     const [isLoading, startTransition] = useTransition();
     const form = useZodForm({
         schema: newWorkspaceSchema,
         defaultValues: {
-            name: `${user.name}'s Workspace`,
+            name: "",
             slug: "",
             members: [],
             theme: "#52525b",
@@ -222,7 +219,7 @@ export function InviteMembers({ form }: InviteStepProps) {
                     {Object.keys(errors).includes("members") && (
                         <p className="text-destructive text-[0.8rem] font-medium">Invalid email</p>
                     )}
-                    <FormDescription>A unique identifier for your workspace.</FormDescription>
+                    <FormDescription>Press tab once you have added an email</FormDescription>
                 </FormItem>
             )}
         /> 

@@ -32,8 +32,7 @@ export function EditProfileForm({ user }: Props) {
     const form = useZodForm({
         schema: editUserSchema,
         defaultValues: {
-            email: user.email,
-            name: user.name ?? "",
+            email: user.email, name: user.name ?? "",
         },
     });
     const watch = form.watch("name");
