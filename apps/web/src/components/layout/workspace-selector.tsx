@@ -25,6 +25,7 @@ interface Props {
 }
 
 export function WorkspaceSelector({ activeWorkspace, workspaces }: Props) {
+    console.log(activeWorkspace);
     return (
         <DropdownMenu>
             <DropdownMenuTrigger className="max-w-2/3 hover:bg-accent flex items-center gap-2 rounded-md px-2 py-1 outline-none">

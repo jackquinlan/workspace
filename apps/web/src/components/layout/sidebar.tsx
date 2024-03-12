@@ -11,16 +11,16 @@ import { UserButton } from "./user-button";
 import { WorkspaceSelector } from "./workspace-selector";
 
 interface SidebarProps {
+    activeWorkspace: Workspace;
     user: User;
     workspaces: Workspace[];
 }
 
-export function Sidebar({ user, workspaces }: SidebarProps) {
-    const activeWorkspace = workspaces.find((w) => w.id === user.activeWorkspace);
+export function Sidebar({ activeWorkspace, user, workspaces }: SidebarProps) {
     return (
         <aside className="bg-sidebar flex h-full flex-col">
             <div className="flex items-center justify-between p-2">
-                <WorkspaceSelector workspaces={workspaces} activeWorkspace={activeWorkspace!} />
+                <WorkspaceSelector workspaces={workspaces} activeWorkspace={activeWorkspace} />
                 <UserButton user={user} />
             </div>
             <Separator />

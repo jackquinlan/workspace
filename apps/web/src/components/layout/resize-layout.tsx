@@ -18,10 +18,11 @@ interface Props {
     children: React.ReactNode;
     defaultLayout?: number[];
     user: User;
+    activeWorkspace: Workspace;
     workspaces: Workspace[];
 }
 
-export function ResizeLayoutWrapper({ children, defaultLayout = [33, 67], user, workspaces }: Props) {
+export function ResizeLayoutWrapper({ activeWorkspace, children, defaultLayout = [33, 67], user, workspaces }: Props) {
     const pathname = usePathname();
     const { open } = useSidebar();
     return (
@@ -42,7 +43,7 @@ export function ResizeLayoutWrapper({ children, defaultLayout = [33, 67], user, 
                 {pathname.startsWith("/settings/") ? (
                     <SettingsSidebar />
                 ) : (
-                    <Sidebar user={user} workspaces={workspaces} />
+                    <Sidebar activeWorkspace={activeWorkspace} user={user} workspaces={workspaces} />
                 )}
             </ResizablePanel>
             <ResizableHandle className={cn(!open ? "hidden" : "visible")} />

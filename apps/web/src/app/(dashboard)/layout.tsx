@@ -35,12 +35,13 @@ export default async function MainLayout({ children }: MainLayoutProps) {
     const workspaces = await db.workspace.findMany({
         where: { members: { some: { userId: session.user.id } } },
     });
+    const activeWorkspace = workspaces.find((w) => w.id === session.user.activeWorkspace);
     const layout = cookies().get("react-resizable-panels:layout");
     const defaultLayout = layout ? JSON.parse(layout.value) : undefined;
     return (
         <div className="flex h-screen">
             <SidebarProvider>
-                <ResizeLayoutWrapper defaultLayout={defaultLayout} user={session.user} workspaces={workspaces}>
+                <ResizeLayoutWrapper defaultLayout={defaultLayout} user={session.user} workspaces={workspaces} activeWorkspace={activeWorkspace!}>
                     <NextAuthProvider session={session}>{children}</NextAuthProvider>
                 </ResizeLayoutWrapper>
             </SidebarProvider>

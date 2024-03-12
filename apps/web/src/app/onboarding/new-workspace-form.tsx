@@ -4,6 +4,7 @@ import React, { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
 import type { User } from "next-auth";
+import { Blocks } from "lucide-react";
 import { FieldValues, UseFormReturn, useFormState } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -29,7 +30,7 @@ import {
 import { cn, slugify } from "@/lib/utils";
 import { ColorSelect } from "@/components/theme-select";
 
-const FORM_STEPS = ["Workspace info", "Invite teammates", "Color theme & logo"];
+const FORM_STEPS = ["Workspace info", "Invite teammates", "Integrations & templates"];
 
 interface Props {
     user: User;
@@ -43,7 +44,7 @@ export function NewWorkspaceForm({ user }: Props) {
         schema: newWorkspaceSchema,
         defaultValues: {
             name: `${user.name}'s Workspace`,
-            slug: slugify(user.name ?? ""),
+            slug: "",
             members: [],
             theme: "#52525b",
         },
@@ -61,8 +62,8 @@ export function NewWorkspaceForm({ user }: Props) {
     const createWorkspace = api.workspace.newWorkspace.useMutation({
         onSuccess: () => {
             toast.success("Workspace created successfully");
-            router.refresh();
             router.push("/inbox");
+            router.refresh();
         },
         onError: (err) => {
             toast.error(err.message);
@@ -81,7 +82,7 @@ export function NewWorkspaceForm({ user }: Props) {
                         <div key={index} className="flex items-center gap-2 text-sm font-medium">
                             <span
                                 className={cn(
-                                    "border-border bg-accent text-md my-auto flex h-6 w-6 items-center justify-center rounded-md border p-1",
+                                    "border-border bg-white text-md my-auto flex h-6 w-6 items-center justify-center rounded-md border p-1",
                                     step >= index + 1 && "bg-primary text-white",
                                 )}
                             >
@@ -107,7 +108,10 @@ export function NewWorkspaceForm({ user }: Props) {
                     ) : step === 2 ? (
                         <InviteMembers form={form} />
                     ) : (
-                        <ThemeStep form={form} /> 
+                        <div className="flex items-center gap-2 font-medium justify-center py-12">
+                            <Blocks className="w-10 h-10" />
+                            Integrations and project templates are coming soon.
+                        </div>
                     )}
                     <div className="flex items-center justify-end gap-2">
                         {step > 1 && (
@@ -153,8 +157,20 @@ export function WorkspaceForm({ form }: WorkspaceProps) {
             form.setValue("slug", slugify(watchSlug));
         }
     }, [watchSlug, form]);
+    const theme = form.watch("theme");
     return (
-        <div className="space-y-3">
+        <div className="space-y-3 py-2">
+            <div className="flex items-center gap-4">
+                <Avatar className="flex justify-center items-center h-12 w-12">
+                    <AvatarFallback
+                        className="text-lg border-border border font-medium text-white"
+                        style={{ backgroundColor: theme }}
+                    >
+                        {form.getValues("name")[0] ?? "W"}
+                    </AvatarFallback>
+                </Avatar>
+                <Button variant="outline" size="sm" onClick={(e) => e.preventDefault()}>Upload image</Button>
+            </div>
             <FormField
                 control={form.control}
                 name="name"
@@ -182,6 +198,7 @@ export function WorkspaceForm({ form }: WorkspaceProps) {
                     </FormItem>
                 )}
             />
+            <ColorSelect form={form} name="theme" />
         </div>
     );
 }
@@ -209,26 +226,5 @@ export function InviteMembers({ form }: InviteStepProps) {
                 </FormItem>
             )}
         /> 
-    );
-}
-
-interface ThemeStepProps<T extends FieldValues = any> {
-    form: UseFormReturn<T>;
-}
-
-export function ThemeStep({ form }: ThemeStepProps) {
-    const theme = form.watch("theme");
-    return (
-        <div className="flex flex-col space-y-3 pb-2">
-            <Avatar className="flex justify-center items-center h-12 w-12">
-                <AvatarFallback
-                    className="border-border border font-medium text-white"
-                    style={{ backgroundColor: theme }}
-                >
-                    {form.getValues("name")[0] ?? "W"}
-                </AvatarFallback>
-            </Avatar>
-            <ColorSelect form={form} name="theme" />
-        </div>
     );
 }
