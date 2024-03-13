@@ -1,6 +1,11 @@
 import type { User } from "next-auth";
 
-import { newWorkspaceSchema, switchWorkspaceSchema } from "@workspace/lib/validators/workspace";
+import {
+    editWorkspaceSchema,
+    newWorkspaceSchema,
+    switchWorkspaceSchema,
+    deleteWorkspaceSchema,
+} from "@workspace/lib/validators/workspace";
 
 import { createRouter, protectedProcedure } from "../trpc";
 
@@ -16,16 +21,17 @@ export const workspaceRouter = createRouter({
         if (!workspace) {
             throw new Error("Failed to create workspace");
         }
-        // Create owner 
+        // Create owner
         await opts.ctx.db.workspaceMember.create({
             data: {
                 userId: (opts.ctx.session.user as User).id,
                 workspaceId: workspace.id,
+                role: "owner",
             },
         });
         await opts.ctx.db.user.update({
-            where: { 
-                id: (opts.ctx.session.user as User).id 
+            where: {
+                id: (opts.ctx.session.user as User).id,
             },
             data: { activeWorkspace: workspace.id },
         });
@@ -50,11 +56,55 @@ export const workspaceRouter = createRouter({
         }
         return await opts.ctx.db.user.update({
             where: {
-                id: (opts.ctx.session.user as User).id  
+                id: (opts.ctx.session.user as User).id,
             },
             data: {
                 activeWorkspace: opts.input.newId,
             },
+        });
+    }),
+    editWorkspace: protectedProcedure.input(editWorkspaceSchema).mutation(async (opts) => {
+        const membership = await opts.ctx.db.workspaceMember.findFirst({
+            where: {
+                userId: (opts.ctx.session.user as User).id,
+                workspaceId: opts.input.workspaceId,
+            },
+        });
+        if (!membership || !["admin", "owner"].includes(membership.role)) {
+            throw new Error("You don't have permission to edit this workspace");
+        }
+        return await opts.ctx.db.workspace.update({
+            where: {
+                id: opts.input.workspaceId,
+            },
+            data: {
+                color: opts.input.theme,
+                name: opts.input.name,
+                slug: opts.input.slug,
+            },
+        });
+    }),
+    deleteWorkspace: protectedProcedure.input(deleteWorkspaceSchema).mutation(async (opts) => {
+        const membership = await opts.ctx.db.workspaceMember.findFirst({
+            where: {
+                userId: (opts.ctx.session.user as User).id,
+                workspaceId: opts.input.workspaceId,
+            },
+        });
+        if (!membership || !["owner"].includes(membership.role)) {
+            throw new Error("You don't have permission to delete this workspace");
+        }
+        await opts.ctx.db.workspace.delete({
+            where: {
+                id: opts.input.workspaceId,
+            },
+        });
+        // TODO: Change all users activeWorkspace to another workspace
+        await opts.ctx.db.user.update({
+            where: {
+                id: (opts.ctx.session.user as User).id,
+            },
+            data: { activeWorkspace: null },
         });
     }),
 });
