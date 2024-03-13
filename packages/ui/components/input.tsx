@@ -32,7 +32,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                         {...props}
                     />
                     {addSuffix && (
-                        <div className="border-input flex h-7 border-r bg-zinc-100 p-1 px-2">
+                        <div className="border-input my-auto flex h-9 items-center border-l p-1 px-2">
                             {addSuffix}
                         </div>
                     )}

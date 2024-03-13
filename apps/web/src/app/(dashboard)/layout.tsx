@@ -41,7 +41,12 @@ export default async function MainLayout({ children }: MainLayoutProps) {
     return (
         <div className="flex h-screen">
             <SidebarProvider>
-                <ResizeLayoutWrapper defaultLayout={defaultLayout} user={session.user} workspaces={workspaces} activeWorkspace={activeWorkspace!}>
+                <ResizeLayoutWrapper
+                    defaultLayout={defaultLayout}
+                    user={session.user}
+                    workspaces={workspaces}
+                    activeWorkspace={activeWorkspace!}
+                >
                     <NextAuthProvider session={session}>{children}</NextAuthProvider>
                 </ResizeLayoutWrapper>
             </SidebarProvider>

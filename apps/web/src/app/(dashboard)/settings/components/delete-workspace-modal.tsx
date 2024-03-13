@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 
 import { AlertTriangle, Trash } from "lucide-react";
-import type { User } from "next-auth";
-import { signOut } from "next-auth/react";
 import { toast } from "sonner";
 
+import type { Workspace } from "@workspace/db/client";
 import { api } from "@workspace/api/react";
 import {
     AlertDialog,
@@ -26,52 +26,54 @@ import {
 } from "@workspace/ui";
 
 interface Props {
-    user: User;
+    workspace: Workspace;
 }
 
-export function DeleteUserModal({ user }: Props) {
+export function DeleteWorkspaceModal({ workspace }: Props) {
     const [isLoading, startTransition] = useTransition();
     const [confirmChecked, setConfirmChecked] = useState<boolean>(false);
     const [confirmName, setConfirmName] = useState<string>("");
 
-    const deleteUser = api.user.deleteUser.useMutation({
+    const router = useRouter();
+    const deleteWorkspace = api.workspace.deleteWorkspace.useMutation({
         onSuccess: () => {
-            toast.success("Account deleted successfully. Redirecting...");
-            signOut({ callbackUrl: "/login" });
+            toast.success("Workspace deleted successfully. Redirecting...");
+            router.push("/inbox");
+            router.refresh();
         },
         onError: () => {
-            toast.error("Unable to delete your account.");
+            toast.error("Unable to delete your workspace.");
         },
     });
     async function handleDelete() {
         startTransition(async () => {
-            await deleteUser.mutateAsync({ id: user.id });
+            await deleteWorkspace.mutateAsync({ workspaceId: workspace.id });
         });
     }
-    const isDisabled = isLoading || confirmName !== user.name || !confirmChecked;
+    const isDisabled = isLoading || confirmName !== workspace.name || !confirmChecked;
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
                 <Button variant="danger" size="sm" className="w-fit">
-                    <Trash className="me-1 h-3 w-3" /> Delete account
+                    <Trash className="me-1 h-3 w-3" /> Delete workspace
                 </Button>
             </AlertDialogTrigger>
             <AlertDialogContent className="top-[25%]">
                 <AlertDialogHeader>
                     <AlertDialogTitle className="flex items-center gap-1">
-                        <AlertTriangle className="text-destructive h-4 w-4" /> Delete your account
+                        <AlertTriangle className="text-destructive h-4 w-4" /> Delete {workspace.name} 
                     </AlertDialogTitle>
                 </AlertDialogHeader>
                 <AlertDialogDescription className="pt-2">
-                    Are you sure you want to delete your account? All data associated with your
-                    account will deleted immediately.{" "}
+                    Are you sure you want to delete this workspace? All data associated with it
+                    will deleted immediately.{" "}
                     <span className="text-destructive font-medium">
                         This action cannot be undone.
                     </span>
                 </AlertDialogDescription>
                 <div className="-mt-4 px-5">
                     <div className="pb-2 pt-4 text-sm font-normal">
-                        Enter your name <span className="font-mono">{user.name}</span> to confirm.
+                        Enter workspace name <span className="font-mono">{workspace.name}</span> to confirm.
                     </div>
                     <Input autoFocus onChange={(e) => setConfirmName(e.target.value)} />
                     <div className="mb-2 mt-5 flex items-center gap-2">

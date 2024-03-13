@@ -8,7 +8,7 @@ import { SidebarItem } from "./sidebar-item";
 
 interface Props {}
 
-export function SettingsSidebar({ }: Props) {
+export function SettingsSidebar({}: Props) {
     return (
         <aside className="bg-sidebar flex h-full flex-col">
             <div className="flex items-center justify-between p-2">

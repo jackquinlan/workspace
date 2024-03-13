@@ -34,7 +34,10 @@ export function ColorSelect({ form, name }: Props) {
                     <FormLabel>Color</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                         <FormControl>
-                            <SelectTrigger showIcon={false} className="h-9 bg-background outline-none">
+                            <SelectTrigger
+                                showIcon={false}
+                                className="bg-background h-9 outline-none"
+                            >
                                 <SelectValue />
                             </SelectTrigger>
                         </FormControl>

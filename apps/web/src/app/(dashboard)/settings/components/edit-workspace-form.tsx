@@ -6,26 +6,26 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import type { Workspace } from "@workspace/db/client";
 import { api } from "@workspace/api/react";
+import type { Workspace } from "@workspace/db/client";
 import { editWorkspaceSchema } from "@workspace/lib/validators/workspace";
 import { Button, Form, useZodForm } from "@workspace/ui";
 
-import { WorkspaceForm } from "@/app/onboarding/new-workspace-form";
+import { WorkspaceForm } from "@/components/workspace-form";
 import { slugify } from "@/lib/utils";
 
 interface Props {
     activeWorkspace: Workspace;
 }
 
-export function EditWorkspace({ activeWorkspace }: Props) {
+export function EditWorkspaceForm({ activeWorkspace }: Props) {
     const router = useRouter();
     const [isLoading, startTransition] = useTransition();
     const form = useZodForm({
         schema: editWorkspaceSchema,
         defaultValues: {
-            name: activeWorkspace.name, 
-            slug: activeWorkspace.slug, 
+            name: activeWorkspace.name,
+            slug: activeWorkspace.slug,
             workspaceId: activeWorkspace.id,
             theme: activeWorkspace.color,
         },
@@ -39,9 +39,7 @@ export function EditWorkspace({ activeWorkspace }: Props) {
             toast.success("Workspace updated successfully");
             // Refresh the page to reflect the changes
             router.refresh();
-            form.setValue("theme", data.color!);
-            form.setValue("name", data.name!);
-            form.setValue("slug", data.slug!);
+            resetFields(data);
         },
         onError: (err) => {
             toast.error(err.message);
@@ -52,6 +50,11 @@ export function EditWorkspace({ activeWorkspace }: Props) {
             await editWorkspace.mutateAsync({ ...data, slug: slugify(data.slug) });
         });
     }
+    function resetFields(data: Workspace) {
+        form.setValue("theme", data.color!);
+        form.setValue("name", data.name!);
+        form.setValue("slug", data.slug!);
+    }
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(handleEdit)}>
@@ -60,17 +63,14 @@ export function EditWorkspace({ activeWorkspace }: Props) {
                     <Button type="submit" size="sm" disabled={isLoading} loading={isLoading}>
                         Update
                     </Button>
-                    {(watchName !== activeWorkspace.name) || 
-                     (watchSlug !== activeWorkspace.slug) || (watchTheme !== activeWorkspace.color) ? (
+                    {/* prettier-ignore */}
+                    {watchName !== activeWorkspace.name || 
+                     watchSlug !== activeWorkspace.slug || watchTheme !== activeWorkspace.color ? (
                         <Button
                             type="button"
                             size="sm"
                             variant="outline"
-                            onClick={() => {
-                                form.setValue("theme", activeWorkspace.color!);
-                                form.setValue("name", activeWorkspace.name!);
-                                form.setValue("slug", activeWorkspace.slug!);   
-                            }}
+                            onClick={() => resetFields(activeWorkspace)}
                         >
                             Cancel
                         </Button>
