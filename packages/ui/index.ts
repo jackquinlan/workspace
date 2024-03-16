@@ -16,3 +16,4 @@ export * from "./components/loading-dots";
 export * from "./components/multi-tag-input";
 export * from "./components/select";
 export * from "./components/switch";
+export * from "./components/table";

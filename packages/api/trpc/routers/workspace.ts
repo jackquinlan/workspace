@@ -1,10 +1,11 @@
+import { TRPCError } from "@trpc/server";
 import type { User } from "next-auth";
 
 import {
+    deleteWorkspaceSchema,
     editWorkspaceSchema,
     newWorkspaceSchema,
     switchWorkspaceSchema,
-    deleteWorkspaceSchema,
 } from "@workspace/lib/validators/workspace";
 
 import { createRouter, protectedProcedure } from "../trpc";
@@ -19,7 +20,7 @@ export const workspaceRouter = createRouter({
             },
         });
         if (!workspace) {
-            throw new Error("Failed to create workspace");
+            throw new TRPCError({ code: "NOT_FOUND", message: "Workspace not found" });
         }
         // Create owner
         await opts.ctx.db.workspaceMember.create({
@@ -43,7 +44,7 @@ export const workspaceRouter = createRouter({
             },
         });
         if (!workspace) {
-            throw new Error("Workspace not found");
+            throw new TRPCError({ code: "NOT_FOUND", message: "Workspace not found" });
         }
         const workspaceMember = await opts.ctx.db.workspaceMember.findFirst({
             where: {
@@ -52,7 +53,10 @@ export const workspaceRouter = createRouter({
             },
         });
         if (!workspaceMember) {
-            throw new Error("You don't have permission to access this workspace");
+            throw new TRPCError({
+                code: "UNAUTHORIZED",
+                message: "You don't have permission to access this workspace",
+            });
         }
         return await opts.ctx.db.user.update({
             where: {
@@ -71,7 +75,10 @@ export const workspaceRouter = createRouter({
             },
         });
         if (!membership || !["admin", "owner"].includes(membership.role)) {
-            throw new Error("You don't have permission to edit this workspace");
+            throw new TRPCError({
+                code: "UNAUTHORIZED",
+                message: "You don't have permission to access this workspace",
+            });
         }
         return await opts.ctx.db.workspace.update({
             where: {
@@ -92,7 +99,10 @@ export const workspaceRouter = createRouter({
             },
         });
         if (!membership || !["owner"].includes(membership.role)) {
-            throw new Error("You don't have permission to delete this workspace");
+            throw new TRPCError({
+                code: "UNAUTHORIZED",
+                message: "You don't have permission to access this workspace",
+            });
         }
         await opts.ctx.db.workspace.delete({
             where: {

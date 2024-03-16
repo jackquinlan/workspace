@@ -21,3 +21,9 @@ export const editWorkspaceSchema = z.object({
 export const deleteWorkspaceSchema = z.object({
     workspaceId: z.string().cuid(),
 });
+
+export const editInviteLinkSchema = z.object({
+    workspaceId: z.string().cuid(),
+    inviteSlugEnabled: z.boolean(),
+    inviteSlug: z.string().uuid(),
+});

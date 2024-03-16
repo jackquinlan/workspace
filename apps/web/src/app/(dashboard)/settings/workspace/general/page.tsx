@@ -31,7 +31,7 @@ export default async function GeneralWorkspaceSettings() {
                 <div>
                     <h1 className="flex items-center gap-1 text-sm">
                         <AlertTriangle className="text-destructive h-4 w-4" />
-                        Delete workspace 
+                        Delete workspace
                     </h1>
                     <h2 className="text-xs font-normal text-black">
                         Permanently delete this workspace and all associated data.
