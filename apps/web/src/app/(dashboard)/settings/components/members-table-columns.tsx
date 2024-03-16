@@ -19,11 +19,11 @@ import {
 
 import { cn } from "@/lib/utils";
 
-// export type MemberWithUser = WorkspaceMember & Omit<User, "hashedPassword">;
 export type MemberWithUser = WorkspaceMember & { user: User, workspace: Workspace, currentUser: string };
 
 export const columns: ColumnDef<MemberWithUser>[] = [
     {
+        accessorKey: "info",
         header: "User",
         cell: ({ row }) => {
             return (
@@ -44,8 +44,12 @@ export const columns: ColumnDef<MemberWithUser>[] = [
                 </div>
             );
         },
+        filterFn: (row, _, value) => {
+            return row.original.user.email.includes(value) || row.original.user.name!.includes(value);
+        },
     },
     {
+        accessorKey: "role",
         header: "Role",
         cell: ({ row }) => {
             return (
@@ -64,6 +68,7 @@ export const columns: ColumnDef<MemberWithUser>[] = [
         },
     },
     {
+        accessorKey: "actions",
         header: "Actions",
         cell: ({ row }) => {
             const isCurrent = row.original.user.id === row.original.currentUser;
