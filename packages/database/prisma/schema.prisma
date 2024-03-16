@@ -107,6 +107,9 @@ model Workspace {
   name  String
   slug  String @unique
 
+  inviteSlugEnabled Boolean @default(true)
+  inviteSlug        String  @unique @default(uuid())
+
   members WorkspaceMember[]
 
   @@map(name: "workspaces")

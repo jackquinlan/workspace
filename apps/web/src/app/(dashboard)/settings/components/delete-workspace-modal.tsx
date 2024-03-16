@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import { AlertTriangle, Trash } from "lucide-react";
 import { toast } from "sonner";
 
-import type { Workspace } from "@workspace/db/client";
 import { api } from "@workspace/api/react";
+import type { Workspace } from "@workspace/db/client";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -61,19 +61,21 @@ export function DeleteWorkspaceModal({ workspace }: Props) {
             <AlertDialogContent className="top-[25%]">
                 <AlertDialogHeader>
                     <AlertDialogTitle className="flex items-center gap-1">
-                        <AlertTriangle className="text-destructive h-4 w-4" /> Delete {workspace.name} 
+                        <AlertTriangle className="text-destructive h-4 w-4" /> Delete{" "}
+                        {workspace.name}
                     </AlertDialogTitle>
                 </AlertDialogHeader>
                 <AlertDialogDescription className="pt-2">
-                    Are you sure you want to delete this workspace? All data associated with it
-                    will deleted immediately.{" "}
+                    Are you sure you want to delete this workspace? All data associated with it will
+                    deleted immediately.{" "}
                     <span className="text-destructive font-medium">
                         This action cannot be undone.
                     </span>
                 </AlertDialogDescription>
                 <div className="-mt-4 px-5">
                     <div className="pb-2 pt-4 text-sm font-normal">
-                        Enter workspace name <span className="font-mono">{workspace.name}</span> to confirm.
+                        Enter workspace name <span className="font-mono">{workspace.name}</span> to
+                        confirm.
                     </div>
                     <Input autoFocus onChange={(e) => setConfirmName(e.target.value)} />
                     <div className="mb-2 mt-5 flex items-center gap-2">

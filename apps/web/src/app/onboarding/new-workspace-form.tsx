@@ -7,8 +7,8 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 import { api } from "@workspace/api/react";
-import { Button, Form, useZodForm } from "@workspace/ui";
 import { newWorkspaceSchema } from "@workspace/lib/validators/workspace";
+import { Button, Form, useZodForm } from "@workspace/ui";
 
 import { WorkspaceForm } from "@/components/workspace-form";
 
@@ -20,7 +20,9 @@ export function NewWorkspaceForm({}: Props) {
     const form = useZodForm({
         schema: newWorkspaceSchema,
         defaultValues: {
-            name: "", slug: "", theme: "#52525b",
+            name: "",
+            slug: "",
+            theme: "#52525b",
         },
         mode: "onChange",
     });
@@ -40,7 +42,7 @@ export function NewWorkspaceForm({}: Props) {
         });
     }
     return (
-        <div className="flex flex-col w-1/3 space-y-4">
+        <div className="flex w-1/3 flex-col space-y-4">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2">
                     <WorkspaceForm form={form} />

@@ -3,22 +3,22 @@
 import React, { useEffect } from "react";
 
 import { FieldValues, UseFormReturn } from "react-hook-form";
-import { 
-    Avatar, 
-    AvatarFallback, 
-    Button, 
-    FormControl, 
-    FormDescription, 
-    FormField, 
-    FormItem, 
-    FormLabel, 
-    FormMessage, 
-    Input 
+
+import {
+    Avatar,
+    AvatarFallback,
+    Button,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+    Input,
 } from "@workspace/ui";
 
 import { ColorSelect } from "@/components/theme-select";
 import { slugify } from "@/lib/utils";
-
 
 interface WorkspaceFormProps<T extends FieldValues = any> {
     form: UseFormReturn<T>;

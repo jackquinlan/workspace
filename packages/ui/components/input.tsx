@@ -15,7 +15,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ({ border = true, className, type, addPrefix, addSuffix, ...props }, ref) => {
         if (addPrefix || addSuffix) {
             return (
-                <div className="border-input bg-background flex w-full items-center space-x-1 rounded-md border text-sm hover:border-zinc-300">
+                <div
+                    className={cn(
+                        "border-input bg-background flex w-full items-center space-x-1 rounded-md border text-sm hover:border-zinc-300",
+                        className,
+                    )}
+                >
                     {addPrefix && (
                         <div className="border-input bg-accent my-auto flex h-9 items-center border-r p-1 px-2">
                             {addPrefix}
@@ -23,16 +28,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     )}
                     <input
                         type={type}
-                        className={cn(
-                            inputClass,
-                            "h-8 border-none shadow-none outline-none",
-                            className,
-                        )}
+                        className={cn(inputClass, "h-8 border-none shadow-none outline-none")}
                         ref={ref}
                         {...props}
                     />
                     {addSuffix && (
-                        <div className="border-input my-auto flex h-9 items-center border-l p-1 px-2">
+                        <div className="border-input bg-background my-auto flex h-9 items-center border-l p-1 px-2">
                             {addSuffix}
                         </div>
                     )}

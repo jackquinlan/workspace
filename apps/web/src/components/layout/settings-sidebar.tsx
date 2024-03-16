@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ArrowLeft, Settings, UserIcon } from "lucide-react";
+import { ArrowLeft, Bell, CreditCard, Settings, User, Users } from "lucide-react";
 
 import { Separator } from "@workspace/ui";
 
@@ -20,8 +20,12 @@ export function SettingsSidebar({}: Props) {
             <div className="mt-2 flex flex-col space-y-1 p-2">
                 <h1 className="text-sm">Account Settings</h1>
                 <SidebarItem href="/settings/profile">
-                    <UserIcon className="h-4 w-4" />
+                    <User className="h-4 w-4" />
                     Profile
+                </SidebarItem>
+                <SidebarItem href="/settings/notifications">
+                    <Bell className="h-4 w-4" />
+                    Notifications 
                 </SidebarItem>
             </div>
             <div className="mt-2 flex flex-col space-y-1 p-2">
@@ -29,6 +33,14 @@ export function SettingsSidebar({}: Props) {
                 <SidebarItem href="/settings/workspace/general">
                     <Settings className="h-4 w-4" />
                     General
+                </SidebarItem>
+                <SidebarItem href="/settings/workspace/billing">
+                    <CreditCard className="h-4 w-4" />
+                    Billing
+                </SidebarItem>
+                <SidebarItem href="/settings/workspace/members">
+                    <Users className="h-4 w-4" />
+                    Members
                 </SidebarItem>
             </div>
         </aside>
