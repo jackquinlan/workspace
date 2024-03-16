@@ -5,6 +5,7 @@ import { getServerAuthSession } from "@workspace/lib/next-auth/get-server-sessio
 
 import { LockScroll } from "@/components/lock-scroll";
 import { BackButton } from "./back-button";
+import { Logout } from "./logout-button";
 
 interface OnboardingLayoutProps {
     children: React.ReactNode;
@@ -18,6 +19,7 @@ export default async function OnboardingLayout({ children }: OnboardingLayoutPro
     return (
         <div className="flex h-screen w-full flex-col items-center bg-zinc-50">
             {session.user.activeWorkspace && <BackButton />}
+            <Logout user={session.user} />
             {children}
             <LockScroll />
         </div>
