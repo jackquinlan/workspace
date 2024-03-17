@@ -26,7 +26,11 @@ export default async function MemberSettings() {
         },
         include: { user: true, workspace: true },
     });
-    const extendedMembers = members.map((member) => ({ ...member, currentUser: session.user.id }))
+    const extendedMembers = members.map((member) => ({ 
+        ...member, 
+        currentUser: session.user.id,
+        currentRole: members.filter(m => m.userId === session.user.id)[0].role,
+    }));
     return (
         <div className="mt-12 flex w-full flex-col">
             <PageHeader heading="Members" description="Manage who can access this workspace" />

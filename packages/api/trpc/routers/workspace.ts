@@ -6,6 +6,7 @@ import {
     editWorkspaceSchema,
     newWorkspaceSchema,
     switchWorkspaceSchema,
+    leaveWorkspaceSchema,
 } from "@workspace/lib/validators/workspace";
 
 import { createRouter, protectedProcedure } from "../trpc";
@@ -110,6 +111,37 @@ export const workspaceRouter = createRouter({
             },
         });
         // TODO: Change all users activeWorkspace to another workspace
+        await opts.ctx.db.user.update({
+            where: {
+                id: (opts.ctx.session.user as User).id,
+            },
+            data: { activeWorkspace: null },
+        });
+    }),
+    leaveWorkspace: protectedProcedure.input(leaveWorkspaceSchema).mutation(async (opts) => {
+        const membership = await opts.ctx.db.workspaceMember.findFirst({
+            where: {
+                userId: (opts.ctx.session.user as User).id,
+                workspaceId: opts.input.workspaceId,
+            },
+        });
+        if (!membership) {
+            throw new TRPCError({
+                code: "UNAUTHORIZED",
+                message: "You don't have permission to access this workspace",
+            });
+        }
+        if (membership.role === "owner") {
+            throw new TRPCError({
+                code: "BAD_REQUEST",
+                message: "You can't leave a workspace you own. Transfer ownership to another member first.",
+            });
+        }
+        await opts.ctx.db.workspaceMember.delete({
+            where: {
+                id: membership.id,
+            },
+        });
         await opts.ctx.db.user.update({
             where: {
                 id: (opts.ctx.session.user as User).id,

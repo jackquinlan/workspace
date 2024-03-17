@@ -2,6 +2,7 @@ export * from "./components/alert";
 export * from "./components/alert-dialog";
 export * from "./components/avatar";
 export * from "./components/button";
+export * from "./components/badge";
 export * from "./components/checkbox";
 export * from "./components/dialog";
 export * from "./components/dropdown-menu";

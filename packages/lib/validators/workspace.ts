@@ -27,3 +27,7 @@ export const editInviteLinkSchema = z.object({
     inviteSlugEnabled: z.boolean(),
     inviteSlug: z.string().uuid(),
 });
+
+export const leaveWorkspaceSchema = z.object({
+    workspaceId: z.string().cuid(),
+});
