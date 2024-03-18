@@ -2,11 +2,10 @@
 
 import React, { useState } from "react";
 
-import { CircleBackslashIcon, ChevronDownIcon, DotsHorizontalIcon, ExitIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
+import { CircleBackslashIcon, ChevronDownIcon, DotsHorizontalIcon, ExitIcon } from "@radix-ui/react-icons";
 
 import type { User, Workspace, WorkspaceMember, WorkspaceMemberRole } from "@workspace/db/client";
-import { api } from "@workspace/api/react";
 import { 
     Avatar, 
     AvatarFallback, 
@@ -21,6 +20,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import { LeaveWorkspaceModal } from "./leave-workspace-modal";
+import { UpdateMemberRoles } from "./update-member-roles";
 import { TransferOwnerModal } from "./transfer-owner-modal";
 
 export type MemberWithUser = WorkspaceMember & { 
@@ -66,31 +66,17 @@ export const columns: ColumnDef<MemberWithUser>[] = [
         cell: ({ row }) => {
             return (
                 <DropdownMenu>
-                    <DropdownMenuTrigger asChild disabled={row.original.role === "member"}>
+                    <DropdownMenuTrigger asChild disabled={row.original.currentRole === "member"}>
                         <Button className="flex items-center gap-1" size="sm" variant="ghost">
                             {row.original.role.charAt(0).toUpperCase() + row.original.role.slice(1)}
                             <ChevronDownIcon className="h-4 w-4" />
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-60" align="end" sideOffset={-3}>
+                    <DropdownMenuContent className="w-64" align="end" sideOffset={-3}>
                         {row.original.currentRole === "owner" && row.original.user.id !== row.original.currentUser && (
                             <TransferOwnerModal workspace={row.original.workspace} newOwnerId={row.original.user.id} />
                         )}
-                        <DropdownMenuItem className="grid grid-cols-1 gap-0" disabled={row.original.user.id === row.original.currentUser}>
-                            <h1 className="font-medium text-md">Admin</h1>
-                            <h2 className="text-xs">
-                                Can change settings, invite people, and create projects.
-                            </h2>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="grid grid-cols-1 gap-0" disabled={row.original.workspace.plan === "free"}>
-                            <h1 className="flex items-center gap-1 font-medium text-md">
-                                Member
-                                {row.original.workspace.plan === "free" && <Badge>Upgrade</Badge>}
-                            </h1>
-                            <h2 className="text-xs">
-                                Can't change settings, invite people. Can create projects.
-                            </h2>
-                        </DropdownMenuItem>
+                        <UpdateMemberRoles currentUser={row.original.currentUser} userId={row.original.user.id} userRole={row.original.role} workspace={row.original.workspace} />
                     </DropdownMenuContent>
                 </DropdownMenu>
             );

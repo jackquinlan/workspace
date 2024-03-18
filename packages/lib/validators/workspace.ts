@@ -36,3 +36,9 @@ export const transferOwnshipSchema = z.object({
     workspaceId: z.string().cuid(),
     userId: z.string().cuid(),
 });
+
+export const updateMemberRoleSchema = z.object({
+    workspaceId: z.string().cuid(),
+    userId: z.string().cuid(),
+    role: z.enum(["admin", "member"]),
+});

@@ -8,6 +8,7 @@ import {
     switchWorkspaceSchema,
     leaveWorkspaceSchema,
     transferOwnshipSchema,
+    updateMemberRoleSchema,
 } from "@workspace/lib/validators/workspace";
 
 import { createRouter, protectedProcedure } from "../trpc";
@@ -185,6 +186,43 @@ export const workspaceRouter = createRouter({
                 id: newOwner.id,
             },
             data: { role: "owner" },
+        });
+    }),
+    updateMemberRole: protectedProcedure.input(updateMemberRoleSchema).mutation(async (opts) => {
+        const currentUser = await opts.ctx.db.workspaceMember.findFirst({
+            where: {
+                userId: (opts.ctx.session.user as User).id, workspaceId: opts.input.workspaceId,
+            },
+        });
+        if (!currentUser || !["admin", "owner"].includes(currentUser.role)) {
+            throw new TRPCError({
+                code: "UNAUTHORIZED", message: "You don't have permission to update user roles in this workspace"
+            });
+        }
+        const workspace = await opts.ctx.db.workspace.findUnique({
+            where: { id: opts.input.workspaceId },
+        });
+        if (!workspace) {
+            throw new TRPCError({ code: "NOT_FOUND", message: "Workspace not found" });
+        }
+        if (workspace.plan !== "premium") {
+            throw new TRPCError({
+                code: "BAD_REQUEST", message: "You need to upgrade to the premium plan to manage roles"
+            });
+        }
+        const member = await opts.ctx.db.workspaceMember.findFirst({
+            where: {
+                userId: opts.input.userId, workspaceId: opts.input.workspaceId,
+            },
+        });
+        if (!member) {
+            throw new TRPCError({ code: "NOT_FOUND", message: "User not found in this workspace" });
+        }
+        await opts.ctx.db.workspaceMember.update({
+            where: { 
+                id: member.id 
+            },
+            data: { role: opts.input.role },
         });
     }),
 });
