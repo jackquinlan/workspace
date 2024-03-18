@@ -7,6 +7,7 @@ import {
     newWorkspaceSchema,
     switchWorkspaceSchema,
     leaveWorkspaceSchema,
+    transferOwnshipSchema,
 } from "@workspace/lib/validators/workspace";
 
 import { createRouter, protectedProcedure } from "../trpc";
@@ -147,6 +148,43 @@ export const workspaceRouter = createRouter({
                 id: (opts.ctx.session.user as User).id,
             },
             data: { activeWorkspace: null },
+        });
+    }),
+    transferOwnership: protectedProcedure.input(transferOwnshipSchema).mutation(async (opts) => {
+        const currentOwner = await opts.ctx.db.workspaceMember.findFirst({
+            where: {
+                userId: (opts.ctx.session.user as User).id,
+                workspaceId: opts.input.workspaceId,
+            },
+        });
+        if (!currentOwner || currentOwner.role !== "owner") {
+            throw new TRPCError({
+                code: "UNAUTHORIZED",
+                message: "You don't have permission to access this workspace",
+            });
+        }
+        const newOwner = await opts.ctx.db.workspaceMember.findFirst({
+            where: {
+                userId: opts.input.userId, workspaceId: opts.input.workspaceId,
+            },
+        });
+        if (!newOwner) {
+            throw new TRPCError({
+                code: "NOT_FOUND",
+                message: "User not found in this workspace",
+            });
+        }
+        await opts.ctx.db.workspaceMember.update({
+            where: {
+                id: currentOwner.id,
+            },
+            data: { role: "admin" },
+        });
+        return await opts.ctx.db.workspaceMember.update({
+            where: {
+                id: newOwner.id,
+            },
+            data: { role: "owner" },
         });
     }),
 });

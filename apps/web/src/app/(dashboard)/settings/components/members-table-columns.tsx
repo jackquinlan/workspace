@@ -6,6 +6,7 @@ import { CircleBackslashIcon, ChevronDownIcon, DotsHorizontalIcon, ExitIcon } fr
 import { ColumnDef } from "@tanstack/react-table";
 
 import type { User, Workspace, WorkspaceMember, WorkspaceMemberRole } from "@workspace/db/client";
+import { api } from "@workspace/api/react";
 import { 
     Avatar, 
     AvatarFallback, 
@@ -20,6 +21,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import { LeaveWorkspaceModal } from "./leave-workspace-modal";
+import { TransferOwnerModal } from "./transfer-owner-modal";
 
 export type MemberWithUser = WorkspaceMember & { 
     currentUser: string,
@@ -72,10 +74,7 @@ export const columns: ColumnDef<MemberWithUser>[] = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-60" align="end" sideOffset={-3}>
                         {row.original.currentRole === "owner" && row.original.user.id !== row.original.currentUser && (
-                            <DropdownMenuItem className="grid grid-cols-1 gap-0">
-                                <h1 className="font-medium text-md">Transfer Ownership</h1>
-                                <h2 className="text-xs">Can change settings, disable admins, manage billing.</h2>   
-                            </DropdownMenuItem>
+                            <TransferOwnerModal workspace={row.original.workspace} newOwnerId={row.original.user.id} />
                         )}
                         <DropdownMenuItem className="grid grid-cols-1 gap-0" disabled={row.original.user.id === row.original.currentUser}>
                             <h1 className="font-medium text-md">Admin</h1>
@@ -86,7 +85,7 @@ export const columns: ColumnDef<MemberWithUser>[] = [
                         <DropdownMenuItem className="grid grid-cols-1 gap-0" disabled={row.original.workspace.plan === "free"}>
                             <h1 className="flex items-center gap-1 font-medium text-md">
                                 Member
-                                {row.original.workspace.plan === "free" && <Badge variant="default">Upgrade</Badge>}
+                                {row.original.workspace.plan === "free" && <Badge>Upgrade</Badge>}
                             </h1>
                             <h2 className="text-xs">
                                 Can't change settings, invite people. Can create projects.

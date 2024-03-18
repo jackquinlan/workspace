@@ -31,3 +31,8 @@ export const editInviteLinkSchema = z.object({
 export const leaveWorkspaceSchema = z.object({
     workspaceId: z.string().cuid(),
 });
+
+export const transferOwnshipSchema = z.object({
+    workspaceId: z.string().cuid(),
+    userId: z.string().cuid(),
+});
