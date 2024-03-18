@@ -1,14 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { 
-    CircleBackslashIcon, 
-    ChevronDownIcon, 
-    DotsHorizontalIcon, 
-    ExitIcon, 
-} from "@radix-ui/react-icons";
+import { ChevronDownIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 
 import type { User, Workspace, WorkspaceMember, WorkspaceMemberRole } from "@workspace/db/client";
 import { 
@@ -93,7 +88,6 @@ export const columns: ColumnDef<MemberWithUser>[] = [
         accessorKey: "actions",
         header: "Actions",
         cell: ({ row }) => {
-            const [open, setOpen] = useState<boolean>(false);
             const isCurrent = row.original.user.id === row.original.currentUser;
             return (
                 <DropdownMenu>
@@ -103,26 +97,10 @@ export const columns: ColumnDef<MemberWithUser>[] = [
                         </div>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-48" align="end" sideOffset={-3}>
-                        <div 
-                            className="hover:bg-accent focus:text-accent-foreground relative flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50 hover:text-destructive" 
-                            onClick={() => setOpen(!open)}
-                        >
-                            {isCurrent ? (
-                                <div className="flex items-center gap-1">
-                                    <ExitIcon className="h-4 w-4" /> Leave Workspace
-                                </div>
-                            ) : (
-                                <div className="flex items-center gap-1">
-                                    <CircleBackslashIcon className="h-4 w-4" /> Remove User 
-                                </div>
-                            )}
-                            <LeaveWorkspaceModal 
-                                isCurrent={isCurrent} 
-                                workspace={row.original.workspace} 
-                                open={open} 
-                                onOpenChange={() => setOpen(!open)}
-                                memberId={row.original.id} />
-                        </div>
+                        <LeaveWorkspaceModal 
+                            isCurrent={isCurrent} 
+                            workspace={row.original.workspace} 
+                            memberId={row.original.id} />
                     </DropdownMenuContent>
                 </DropdownMenu>
             );

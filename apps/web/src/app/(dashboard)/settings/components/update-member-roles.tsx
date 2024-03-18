@@ -52,7 +52,7 @@ export function UpdateMemberRoles({ currentUser, userId, userRole, workspace }: 
                         {workspace.plan === "free" && <Badge>Upgrade</Badge>}
                     </h1>
                     <h2 className="text-xs">
-                        Can't change settings, invite people. Can create projects.
+                        Can&apos;t change settings, invite people. Can create projects.
                     </h2>
                 </div>
                 {userRole === "member" && <Check className="w-6 h-6" />}
