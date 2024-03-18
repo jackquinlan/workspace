@@ -27,3 +27,22 @@ export const editInviteLinkSchema = z.object({
     inviteSlugEnabled: z.boolean(),
     inviteSlug: z.string().uuid(),
 });
+
+export const leaveWorkspaceSchema = z.object({
+    workspaceId: z.string().cuid(),
+});
+
+export const transferOwnshipSchema = z.object({
+    workspaceId: z.string().cuid(),
+    userId: z.string().cuid(),
+});
+
+export const updateMemberRoleSchema = z.object({
+    workspaceId: z.string().cuid(),
+    userId: z.string().cuid(),
+    role: z.enum(["admin", "member"]),
+});
+
+export const removeMemberSchema = z.object({
+    membershipId: z.string().cuid(),
+});

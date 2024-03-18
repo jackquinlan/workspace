@@ -6,8 +6,10 @@ import { Bird } from "lucide-react";
 
 import {
     ColumnDef,
+    ColumnFiltersState,
     flexRender,
     getCoreRowModel,
+    getFilteredRowModel,
     useReactTable,
 } from "@tanstack/react-table";
 
@@ -21,10 +23,16 @@ interface MembersTableProps<TData, TValue> {
 }
 
 export function MembersTable<TData, TValue>({ columns, data }: MembersTableProps<TData, TValue>) {
+    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
     const table = useReactTable({
         columns,
         data,
+        state: {
+            columnFilters,
+        },
+        onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
     });
     return (
         <div className="space-y-3 mt-4">

@@ -57,12 +57,6 @@ model User {
 
   activeWorkspace String?
 
-  plan                   Plan      @default(free)
-  stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
-  stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
-  stripePriceId          String?   @map(name: "stripe_price_id")
-  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
-
   accounts           Account[]
   sessions           Session[]
   resetTokens        ResetPasswordToken[]
@@ -106,6 +100,7 @@ model Workspace {
   color String @default("#ef4444")
   name  String
   slug  String @unique
+  plan  Plan   @default(free)
 
   inviteSlugEnabled Boolean @default(true)
   inviteSlug        String  @unique @default(uuid())

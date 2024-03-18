@@ -15,10 +15,10 @@ export function MembersTableToolbar<TData>({ table }: MembersTableToolbarProps<T
         <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
                 <Input
-                    placeholder="Search by name"
-                    value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+                    placeholder="Search by name or email"
+                    value={(table.getColumn("info")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
-                        table.getColumn("name")?.setFilterValue(event.target.value)
+                        table.getColumn("info")?.setFilterValue(event.target.value)
                     }
                     className="h-8 w-[250px] lg:w-[300px]"
                 />
