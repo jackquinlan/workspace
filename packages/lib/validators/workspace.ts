@@ -42,3 +42,7 @@ export const updateMemberRoleSchema = z.object({
     userId: z.string().cuid(),
     role: z.enum(["admin", "member"]),
 });
+
+export const removeMemberSchema = z.object({
+    membershipId: z.string().cuid(),
+});

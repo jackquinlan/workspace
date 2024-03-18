@@ -9,6 +9,7 @@ import {
     leaveWorkspaceSchema,
     transferOwnshipSchema,
     updateMemberRoleSchema,
+    removeMemberSchema,
 } from "@workspace/lib/validators/workspace";
 
 import { createRouter, protectedProcedure } from "../trpc";
@@ -223,6 +224,25 @@ export const workspaceRouter = createRouter({
                 id: member.id 
             },
             data: { role: opts.input.role },
+        });
+    }),
+    removeMember: protectedProcedure.input(removeMemberSchema).mutation(async (opts) => {
+        const membership = await opts.ctx.db.workspaceMember.findFirst({
+            where: { id: opts.input.membershipId },
+        });
+        if (!membership) {
+            throw new TRPCError({ code: "NOT_FOUND", message: "Membership not found" });
+        }
+        const user = await opts.ctx.db.user.findFirst({
+            where: { id: membership.userId },
+        });
+        if (user?.activeWorkspace === membership.workspaceId) {
+            await opts.ctx.db.user.update({
+                where: { id: user.id }, data: { activeWorkspace: null }
+            });
+        }
+        await opts.ctx.db.workspaceMember.delete({
+            where: { id: membership.id },
         });
     }),
 });

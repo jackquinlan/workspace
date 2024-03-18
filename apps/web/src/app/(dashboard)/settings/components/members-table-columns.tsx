@@ -3,18 +3,21 @@
 import React, { useState } from "react";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { CircleBackslashIcon, ChevronDownIcon, DotsHorizontalIcon, ExitIcon } from "@radix-ui/react-icons";
+import { 
+    CircleBackslashIcon, 
+    ChevronDownIcon, 
+    DotsHorizontalIcon, 
+    ExitIcon, 
+} from "@radix-ui/react-icons";
 
 import type { User, Workspace, WorkspaceMember, WorkspaceMemberRole } from "@workspace/db/client";
 import { 
     Avatar, 
     AvatarFallback, 
     AvatarImage,
-    Badge,
     Button,
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@workspace/ui";
 
@@ -76,7 +79,11 @@ export const columns: ColumnDef<MemberWithUser>[] = [
                         {row.original.currentRole === "owner" && row.original.user.id !== row.original.currentUser && (
                             <TransferOwnerModal workspace={row.original.workspace} newOwnerId={row.original.user.id} />
                         )}
-                        <UpdateMemberRoles currentUser={row.original.currentUser} userId={row.original.user.id} userRole={row.original.role} workspace={row.original.workspace} />
+                        <UpdateMemberRoles 
+                            currentUser={row.original.currentUser} 
+                            userId={row.original.user.id} 
+                            workspace={row.original.workspace} 
+                            userRole={row.original.role} />
                     </DropdownMenuContent>
                 </DropdownMenu>
             );
@@ -86,8 +93,8 @@ export const columns: ColumnDef<MemberWithUser>[] = [
         accessorKey: "actions",
         header: "Actions",
         cell: ({ row }) => {
-            const isCurrent = row.original.user.id === row.original.currentUser;
             const [open, setOpen] = useState<boolean>(false);
+            const isCurrent = row.original.user.id === row.original.currentUser;
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger className="flex items-center justify-end w-full outline-none">
@@ -96,21 +103,29 @@ export const columns: ColumnDef<MemberWithUser>[] = [
                         </div>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-48" align="end" sideOffset={-3}>
-                        <div className="hover:bg-accent focus:text-accent-foreground relative flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50 hover:text-destructive" onClick={() => setOpen(!open)}>
+                        <div 
+                            className="hover:bg-accent focus:text-accent-foreground relative flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50 hover:text-destructive" 
+                            onClick={() => setOpen(!open)}
+                        >
                             {isCurrent ? (
                                 <div className="flex items-center gap-1">
                                     <ExitIcon className="h-4 w-4" /> Leave Workspace
                                 </div>
                             ) : (
                                 <div className="flex items-center gap-1">
-                                    <CircleBackslashIcon className="h-4 w-4" /> Disable User 
+                                    <CircleBackslashIcon className="h-4 w-4" /> Remove User 
                                 </div>
                             )}
-                            <LeaveWorkspaceModal isCurrent={isCurrent} workspace={row.original.workspace} open={open} onOpenChange={() => setOpen(!open)} />
+                            <LeaveWorkspaceModal 
+                                isCurrent={isCurrent} 
+                                workspace={row.original.workspace} 
+                                open={open} 
+                                onOpenChange={() => setOpen(!open)}
+                                memberId={row.original.id} />
                         </div>
                     </DropdownMenuContent>
                 </DropdownMenu>
             );
         },
-    }
+    },
 ];
