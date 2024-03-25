@@ -133,3 +133,15 @@ model WorkspaceMember {
   @@index([userId])
   @@map(name: "workspace_members")
 }
+
+model Project {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  name      String
+  color     String @default("#ef4444")
+
+  @@index([id])
+  @@map(name: "projects")
+}
