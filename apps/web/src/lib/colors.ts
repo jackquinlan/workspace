@@ -9,3 +9,5 @@ export const themeColors = [
     { value: "#a855f7", label: "Purple" },
     { value: "#ec4899", label: "Pink" },
 ];
+
+export const themeColorHex = themeColors.map((color) => color.value);

@@ -10,6 +10,7 @@ import { CreateProjectModal } from "../create-project-modal";
 import { SidebarItem } from "./sidebar-item";
 import { UserButton } from "./user-button";
 import { WorkspaceSelector } from "./workspace-selector";
+import { ProjectsList } from "../projects-list";
 
 interface SidebarProps {
     activeWorkspace: Workspace;
@@ -56,12 +57,7 @@ export function Sidebar({ activeWorkspace, user, workspaces, projects }: Sidebar
                     <h1 className="text-sm">Projects</h1>
                     <CreateProjectModal workspace={activeWorkspace} />
                 </div>
-                {projects.map((project) => (
-                    <SidebarItem key={project.id} href={`/p/${project.id}`}>
-                        <div className="border-border h-2.5 w-2.5 rounded-sm border" style={{ backgroundColor: project.color }} />
-                        {project.name}
-                    </SidebarItem>
-                ))}
+                <ProjectsList projects={projects} />
             </div>
         </aside>
     );
