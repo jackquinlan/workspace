@@ -32,7 +32,7 @@ import {
     DialogFooter,
 } from "@workspace/ui";
 
-import { ColorSelect } from "./theme-select";
+import { ColorSelect } from "../theme-select";
 
 interface Props {
     workspace: Workspace;

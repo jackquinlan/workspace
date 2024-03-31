@@ -6,11 +6,11 @@ import type { User } from "next-auth";
 import type { Project, Workspace } from "@workspace/db/client";
 import { Separator } from "@workspace/ui";
 
-import { CreateProjectModal } from "../create-project-modal";
+import { CreateProjectModal } from "../projects/create-project-modal";
 import { SidebarItem } from "./sidebar-item";
 import { UserButton } from "./user-button";
 import { WorkspaceSelector } from "./workspace-selector";
-import { ProjectsList } from "../projects-list";
+import { ProjectList } from "../projects/project-list";
 
 interface SidebarProps {
     activeWorkspace: Workspace;
@@ -57,7 +57,7 @@ export function Sidebar({ activeWorkspace, user, workspaces, projects }: Sidebar
                     <h1 className="text-sm">Projects</h1>
                     <CreateProjectModal workspace={activeWorkspace} />
                 </div>
-                <ProjectsList projects={projects} />
+                <ProjectList projects={projects} />
             </div>
         </aside>
     );
