@@ -3,9 +3,10 @@ import React from "react";
 import { Bell, Calendar, Inbox, Search, Zap } from "lucide-react";
 import type { User } from "next-auth";
 
-import type { Workspace } from "@workspace/db/client";
+import type { Project, Workspace } from "@workspace/db/client";
 import { Separator } from "@workspace/ui";
 
+import { CreateProjectModal } from "../create-project-modal";
 import { SidebarItem } from "./sidebar-item";
 import { UserButton } from "./user-button";
 import { WorkspaceSelector } from "./workspace-selector";
@@ -14,9 +15,10 @@ interface SidebarProps {
     activeWorkspace: Workspace;
     user: User;
     workspaces: Workspace[];
+    projects: Project[];
 }
 
-export function Sidebar({ activeWorkspace, user, workspaces }: SidebarProps) {
+export function Sidebar({ activeWorkspace, user, workspaces, projects }: SidebarProps) {
     return (
         <aside className="bg-sidebar flex h-full flex-col">
             <div className="flex items-center justify-between p-2">
@@ -48,6 +50,18 @@ export function Sidebar({ activeWorkspace, user, workspaces }: SidebarProps) {
                     <Zap className="h-4 w-4" />
                     Automations
                 </SidebarItem>
+            </div>
+            <div className="flex flex-col space-y-1 px-3 py-1">
+                <div className="flex items-center justify-between mb-2">
+                    <h1 className="text-sm">Projects</h1>
+                    <CreateProjectModal workspace={activeWorkspace} />
+                </div>
+                {projects.map((project) => (
+                    <SidebarItem key={project.id} href={`/p/${project.id}`}>
+                        <div className="border-border h-2.5 w-2.5 rounded-sm border" style={{ backgroundColor: project.color }} />
+                        {project.name}
+                    </SidebarItem>
+                ))}
             </div>
         </aside>
     );

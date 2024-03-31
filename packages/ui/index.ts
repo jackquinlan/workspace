@@ -18,3 +18,4 @@ export * from "./components/multi-tag-input";
 export * from "./components/select";
 export * from "./components/switch";
 export * from "./components/table";
+export * from "./components/tooltip";

@@ -36,6 +36,9 @@ export default async function MainLayout({ children }: MainLayoutProps) {
         where: { members: { some: { userId: session.user.id } } },
     });
     const activeWorkspace = workspaces.find((w) => w.id === session.user.activeWorkspace);
+    const projects = await db.project.findMany({
+        where: { workspaceId: activeWorkspace!.id },
+    });
     const layout = cookies().get("react-resizable-panels:layout");
     const defaultLayout = layout ? JSON.parse(layout.value) : undefined;
     return (
@@ -45,6 +48,7 @@ export default async function MainLayout({ children }: MainLayoutProps) {
                     defaultLayout={defaultLayout}
                     user={session.user}
                     workspaces={workspaces}
+                    projects={projects}
                     activeWorkspace={activeWorkspace!}
                 >
                     <NextAuthProvider session={session}>{children}</NextAuthProvider>

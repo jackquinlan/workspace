@@ -105,7 +105,8 @@ model Workspace {
   inviteSlugEnabled Boolean @default(true)
   inviteSlug        String  @unique @default(uuid())
 
-  members WorkspaceMember[]
+  members  WorkspaceMember[]
+  projects Project[]
 
   @@map(name: "workspaces")
 }
@@ -142,6 +143,9 @@ model Project {
   name      String
   color     String @default("#ef4444")
 
-  @@index([id])
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String
+
+  @@index([workspaceId])
   @@map(name: "projects")
 }
