@@ -140,12 +140,49 @@ model Project {
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
-  name      String
-  color     String @default("#ef4444")
+  name  String
+  color String @default("#ef4444")
 
   workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   workspaceId String
 
+  links Link[]
+
   @@index([workspaceId])
   @@map(name: "projects")
+}
+
+enum ViewType {
+  board
+  list
+}
+
+model View {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  name  String
+  type  ViewType @default(board)
+  order Int
+
+  links Link[]
+
+  @@map(name: "views")
+}
+
+model Link {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  view   View   @relation(fields: [viewId], references: [id], onDelete: Cascade)
+  viewId String
+
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+
+  @@index([projectId])
+  @@index([viewId])
+  @@map(name: "links")
 }
