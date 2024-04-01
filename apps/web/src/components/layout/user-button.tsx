@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { LogOut, Settings, Star } from "lucide-react";
+import { LogOut, Settings, Star, Plus } from "lucide-react";
 import type { User } from "next-auth";
 import { signOut } from "next-auth/react";
 
@@ -26,7 +26,7 @@ interface UserButtonProps {
 export function UserButton({ user }: UserButtonProps) {
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger className="outline-none">
+            <DropdownMenuTrigger className="outline-none" asChild>
                 <Avatar className="h-7 w-7">
                     <AvatarImage src={user.image ?? undefined} />
                     <AvatarFallback className="border-border bg-accent border" />
@@ -48,6 +48,10 @@ export function UserButton({ user }: UserButtonProps) {
                     <DropdownMenuLink href="/settings/profile">
                         <Settings className="h-4 w-4" />
                         Settings
+                    </DropdownMenuLink>
+                    <DropdownMenuLink href="/onboarding">
+                        <Plus className="h-4 w-4" />
+                        Create workspace 
                     </DropdownMenuLink>
                     <DropdownMenuItem>
                         <Star className="h-4 w-4 text-yellow-400" />

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 import type { User } from "next-auth";
 
-import type { Workspace } from "@workspace/db/client";
+import type { Project, Workspace } from "@workspace/db/client";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup, ScrollArea } from "@workspace/ui";
 
 import { Sidebar } from "@/components/layout/sidebar";
@@ -18,6 +18,7 @@ interface Props {
     children: React.ReactNode;
     defaultLayout?: number[];
     user: User;
+    projects: Project[];
     activeWorkspace: Workspace;
     workspaces: Workspace[];
 }
@@ -28,6 +29,7 @@ export function ResizeLayoutWrapper({
     defaultLayout = [33, 67],
     user,
     workspaces,
+    projects
 }: Props) {
     const pathname = usePathname();
     const { open } = useSidebar();
@@ -53,6 +55,7 @@ export function ResizeLayoutWrapper({
                         activeWorkspace={activeWorkspace}
                         user={user}
                         workspaces={workspaces}
+                        projects={projects}
                     />
                 )}
             </ResizablePanel>

@@ -10,14 +10,12 @@ export default async function InvitePage({ params }: { params: { slug: string } 
         return redirect(`/?from=${process.env.NEXT_PUBLIC_APP_URL}/invite/${params.slug}`);
     }
     if (!params.slug) {
-        console.log("no slug")
         return notFound();
     }
     const workspace = await db.workspace.findUnique({
         where: { inviteSlug: params.slug },
     });
     if (!workspace || !workspace.inviteSlugEnabled) {
-        console.log(workspace, "no workspace");
         return notFound();
     }
     const membership = await addMemberToWorkspace(user.user.id, workspace, "admin");
