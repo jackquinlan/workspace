@@ -33,13 +33,12 @@ export default async function MemberSettings() {
     }));
     return (
         <div className="mt-12 flex w-full flex-col">
-            <PageHeader heading="Members" description="Manage who can access this workspace" />
+            <PageHeader heading="People" description="Manage who can access this workspace" />
             <WorkspaceInviteLink workspace={workspace} />
             <hr className="mb-4 mt-6" />
-            <h1 className="font-medium mb-2">Manage members</h1>
+            <h1 className="font-medium mb-2">Manage workspace access</h1>
             <h2 className="text-xs leading-4">
                 Your workspace is currently on the Free plan. All new members will join as Administrators.
-                <br />Upgrade to the <span className="underline underline-offset-2">Premium Plan</span> to manage roles and permissions.
             </h2>
             <MembersTable columns={columns} data={extendedMembers} />
         </div>

@@ -5,5 +5,5 @@ interface SettingsLayoutProps {
 }
 
 export default async function SettingsLayout({ children }: SettingsLayoutProps) {
-    return <div className="m-auto flex w-full items-center md:w-2/3 xl:w-1/2">{children}</div>;
+    return <div className="m-auto flex w-full items-center md:w-2/3 xl:w-[55%]">{children}</div>;
 }
