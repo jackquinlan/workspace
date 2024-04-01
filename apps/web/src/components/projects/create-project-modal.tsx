@@ -12,7 +12,6 @@ import { api } from "@workspace/api/react";
 import { newProjectSchema } from "@workspace/lib/validators/project";
 import { 
     Dialog,
-    DialogTrigger,
     DialogContent,
     DialogHeader,
     TooltipProvider,
