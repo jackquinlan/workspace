@@ -4,6 +4,8 @@ import { db } from "@workspace/db";
 
 import { NoViewFound } from "./no-view-found";
 import { ThemeSquare } from "@/components/theme-square";
+import { ViewListContainer } from "@/components/projects/view-list-container";
+
 
 export default async function ProjectPage({ params }: { params: { id: string } }) {
     const project = await db.project.findUnique({
@@ -12,12 +14,20 @@ export default async function ProjectPage({ params }: { params: { id: string } }
     if (!project) {
         return <NoViewFound />;
     }
+    const links = await db.link.findMany({
+        where: { 
+            projectId: project.id 
+        },
+        include: { view: true },
+    });
+    const views = links.map((link) => link.view);
     return (
-        <div>
+        <div className="space-y-2">
             <h1 className="flex items-center gap-2 text-3xl font-semibold">
                 <ThemeSquare className="h-6 w-6" color={project.color} />
                 {project.name}
             </h1>
+            <ViewListContainer views={views} />
         </div>
     );
 }
