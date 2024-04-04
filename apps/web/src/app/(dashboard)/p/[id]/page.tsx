@@ -22,7 +22,7 @@ export default async function ProjectPage({ params }: { params: { id: string } }
     });
     const views = links.map((link) => link.view);
     return (
-        <div className="space-y-2">
+        <div className="space-y-1">
             <h1 className="flex items-center gap-2 text-3xl font-semibold">
                 <ThemeSquare className="h-6 w-6" color={project.color} />
                 {project.name}
