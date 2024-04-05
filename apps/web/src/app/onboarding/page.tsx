@@ -4,7 +4,7 @@ import { NewWorkspaceForm } from "./new-workspace-form";
 
 export default async function OnboardingPage() {
     return (
-        <div className="mt-32 flex w-full flex-col items-center space-y-4">
+        <div className="mt-32 flex w-[1400px] flex-col items-center space-y-4">
             <div className="flex flex-col space-y-0">
                 <h1 className="scroll-m-20 text-center text-2xl font-semibold tracking-tight">
                     Create a workspace that works for you.
