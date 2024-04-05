@@ -21,20 +21,19 @@ interface ViewListContainerProps {
 }
 
 function ViewListContainer({ views }: ViewListContainerProps) {
-    const { maxVisibleViews, containerRef, viewListRef } = useVisibleViews(views.length, 83);
-    console.log(maxVisibleViews);
+    const { maxVisibleViews, containerRef, viewListRef } = useVisibleViews(views.length, 80);
     const displayViews = views.slice(0, maxVisibleViews);
     return (
         <div className="flex items-center justify-between h-10 w-full border-b border-b-border">
             <div 
                 ref={containerRef} 
-                className="flex items-center gap-2 w-1/3 md:w-2/3"
+                className="flex items-center gap-2 w-1/2"
             >
                 <ol ref={viewListRef} className="flex items-center gap-2 list-none">
                     {displayViews.map((view) => (
                         <li 
                             key={view.id} 
-                            className="flex items-center gap-1 p-1 rounded-md cursor-pointer text-sm hover:bg-accent"
+                            className="flex items-center gap-1 h-7 p-1 rounded-md cursor-pointer text-sm w-fit truncate hover:bg-accent"
                         >
                             {VIEW_ICONS[view.type]}
                             {view.name}
@@ -47,15 +46,19 @@ function ViewListContainer({ views }: ViewListContainerProps) {
                     )}
                 </ol>
                 <div className="w-px h-4 rounded-md border-l border-border" />
-                <div className="flex items-center gap-1 p-1 rounded-md cursor-pointer text-sm hover:bg-accent">
+                <Button size="xs" className="flex items-center gap-1">
                     <Plus className="h-4 w-4" />
                     View
-                </div>
+                </Button>
             </div>
             <div className="flex items-center justify-end gap-1 w-2/3 md:w-1/3">
-                <Button variant="ghost" size="sm" className="flex items-center gap-1">
+                <Button size="xs" className="flex items-center gap-1">
+                    <Plus className="block h-4 w-4 md:hidden" />
+                    <span className="hidden md:block">View Settings</span>
+                </Button>
+                <Button variant="outline" size="xs" className="flex items-center gap-1 font-normal">
                     <Settings className="h-4 w-4" />
-                    Settings
+                    <span className="hidden md:block">View Settings</span>
                 </Button>
             </div>
         </div>

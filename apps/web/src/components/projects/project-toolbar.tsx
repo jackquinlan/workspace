@@ -14,7 +14,7 @@ export function ProjectToolbar({ project }: Props) {
     return (
         <div className="flex h-12 items-center justify-end">
             <div className="flex items-center gap-1">
-                <div className="hover:bg-accent flex items-center gap-2 rounded-md px-2 py-1 text-sm">
+                <div className="hover:bg-accent flex items-center gap-1 rounded-md px-2 py-1 text-sm">
                     <UserPlus className="h-5 w-5 stroke-[1.5px]" />
                     Share
                 </div>

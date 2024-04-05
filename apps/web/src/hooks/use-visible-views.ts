@@ -1,7 +1,7 @@
 import * as React from "react";
 
 export function useVisibleViews(numViews: number, maxViewWidth?: number) {
-    const [maxVisibleViews, setMaxVisibleViews] = React.useState<number>(0);
+    const [maxVisibleViews, setMaxVisibleViews] = React.useState<number>(numViews);
     const containerRef = React.useRef<HTMLDivElement>(null);
     const viewListRef  = React.useRef<HTMLOListElement>(null);
 
@@ -14,9 +14,8 @@ export function useVisibleViews(numViews: number, maxViewWidth?: number) {
             // Get the width of the container that the view list is in
             const container = containerRef.current;
             const containerWidth = container?.offsetWidth || 0;
-            console.log(viewWidth, containerWidth)
       
-            const fractionalViews = containerWidth / viewWidth;
+            const fractionalViews = containerWidth < 200 ? 1 : containerWidth / viewWidth;
             const adjustedMaxViews = Math.min(Math.floor(fractionalViews), numViews);
       
             setMaxVisibleViews(adjustedMaxViews);
