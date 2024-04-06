@@ -14,7 +14,6 @@ import {
     Dialog,
     DialogContent,
     DialogHeader,
-    TooltipProvider,
     Tooltip,
     TooltipTrigger,
     TooltipContent,
@@ -65,16 +64,14 @@ export function CreateProjectModal({ workspace }: Props) {
     }
     return (
         <Dialog open={open} onOpenChange={() => setOpen(!open)}> 
-            <TooltipProvider delayDuration={0}>
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <div onClick={() => setOpen(true)} className="p-0.5 rounded-md hover:bg-accent">
-                            <Plus className="h-4 w-4" />
-                        </div>
-                    </TooltipTrigger>
-                    <TooltipContent side="right" sideOffset={4}>Create Project</TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <div onClick={() => setOpen(true)} className="p-0.5 rounded-md hover:bg-accent">
+                        <Plus className="h-4 w-4" />
+                    </div>
+                </TooltipTrigger>
+                <TooltipContent side="right" sideOffset={4}>Create Project</TooltipContent>
+            </Tooltip>
             <DialogContent className="top-[25%]" showClose={false}>
                 <DialogHeader>
                     <DialogTitle>Add project</DialogTitle>
