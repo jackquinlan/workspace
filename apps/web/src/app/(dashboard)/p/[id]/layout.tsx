@@ -18,7 +18,7 @@ export default async function ProjectLayout({ children, params }: ProjectLayoutP
         return notFound();
     }
     return (
-        <div className="flex flex-col space-y-4">
+        <div className="flex flex-col space-y-2">
             <ProjectToolbar project={project} />
             {children}
         </div>
