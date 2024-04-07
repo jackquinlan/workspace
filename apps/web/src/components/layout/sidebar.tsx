@@ -7,10 +7,10 @@ import type { Project, Workspace } from "@workspace/db/client";
 import { Separator } from "@workspace/ui";
 
 import { CreateProjectModal } from "../projects/create-project-modal";
+import { ProjectList } from "../projects/project-list";
 import { SidebarItem } from "./sidebar-item";
 import { UserButton } from "./user-button";
 import { WorkspaceSelector } from "./workspace-selector";
-import { ProjectList } from "../projects/project-list";
 
 interface SidebarProps {
     activeWorkspace: Workspace;
@@ -53,7 +53,7 @@ export function Sidebar({ activeWorkspace, user, workspaces, projects }: Sidebar
                 </SidebarItem>
             </div>
             <div className="flex flex-col space-y-1 px-3 py-1">
-                <div className="flex items-center justify-between mb-2">
+                <div className="mb-2 flex items-center justify-between">
                     <h1 className="text-sm">Projects</h1>
                     <CreateProjectModal workspace={activeWorkspace} />
                 </div>

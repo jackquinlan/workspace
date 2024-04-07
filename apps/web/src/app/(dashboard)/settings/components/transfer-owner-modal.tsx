@@ -5,16 +5,16 @@ import { useRouter } from "next/navigation";
 
 import { toast } from "sonner";
 
-import type { Workspace } from "@workspace/db/client";
 import { api } from "@workspace/api/react";
-import { 
+import type { Workspace } from "@workspace/db/client";
+import {
     AlertDialog,
     AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogFooter,
     AlertDialogTitle,
-    AlertDialogTrigger
+    AlertDialogTrigger,
 } from "@workspace/ui";
 
 interface Props {
@@ -39,20 +39,21 @@ export function TransferOwnerModal({ workspace, newOwnerId }: Props) {
     }
     return (
         <AlertDialog>
-            <AlertDialogTrigger className="grid grid-cols-1 gap-0 text-left hover:bg-accent hover:text-accent-foreground relative cursor-pointer select-none items-center rounded-sm px-2 py-1 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                <h1 className="font-medium text-md">Transfer Ownership</h1>
-                <h2 className="text-xs">Can change settings, disable admins, manage billing.</h2>   
+            <AlertDialogTrigger className="hover:bg-accent hover:text-accent-foreground relative grid cursor-pointer select-none grid-cols-1 items-center gap-0 rounded-sm px-2 py-1 text-left text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                <h1 className="text-md font-medium">Transfer Ownership</h1>
+                <h2 className="text-xs">Can change settings, disable admins, manage billing.</h2>
             </AlertDialogTrigger>
             <AlertDialogContent className="top-[20%]">
                 <AlertDialogTitle>Are you sure you want to transfer ownership?</AlertDialogTitle>
-                <p className="text-sm px-5">
-                    You will be demoted to an administrator and the new owner will have full control over the workspace.
+                <p className="px-5 text-sm">
+                    You will be demoted to an administrator and the new owner will have full control
+                    over the workspace.
                 </p>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <AlertDialogAction onClick={handleSubmit}>Transfer</AlertDialogAction>
                 </AlertDialogFooter>
-            </AlertDialogContent> 
+            </AlertDialogContent>
         </AlertDialog>
     );
 }

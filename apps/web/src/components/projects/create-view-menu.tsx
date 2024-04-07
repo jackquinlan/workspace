@@ -1,29 +1,29 @@
 "use client";
 
-import React, { useTransition, useState } from "react";
+import React, { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import type { Project, View } from "@workspace/db/client";
 import { api } from "@workspace/api/react";
+import type { Project, View } from "@workspace/db/client";
 import { newViewSchema } from "@workspace/lib/validators/view";
-import { 
-    Button, 
-    Popover, 
-    PopoverContent,
-    PopoverTrigger,
+import {
+    Button,
     Form,
     FormControl,
     FormField,
     FormItem,
     FormMessage,
-    RadioGroup,
-    RadioGroupItem,
     Input,
     Label,
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+    RadioGroup,
+    RadioGroupItem,
     useZodForm,
 } from "@workspace/ui";
 
@@ -58,10 +58,10 @@ export function CreateViewMenu({ project }: Props) {
             router.refresh();
             setOpen(false);
             form.reset();
-            toast("View created successfully"); 
+            toast("View created successfully");
         },
         onError: (error) => {
-            toast.error(error.message); 
+            toast.error(error.message);
         },
     });
     async function handleSubmit(data: z.infer<typeof newViewSchema>) {
@@ -70,18 +70,21 @@ export function CreateViewMenu({ project }: Props) {
         });
     }
     return (
-        <Popover open={open} onOpenChange={() => {
-            setOpen(!open); 
-            form.reset();
-        }}>
+        <Popover
+            open={open}
+            onOpenChange={() => {
+                setOpen(!open);
+                form.reset();
+            }}
+        >
             <PopoverTrigger asChild>
                 <Button size="xs" className="flex items-center gap-1">
                     <Plus className="h-4 w-4" />
                     View
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="py-2 px-3 w-72" align="start" sideOffset={4}>
-                <h1 className="text-sm font-medium mb-2">Create new view</h1>
+            <PopoverContent className="w-72 px-3 py-2" align="start" sideOffset={4}>
+                <h1 className="mb-2 text-sm font-medium">New view</h1>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-3">
                         <FormField
@@ -95,29 +98,22 @@ export function CreateViewMenu({ project }: Props) {
                                     <FormMessage />
                                 </FormItem>
                             )}
-                        /> 
-                        <FormField 
+                        />
+                        <FormField
                             control={form.control}
                             name="type"
                             render={({ field }) => (
                                 <FormItem>
-                                    <RadioGroup 
-                                        className="grid grid-cols-2 gap-2" 
-                                        defaultValue={field.value} 
-                                        onValueChange={field.onChange}
-                                    >
+                                    <RadioGroup className="grid grid-cols-2 gap-2" defaultValue={field.value} onValueChange={field.onChange}>
                                         <ViewGrid />
                                     </RadioGroup>
                                 </FormItem>
                             )}
                         />
-                        <Button 
-                            className="w-full" 
-                            type="submit" 
-                            size="xs" 
-                            disabled={isLoading} 
-                            loading={isLoading}
-                        >
+                        <p className="text-xs">
+                            By creating a new view, all members in your workspace will have access to it.
+                        </p>
+                        <Button className="w-full" type="submit" size="xs" disabled={isLoading} loading={isLoading}>
                             Create
                         </Button>
                     </form>
@@ -134,18 +130,22 @@ export function ViewGrid() {
                 <FormItem key={view.label}>
                     <FormControl>
                         <div>
-                            <RadioGroupItem value={view.type} id={view.type} className="peer sr-only" />
-                            <Label 
-                                htmlFor={view.type} 
-                                className="flex flex-col items-center justify-between space-y-3 rounded-md border-2 border-muted bg-popover p-3 text-zinc-500 hover:bg-accent peer-data-[state=checked]:text-primary peer-data-[state=checked]:border-primary"
+                            <RadioGroupItem
+                                value={view.type}
+                                id={view.type}
+                                className="peer sr-only"
+                            />
+                            <Label
+                                htmlFor={view.type}
+                                className="border-muted bg-popover hover:bg-accent peer-data-[state=checked]:text-primary peer-data-[state=checked]:border-primary flex flex-col items-center justify-between space-y-3 rounded-md border-2 p-3 text-zinc-500"
                             >
-                                {VIEW_ICONS[view.type as ("board" | "calendar" | "list" | "table")]}
+                                {VIEW_ICONS[view.type as "board" | "calendar" | "list" | "table"]}
                                 {view.label}
                             </Label>
                         </div>
                     </FormControl>
                 </FormItem>
-            ))} 
+            ))}
         </React.Fragment>
     );
 }

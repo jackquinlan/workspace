@@ -13,8 +13,8 @@ export default async function ProjectPage({ params }: { params: { id: string } }
         return <NoViewFound />;
     }
     const links = await db.link.findMany({
-        where: { 
-            projectId: project.id 
+        where: {
+            projectId: project.id,
         },
         include: { view: true },
     });

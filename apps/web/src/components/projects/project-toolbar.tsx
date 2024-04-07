@@ -1,19 +1,19 @@
 import React from "react";
 
-import { UserPlus, Star } from "lucide-react";
+import { Star, UserPlus } from "lucide-react";
 
 import type { Project } from "@workspace/db/client";
-import { 
+import {
     Breadcrumb,
-    BreadcrumbList,
     BreadcrumbItem,
     BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
     BreadcrumbSeparator,
-    BreadcrumbPage
 } from "@workspace/ui";
 
-import { ProjectSettingsDropdown } from "./project-settings-dropdown";
 import { ThemeSquare } from "../theme-square";
+import { ProjectSettingsDropdown } from "./project-settings-dropdown";
 
 interface Props {
     project: Project;
@@ -30,7 +30,7 @@ export function ProjectToolbar({ project }: Props) {
                     <BreadcrumbSeparator className="hidden sm:block" />
                     <BreadcrumbItem className="hidden sm:block">
                         <BreadcrumbPage className="flex items-center gap-1">
-                            <ThemeSquare color={project.color} className="rounded-sm h-2.5 w-2.5" />
+                            <ThemeSquare color={project.color} className="h-2.5 w-2.5 rounded-sm" />
                             <h1 className="text-sm font-medium">{project.name}</h1>
                         </BreadcrumbPage>
                     </BreadcrumbItem>
@@ -47,4 +47,3 @@ export function ProjectToolbar({ project }: Props) {
         </div>
     );
 }
-

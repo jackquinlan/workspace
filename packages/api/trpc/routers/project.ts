@@ -1,8 +1,6 @@
 import { TRPCError } from "@trpc/server";
 
-import { 
-    newProjectSchema,
-} from "@workspace/lib/validators/project";
+import { newProjectSchema } from "@workspace/lib/validators/project";
 
 import { createRouter, protectedProcedure } from "../trpc";
 

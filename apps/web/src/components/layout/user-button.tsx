@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { LogOut, Settings, Star, Plus } from "lucide-react";
+import { LogOut, Plus, Settings, Star } from "lucide-react";
 import type { User } from "next-auth";
 import { signOut } from "next-auth/react";
 
@@ -51,7 +51,7 @@ export function UserButton({ user }: UserButtonProps) {
                     </DropdownMenuLink>
                     <DropdownMenuLink href="/onboarding">
                         <Plus className="h-4 w-4" />
-                        Create workspace 
+                        Create workspace
                     </DropdownMenuLink>
                     <DropdownMenuItem>
                         <Star className="h-4 w-4 text-yellow-400" />

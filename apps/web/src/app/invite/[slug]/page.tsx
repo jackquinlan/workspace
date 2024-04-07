@@ -1,8 +1,8 @@
 import { notFound, redirect } from "next/navigation";
 
-import { addMemberToWorkspace } from "@workspace/lib/server-only/add-user-to-workspace";
 import { db } from "@workspace/db";
 import { getServerAuthSession } from "@workspace/lib/next-auth/get-server-session";
+import { addMemberToWorkspace } from "@workspace/lib/server-only/add-user-to-workspace";
 
 export default async function InvitePage({ params }: { params: { slug: string } }) {
     const user = await getServerAuthSession();

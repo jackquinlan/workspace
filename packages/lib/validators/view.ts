@@ -5,3 +5,7 @@ export const newViewSchema = z.object({
     type: z.string().min(1),
     projectId: z.string().cuid(),
 });
+
+export const deleteViewSchema = z.object({
+    id: z.string().cuid(),
+});

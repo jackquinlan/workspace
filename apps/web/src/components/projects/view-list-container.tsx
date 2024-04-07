@@ -1,17 +1,23 @@
 "use client";
 
 import React from "react";
-import { useParams } from "next/navigation";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
-import { CalendarDays, KanbanSquare, List, Table, Plus, Settings } from "lucide-react";
+import { CalendarDays, KanbanSquare, List, Plus, Table } from "lucide-react";
 
 import type { Project, View } from "@workspace/db/client";
-import { Button } from "@workspace/ui";
+import { 
+    Button,
+    ContextMenu,
+    ContextMenuContent,
+    ContextMenuTrigger,
+} from "@workspace/ui";
 
 import { useVisibleViews } from "@/hooks/use-visible-views";
 import { cn } from "@/lib/utils";
 import { CreateViewMenu } from "./create-view-menu";
+import { ViewSettingsDropdown } from "./view-settings-dropdown";
 
 export const VIEW_ICONS = {
     board: <KanbanSquare className="h-4 w-4" />,
@@ -27,54 +33,68 @@ interface ViewListContainerProps {
 
 export function ViewListContainer({ project, views }: ViewListContainerProps) {
     const { maxVisibleViews, containerRef, viewListRef } = useVisibleViews(views.length, 80);
+    const params = useParams<{ viewId: string; id: string }>();
     const displayViews = views.slice(0, maxVisibleViews);
     return (
-        <div className="flex items-center justify-between h-10 gap-0.5 w-full border-b border-b-border">
+        <div className="border-b-border flex h-10 w-full items-center justify-between gap-0.5 border-b">
             <div 
                 ref={containerRef} 
-                className="flex items-center gap-3 w-1/2"
+                className="flex w-1/2 items-center gap-3"
             >
-                <ol ref={viewListRef} className="flex items-center gap-2 list-none">
+                <ol ref={viewListRef} className="flex list-none items-center gap-2">
                     {displayViews.map((view) => (
-                        <ViewItem key={view.id} projectId={project.id} view={view} />
+                        <ViewItem key={view.id} projectId={project.id} view={view} isActive={view.id === params.viewId} />
                     ))}
-                    {(views.length - displayViews.length) > 0 && (
-                        <li className="flex items-center gap-1 w-16 p-1 rounded-md cursor-pointer text-sm hover:bg-accent">
+                    {views.length - displayViews.length > 0 && (
+                        <li className="hover:bg-accent flex w-16 cursor-pointer items-center gap-1 rounded-md p-1 text-sm">
                             {views.length - displayViews.length} more...
                         </li>
                     )}
                 </ol>
-                <div className="w-px h-4 rounded-md border-l border-border" />
+                <div className="border-border h-4 w-px rounded-md border-l" />
                 <CreateViewMenu project={project} />
             </div>
-            <div className="flex items-center justify-end gap-1 w-2/3 md:w-1/3">
-                <Button size="xs" className="flex items-center gap-1 w-fit">
+            <div className="flex w-2/3 items-center justify-end gap-1 md:w-1/3">
+                <ViewSettingsDropdown projectId={project.id} view={views.filter(v => v.id === params.viewId)[0]!} />
+                <Button size="xs" className="flex w-fit items-center gap-1">
                     <Plus className="block h-4 w-4 md:hidden" />
                     <span className="hidden md:block">New Task</span>
                 </Button>
-                <Button variant="outline" size="xs" className="flex items-center gap-1 w-fit font-normal">
-                    <Settings className="h-4 w-4" />
-                    <span className="hidden md:block">Settings</span>
-                </Button>
             </div>
         </div>
     );
 }
 
-export function ViewItem({ projectId, view }: { projectId: string, view: View }) {
-    const params = useParams<{ viewId: string; id: string }>();
+export function ViewItem({ 
+    projectId, 
+    view,
+    isActive,
+}: { 
+    projectId: string; 
+    view: View;
+    isActive: boolean; 
+}) {
     return (
-        <div className={cn("flex items-center h-10", view.id === params.viewId && "border-b-2 border-primary")}>
-            <Link 
-                href={`/p/${projectId}/view/${view.id}`}
-                className={cn(
-                    "flex items-center gap-1 h-7 p-1 rounded-md cursor-pointer text-sm w-fit truncate hover:bg-accent",
-                )}
-            >
-                {VIEW_ICONS[view.type]}
-                {view.name}
-            </Link>
-        </div>
+        <ContextMenu>
+            <ContextMenuTrigger asChild>
+                <div 
+                    className={cn(
+                        "flex h-10 items-center", 
+                        isActive && "border-primary border-b-2"
+                    )}
+                >
+                    <Link
+                        className="hover:bg-accent flex h-7 w-fit cursor-pointer items-center gap-1 truncate rounded-md p-1 text-sm"
+                        href={`/p/${projectId}/view/${view.id}`}
+                    >
+                        {VIEW_ICONS[view.type]}
+                        {view.name}
+                    </Link>
+                </div>
+            </ContextMenuTrigger>
+            <ContextMenuContent className="w-64">
+                View Settings
+            </ContextMenuContent>
+        </ContextMenu>
     );
 }
-

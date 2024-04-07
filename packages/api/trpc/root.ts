@@ -1,9 +1,8 @@
-import { createRouter } from "./trpc";
-
 import { projectRouter } from "./routers/project";
 import { userRouter } from "./routers/user";
 import { viewRouter } from "./routers/view";
 import { workspaceRouter } from "./routers/workspace";
+import { createRouter } from "./trpc";
 
 const appRouter = createRouter({
     project: projectRouter,

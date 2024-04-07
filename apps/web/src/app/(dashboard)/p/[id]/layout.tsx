@@ -1,12 +1,12 @@
 import React from "react";
 import { notFound } from "next/navigation";
 
-import { getServerAuthSession } from "@workspace/lib/next-auth/get-server-session";
 import { db } from "@workspace/db";
+import { getServerAuthSession } from "@workspace/lib/next-auth/get-server-session";
 
 import { ProjectToolbar } from "@/components/projects/project-toolbar";
-import { ThemeSquare } from "@/components/theme-square";
 import { ViewListContainer } from "@/components/projects/view-list-container";
+import { ThemeSquare } from "@/components/theme-square";
 
 interface ProjectLayoutProps {
     children: React.ReactNode;
@@ -23,8 +23,8 @@ export default async function ProjectLayout({ children, params }: ProjectLayoutP
         return notFound();
     }
     const links = await db.link.findMany({
-        where: { 
-            projectId: project.id 
+        where: {
+            projectId: project.id,
         },
         include: { view: true },
     });

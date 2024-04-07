@@ -4,7 +4,7 @@ import React from "react";
 
 import { Table } from "@tanstack/react-table";
 
-import { Input, Button } from "@workspace/ui";
+import { Button, Input } from "@workspace/ui";
 
 interface MembersTableToolbarProps<TData> {
     table: Table<TData>;
@@ -12,7 +12,7 @@ interface MembersTableToolbarProps<TData> {
 
 export function MembersTableToolbar<TData>({ table }: MembersTableToolbarProps<TData>) {
     return (
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
                 <Input
                     placeholder="Search by name or email"

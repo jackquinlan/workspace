@@ -2,13 +2,13 @@
 
 import React from "react";
 
-import { ColumnDef } from "@tanstack/react-table";
 import { ChevronDownIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { ColumnDef } from "@tanstack/react-table";
 
 import type { User, Workspace, WorkspaceMember, WorkspaceMemberRole } from "@workspace/db/client";
-import { 
-    Avatar, 
-    AvatarFallback, 
+import {
+    Avatar,
+    AvatarFallback,
     AvatarImage,
     Button,
     DropdownMenu,
@@ -18,14 +18,14 @@ import {
 
 import { cn } from "@/lib/utils";
 import { LeaveWorkspaceModal } from "./leave-workspace-modal";
-import { UpdateMemberRoles } from "./update-member-roles";
 import { TransferOwnerModal } from "./transfer-owner-modal";
+import { UpdateMemberRoles } from "./update-member-roles";
 
-export type MemberWithUser = WorkspaceMember & { 
-    currentUser: string,
-    currentRole: WorkspaceMemberRole
-    user: User, 
-    workspace: Workspace, 
+export type MemberWithUser = WorkspaceMember & {
+    currentUser: string;
+    currentRole: WorkspaceMemberRole;
+    user: User;
+    workspace: Workspace;
 };
 
 export const columns: ColumnDef<MemberWithUser>[] = [
@@ -34,13 +34,15 @@ export const columns: ColumnDef<MemberWithUser>[] = [
         header: "User",
         cell: ({ row }) => {
             return (
-                <div className="flex items-center gap-2 w-2/3">
+                <div className="flex w-2/3 items-center gap-2">
                     <Avatar className="h-8 w-8">
                         <AvatarImage src={row.original.user.image ?? undefined} />
-                        <AvatarFallback className={cn(
-                            "border border-border text-white",
-                            row.original.user.image ? "bg-accent" : "bg-orange-500"
-                        )}>
+                        <AvatarFallback
+                            className={cn(
+                                "border-border border text-white",
+                                row.original.user.image ? "bg-accent" : "bg-orange-500",
+                            )}
+                        >
                             {row.original.user.name?.charAt(0).toUpperCase() ?? "U"}
                         </AvatarFallback>
                     </Avatar>
@@ -55,7 +57,9 @@ export const columns: ColumnDef<MemberWithUser>[] = [
             );
         },
         filterFn: (row, _, value) => {
-            return row.original.user.email.includes(value) || row.original.user.name!.includes(value);
+            return (
+                row.original.user.email.includes(value) || row.original.user.name!.includes(value)
+            );
         },
     },
     {
@@ -71,14 +75,16 @@ export const columns: ColumnDef<MemberWithUser>[] = [
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-64" align="end" sideOffset={-3}>
-                        {row.original.currentRole === "owner" && row.original.user.id !== row.original.currentUser && (
-                            <TransferOwnerModal workspace={row.original.workspace} newOwnerId={row.original.user.id} />
-                        )}
-                        <UpdateMemberRoles 
-                            currentUser={row.original.currentUser} 
-                            userId={row.original.user.id} 
-                            workspace={row.original.workspace} 
-                            userRole={row.original.role} />
+                        {row.original.currentRole === "owner" &&
+                            row.original.user.id !== row.original.currentUser && (
+                                <TransferOwnerModal workspace={row.original.workspace} newOwnerId={row.original.user.id} />
+                            )}
+                        <UpdateMemberRoles
+                            currentUser={row.original.currentUser}
+                            userId={row.original.user.id}
+                            workspace={row.original.workspace}
+                            userRole={row.original.role}
+                        />
                     </DropdownMenuContent>
                 </DropdownMenu>
             );
@@ -91,16 +97,17 @@ export const columns: ColumnDef<MemberWithUser>[] = [
             const isCurrent = row.original.user.id === row.original.currentUser;
             return (
                 <DropdownMenu>
-                    <DropdownMenuTrigger className="flex items-center justify-end w-full outline-none">
-                        <div className="p-1 rounded-lg hover:bg-accent">
+                    <DropdownMenuTrigger className="flex w-full items-center justify-end outline-none">
+                        <div className="hover:bg-accent rounded-lg p-1">
                             <DotsHorizontalIcon className="h-4 w-4" />
                         </div>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-48" align="end" sideOffset={-3}>
-                        <LeaveWorkspaceModal 
-                            isCurrent={isCurrent} 
-                            workspace={row.original.workspace} 
-                            memberId={row.original.id} />
+                        <LeaveWorkspaceModal
+                            isCurrent={isCurrent}
+                            workspace={row.original.workspace}
+                            memberId={row.original.id}
+                        />
                     </DropdownMenuContent>
                 </DropdownMenu>
             );
