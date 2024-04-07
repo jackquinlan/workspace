@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { usePathname } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 
 import { CalendarDays, KanbanSquare, List, Table, Plus, Settings } from "lucide-react";
@@ -10,6 +10,7 @@ import type { Project, View } from "@workspace/db/client";
 import { Button } from "@workspace/ui";
 
 import { useVisibleViews } from "@/hooks/use-visible-views";
+import { cn } from "@/lib/utils";
 import { CreateViewMenu } from "./create-view-menu";
 
 export const VIEW_ICONS = {
@@ -61,14 +62,19 @@ export function ViewListContainer({ project, views }: ViewListContainerProps) {
 }
 
 export function ViewItem({ projectId, view }: { projectId: string, view: View }) {
+    const params = useParams<{ viewId: string; id: string }>();
     return (
-        <Link 
-            href={`/p/${projectId}/view/${view.id}`}
-            className="flex items-center gap-1 h-7 p-1 rounded-md cursor-pointer text-sm w-fit truncate hover:bg-accent"
-        >
-            {VIEW_ICONS[view.type]}
-            {view.name}
-        </Link>
+        <div className={cn("flex items-center h-10", view.id === params.viewId && "border-b-2 border-primary")}>
+            <Link 
+                href={`/p/${projectId}/view/${view.id}`}
+                className={cn(
+                    "flex items-center gap-1 h-7 p-1 rounded-md cursor-pointer text-sm w-fit truncate hover:bg-accent",
+                )}
+            >
+                {VIEW_ICONS[view.type]}
+                {view.name}
+            </Link>
+        </div>
     );
 }
 

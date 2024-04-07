@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useTransition, useState, startTransition } from "react";
+import React, { useTransition, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Plus } from "lucide-react";
@@ -25,7 +25,6 @@ import {
     Input,
     Label,
     useZodForm,
-    Separator,
 } from "@workspace/ui";
 
 import { VIEW_ICONS } from "./view-list-container";
@@ -102,13 +101,23 @@ export function CreateViewMenu({ project }: Props) {
                             name="type"
                             render={({ field }) => (
                                 <FormItem>
-                                    <RadioGroup className="grid grid-cols-2 gap-2" defaultValue={field.value} onValueChange={field.onChange}>
+                                    <RadioGroup 
+                                        className="grid grid-cols-2 gap-2" 
+                                        defaultValue={field.value} 
+                                        onValueChange={field.onChange}
+                                    >
                                         <ViewGrid />
                                     </RadioGroup>
                                 </FormItem>
                             )}
                         />
-                        <Button className="w-full" type="submit" size="xs" disabled={isLoading} loading={isLoading}>
+                        <Button 
+                            className="w-full" 
+                            type="submit" 
+                            size="xs" 
+                            disabled={isLoading} 
+                            loading={isLoading}
+                        >
                             Create
                         </Button>
                     </form>
