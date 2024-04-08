@@ -36,7 +36,10 @@ export async function PATCH(req: Request) {
                 inviteSlugEnabled: body.inviteSlugEnabled,
             },
         });
-        return new Response(JSON.stringify({ inviteSlug: update.inviteSlug, enabled: update.inviteSlugEnabled }), { status: 200 });
+        return new Response(
+            JSON.stringify({ inviteSlug: update.inviteSlug, enabled: update.inviteSlugEnabled }),
+            { status: 200 },
+        );
     } catch (error) {
         if (error instanceof z.ZodError) {
             return new Response(JSON.stringify(error.issues), { status: 422 });

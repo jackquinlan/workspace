@@ -4,12 +4,12 @@ import type { User } from "next-auth";
 import {
     deleteWorkspaceSchema,
     editWorkspaceSchema,
-    newWorkspaceSchema,
-    switchWorkspaceSchema,
     leaveWorkspaceSchema,
+    newWorkspaceSchema,
+    removeMemberSchema,
+    switchWorkspaceSchema,
     transferOwnshipSchema,
     updateMemberRoleSchema,
-    removeMemberSchema,
 } from "@workspace/lib/validators/workspace";
 
 import { createRouter, protectedProcedure } from "../trpc";
@@ -137,7 +137,8 @@ export const workspaceRouter = createRouter({
         if (membership.role === "owner") {
             throw new TRPCError({
                 code: "BAD_REQUEST",
-                message: "You can't leave a workspace you own. Transfer ownership to another member first.",
+                message:
+                    "You can't leave a workspace you own. Transfer ownership to another member first.",
             });
         }
         await opts.ctx.db.workspaceMember.delete({
@@ -167,7 +168,8 @@ export const workspaceRouter = createRouter({
         }
         const newOwner = await opts.ctx.db.workspaceMember.findFirst({
             where: {
-                userId: opts.input.userId, workspaceId: opts.input.workspaceId,
+                userId: opts.input.userId,
+                workspaceId: opts.input.workspaceId,
             },
         });
         if (!newOwner) {
@@ -192,12 +194,14 @@ export const workspaceRouter = createRouter({
     updateMemberRole: protectedProcedure.input(updateMemberRoleSchema).mutation(async (opts) => {
         const currentUser = await opts.ctx.db.workspaceMember.findFirst({
             where: {
-                userId: (opts.ctx.session.user as User).id, workspaceId: opts.input.workspaceId,
+                userId: (opts.ctx.session.user as User).id,
+                workspaceId: opts.input.workspaceId,
             },
         });
         if (!currentUser || !["admin", "owner"].includes(currentUser.role)) {
             throw new TRPCError({
-                code: "UNAUTHORIZED", message: "You don't have permission to update user roles in this workspace"
+                code: "UNAUTHORIZED",
+                message: "You don't have permission to update user roles in this workspace",
             });
         }
         const workspace = await opts.ctx.db.workspace.findUnique({
@@ -208,20 +212,22 @@ export const workspaceRouter = createRouter({
         }
         if (workspace.plan !== "premium") {
             throw new TRPCError({
-                code: "BAD_REQUEST", message: "You need to upgrade to the premium plan to manage roles"
+                code: "BAD_REQUEST",
+                message: "You need to upgrade to the premium plan to manage roles",
             });
         }
         const member = await opts.ctx.db.workspaceMember.findFirst({
             where: {
-                userId: opts.input.userId, workspaceId: opts.input.workspaceId,
+                userId: opts.input.userId,
+                workspaceId: opts.input.workspaceId,
             },
         });
         if (!member) {
             throw new TRPCError({ code: "NOT_FOUND", message: "User not found in this workspace" });
         }
         await opts.ctx.db.workspaceMember.update({
-            where: { 
-                id: member.id 
+            where: {
+                id: member.id,
             },
             data: { role: opts.input.role },
         });
@@ -238,7 +244,8 @@ export const workspaceRouter = createRouter({
         });
         if (user?.activeWorkspace === membership.workspaceId) {
             await opts.ctx.db.user.update({
-                where: { id: user.id }, data: { activeWorkspace: null }
+                where: { id: user.id },
+                data: { activeWorkspace: null },
             });
         }
         await opts.ctx.db.workspaceMember.delete({

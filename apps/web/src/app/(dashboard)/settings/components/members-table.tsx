@@ -2,8 +2,6 @@
 
 import React from "react";
 
-import { Bird } from "lucide-react";
-
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -12,6 +10,7 @@ import {
     getFilteredRowModel,
     useReactTable,
 } from "@tanstack/react-table";
+import { Bird } from "lucide-react";
 
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@workspace/ui";
 
@@ -35,7 +34,7 @@ export function MembersTable<TData, TValue>({ columns, data }: MembersTableProps
         getFilteredRowModel: getFilteredRowModel(),
     });
     return (
-        <div className="space-y-3 mt-4">
+        <div className="mt-4 space-y-3">
             <MembersTableToolbar table={table} />
             <Table>
                 <TableHeader>

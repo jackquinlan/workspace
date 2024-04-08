@@ -1,13 +1,14 @@
+import { projectRouter } from "./routers/project";
+import { userRouter } from "./routers/user";
+import { viewRouter } from "./routers/view";
+import { workspaceRouter } from "./routers/workspace";
 import { createRouter } from "./trpc";
 
-import { userRouter } from "./routers/user";
-import { workspaceRouter } from "./routers/workspace";
-import { projectRouter } from "./routers/project";
-
 const appRouter = createRouter({
+    project: projectRouter,
     user: userRouter,
+    view: viewRouter,
     workspace: workspaceRouter,
-    project: projectRouter
 });
 export type AppRouter = typeof appRouter;
 export { appRouter };

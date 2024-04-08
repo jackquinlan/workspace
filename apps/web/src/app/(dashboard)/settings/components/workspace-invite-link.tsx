@@ -37,12 +37,16 @@ interface WorkspaceInviteLinkProps {
 
 export function WorkspaceInviteLink({ workspace }: WorkspaceInviteLinkProps) {
     const router = useRouter();
-    const [inviteLink, setInviteLink] = useState<string>(`${process.env.NEXT_PUBLIC_APP_URL}/invite/${workspace.inviteSlug}`);
+    const [inviteLink, setInviteLink] = useState<string>(
+        `${process.env.NEXT_PUBLIC_APP_URL}/invite/${workspace.inviteSlug}`,
+    );
     const [showLink, setShowLink] = useState<boolean>(workspace.inviteSlugEnabled);
     const form = useZodForm({
         schema: editInviteLinkSchema,
         defaultValues: {
-            workspaceId: workspace.id, inviteSlugEnabled: workspace.inviteSlugEnabled, inviteSlug: workspace.inviteSlug,
+            workspaceId: workspace.id,
+            inviteSlugEnabled: workspace.inviteSlugEnabled,
+            inviteSlug: workspace.inviteSlug,
         },
     });
     const data = form.watch();

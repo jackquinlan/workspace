@@ -29,7 +29,7 @@ export function ResizeLayoutWrapper({
     defaultLayout = [33, 67],
     user,
     workspaces,
-    projects
+    projects,
 }: Props) {
     const pathname = usePathname();
     const { open } = useSidebar();

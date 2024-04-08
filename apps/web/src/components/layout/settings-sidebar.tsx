@@ -25,7 +25,7 @@ export function SettingsSidebar({}: Props) {
                 </SidebarItem>
                 <SidebarItem href="/settings/notifications">
                     <Bell className="h-4 w-4" />
-                    Notifications 
+                    Notifications
                 </SidebarItem>
             </div>
             <div className="mt-2 flex flex-col space-y-1 p-2">

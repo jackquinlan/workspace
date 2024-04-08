@@ -10,6 +10,8 @@ import { cn, constructMetadata } from "@/lib/utils";
 
 import "@/styles/globals.css";
 
+import { TooltipProvider } from "@workspace/ui";
+
 const rubik = Rubik({ subsets: ["latin"], weight: ["500"], variable: "--font-rubik" });
 
 export const metadata = constructMetadata();
@@ -23,9 +25,11 @@ export default function RootLayout({ children }: Props) {
             <head />
             <body className={cn(GeistSans.className, GeistSans.variable, rubik.variable)}>
                 <TRPCProvider>
-                    <div className="flex min-h-screen flex-col">
-                        <main className="flex-1">{children}</main>
-                    </div>
+                    <TooltipProvider delayDuration={0}>
+                        <div className="flex min-h-screen flex-col">
+                            <main className="flex-1">{children}</main>
+                        </div>
+                    </TooltipProvider>
                 </TRPCProvider>
                 <Toaster position="bottom-right" visibleToasts={6} />
             </body>

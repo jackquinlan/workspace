@@ -29,6 +29,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     <input
                         type={type}
                         className={cn(inputClass, "h-8 border-none shadow-none outline-none")}
+                        autoComplete="off"
                         ref={ref}
                         {...props}
                     />

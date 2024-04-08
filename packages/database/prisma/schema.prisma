@@ -154,7 +154,9 @@ model Project {
 
 enum ViewType {
   board
+  calendar
   list
+  table
 }
 
 model View {

@@ -7,19 +7,16 @@ import { Plus } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import type { Workspace } from "@workspace/db/client";
 import { api } from "@workspace/api/react";
+import type { Workspace } from "@workspace/db/client";
 import { newProjectSchema } from "@workspace/lib/validators/project";
-import { 
+import {
+    Button,
     Dialog,
     DialogContent,
+    DialogFooter,
     DialogHeader,
-    TooltipProvider,
-    Tooltip,
-    TooltipTrigger,
-    TooltipContent,
     DialogTitle,
-    Button,
     Form,
     FormControl,
     FormField,
@@ -27,8 +24,10 @@ import {
     FormLabel,
     FormMessage,
     Input,
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
     useZodForm,
-    DialogFooter,
 } from "@workspace/ui";
 
 import { ColorSelect } from "../theme-select";
@@ -44,7 +43,9 @@ export function CreateProjectModal({ workspace }: Props) {
     const form = useZodForm({
         schema: newProjectSchema,
         defaultValues: {
-            name: "", workspaceId: workspace.id, color: "#52525b",
+            name: "",
+            workspaceId: workspace.id,
+            color: "#52525b",
         },
     });
     const newProject = api.project.newProject.useMutation({
@@ -64,17 +65,17 @@ export function CreateProjectModal({ workspace }: Props) {
         });
     }
     return (
-        <Dialog open={open} onOpenChange={() => setOpen(!open)}> 
-            <TooltipProvider delayDuration={0}>
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <div onClick={() => setOpen(true)} className="p-0.5 rounded-md hover:bg-accent">
-                            <Plus className="h-4 w-4" />
-                        </div>
-                    </TooltipTrigger>
-                    <TooltipContent side="right" sideOffset={4}>Create Project</TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
+        <Dialog open={open} onOpenChange={() => setOpen(!open)}>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <div onClick={() => setOpen(true)} className="hover:bg-accent rounded-md p-0.5">
+                        <Plus className="h-4 w-4" />
+                    </div>
+                </TooltipTrigger>
+                <TooltipContent side="right" sideOffset={4}>
+                    Create Project
+                </TooltipContent>
+            </Tooltip>
             <DialogContent className="top-[25%]" showClose={false}>
                 <DialogHeader>
                     <DialogTitle>Add project</DialogTitle>
@@ -94,19 +95,18 @@ export function CreateProjectModal({ workspace }: Props) {
                                         <FormMessage />
                                     </FormItem>
                                 )}
-                            /> 
+                            />
                             <ColorSelect name="color" form={form} />
                         </div>
                         <DialogFooter>
-                            <Button 
-                                type="submit" 
-                                size="sm" 
+                            <Button
+                                type="submit"
+                                size="sm"
                                 loading={isLoading}
-                                variant="default" 
                                 disabled={isLoading || form.formState.isSubmitting}
                             >
                                 Create
-                            </Button>  
+                            </Button>
                         </DialogFooter>
                     </form>
                 </Form>

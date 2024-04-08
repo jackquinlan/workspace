@@ -17,15 +17,18 @@ export function ProjectList({ projects }: Props) {
     return (
         <Fragment>
             {projects.map((project) => (
-                <SidebarItem 
-                    key={project.id} 
+                <SidebarItem
+                    key={project.id}
                     href={`/p/${project.id}`}
                     onMouseOver={() => setHoverId(project.id)}
                     onMouseLeave={() => setHoverId(null)}
                     className="flex items-center justify-between"
                 >
                     <div className="flex items-center gap-2">
-                        <div className="border-border h-2.5 w-2.5 rounded-sm border" style={{ backgroundColor: project.color }} />
+                        <div
+                            className="border-border h-2.5 w-2.5 rounded-sm border"
+                            style={{ backgroundColor: project.color }}
+                        />
                         {project.name}
                     </div>
                     {hoverId === project.id && (
