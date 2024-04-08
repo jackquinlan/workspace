@@ -41,7 +41,7 @@ export function EditViewModal({ view }: Props) {
     });
     const router = useRouter();
     const editView = api.view.editView.useMutation({
-        onSuccess: (data) => {
+        onSuccess: () => {
             router.refresh();
             setOpen(false);
             form.reset();
