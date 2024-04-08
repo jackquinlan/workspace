@@ -50,7 +50,7 @@ export function DeleteViewModal({ projectId, view }: Props) {
     });
     async function handleSubmit() {
         startTransition(async () => {
-            await deleteView.mutateAsync({ id: view.id });
+            await deleteView.mutateAsync({ viewId: view.id });
         });
     }
     return (

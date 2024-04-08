@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
-import { Copy, Settings, Pencil } from "lucide-react";
+import { Copy, Settings } from "lucide-react";
 
 import type { View } from "@workspace/db/client";
 import { 
@@ -16,6 +16,7 @@ import {
 } from "@workspace/ui";
 
 import { DeleteViewModal } from "./delete-view-modal";
+import { EditViewModal } from "./edit-view-modal";
 
 interface Props {
     projectId: string;
@@ -26,16 +27,13 @@ export function ViewSettingsDropdown({ projectId, view }: Props) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button size="icon" variant="ghost">
-                    <Settings className="w-4 h-4" />
+                <Button size="xs" variant="ghost" className="flex items-center gap-1">
+                    <Settings className="w-4 h-4" /> Settings
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-48" align="end" sideOffset={-2}>
+            <DropdownMenuContent className="w-36" align="end" sideOffset={-2}>
                 <DropdownMenuLabel>View options</DropdownMenuLabel>
-                <DropdownMenuItem className="flex items-center gap-1 py-0.5">
-                    <Pencil className="h-4 w-4" />
-                    Edit
-                </DropdownMenuItem>
+                <EditViewModal view={view} />
                 <DropdownMenuItem className="flex items-center gap-1 py-0.5">
                     <Copy className="h-4 w-4" />
                     Duplicate

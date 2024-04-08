@@ -12,7 +12,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-    ({ border = true, className, type, addPrefix, addSuffix, autoComplete=false, ...props }, ref) => {
+    ({ border = true, className, type, addPrefix, addSuffix, ...props }, ref) => {
         if (addPrefix || addSuffix) {
             return (
                 <div
@@ -29,6 +29,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     <input
                         type={type}
                         className={cn(inputClass, "h-8 border-none shadow-none outline-none")}
+                        autoComplete="off"
                         ref={ref}
                         {...props}
                     />

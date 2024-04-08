@@ -103,7 +103,6 @@ export function CreateProjectModal({ workspace }: Props) {
                                 type="submit"
                                 size="sm"
                                 loading={isLoading}
-                                variant="default"
                                 disabled={isLoading || form.formState.isSubmitting}
                             >
                                 Create

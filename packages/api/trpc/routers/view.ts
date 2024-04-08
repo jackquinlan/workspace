@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 
 import type { ViewType } from "@workspace/db/client";
-import { newViewSchema, deleteViewSchema } from "@workspace/lib/validators/view";
+import { newViewSchema, deleteViewSchema, editViewSchema } from "@workspace/lib/validators/view";
 
 import { createRouter, protectedProcedure } from "../trpc";
 
@@ -38,7 +38,20 @@ export const viewRouter = createRouter({
     }),
     deleteView: protectedProcedure.input(deleteViewSchema).mutation(async (opts) => {
         const view = await opts.ctx.db.view.delete({
-            where: { id: opts.input.id },
+            where: { id: opts.input.viewId },
+        });
+        if (!view) {
+            throw new TRPCError({ code: "NOT_FOUND", message: "View not found" });
+        }
+        return view;
+    }),
+    editView: protectedProcedure.input(editViewSchema).mutation(async (opts) => {
+        const view = await opts.ctx.db.view.update({
+            where: { id: opts.input.viewId },
+            data: {
+                name: opts.input.name,
+                type: opts.input.type as ViewType,
+            },
         });
         if (!view) {
             throw new TRPCError({ code: "NOT_FOUND", message: "View not found" });
