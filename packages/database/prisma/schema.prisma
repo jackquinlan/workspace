@@ -178,6 +178,7 @@ model Task {
   content     String
   description String?
 
+  order   Int
   group   Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
   groupId Int
 
