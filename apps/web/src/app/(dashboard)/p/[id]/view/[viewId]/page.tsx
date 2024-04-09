@@ -10,5 +10,7 @@ export default async function ViewPage({ params }: { params: { viewId: string } 
     if (!view) {
         return notFound();
     }
-    return <div className="space-y-1 text-lg">{view.name}</div>;
+    return (
+        <div className="space-y-1 text-lg">{view.name}</div>
+    );
 }

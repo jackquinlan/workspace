@@ -146,10 +146,43 @@ model Project {
   workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   workspaceId String
 
-  links Link[]
+  groups Group[]
+  links  Link[]
 
   @@index([workspaceId])
   @@map(name: "projects")
+}
+
+model Group {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  name  String
+  color String @default("#ef4444")
+
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+
+  tasks Task[]
+
+  @@index([projectId])
+  @@map(name: "groups")
+}
+
+model Task {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  content     String
+  description String?
+
+  group   Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  groupId Int
+
+  @@index([groupId])
+  @@map(name: "tasks")
 }
 
 enum ViewType {
