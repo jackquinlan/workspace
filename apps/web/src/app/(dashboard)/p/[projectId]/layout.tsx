@@ -10,7 +10,9 @@ import { ThemeSquare } from "@/components/theme-square";
 
 interface ProjectLayoutProps {
     children: React.ReactNode;
-    params: { id: string };
+    params: { 
+        projectId: string 
+    };
 }
 
 export default async function ProjectLayout({ children, params }: ProjectLayoutProps) {
@@ -18,7 +20,7 @@ export default async function ProjectLayout({ children, params }: ProjectLayoutP
     if (!session) {
         return notFound();
     }
-    const project = await db.project.findFirst({ where: { id: params.id } });
+    const project = await db.project.findFirst({ where: { id: params.projectId } });
     if (!project) {
         return notFound();
     }

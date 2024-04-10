@@ -5,9 +5,9 @@ import { db } from "@workspace/db";
 
 import { NoViewFound } from "./no-view-found";
 
-export default async function ProjectPage({ params }: { params: { id: string } }) {
+export default async function ProjectPage({ params }: { params: { projectId: string } }) {
     const project = await db.project.findUnique({
-        where: { id: params.id },
+        where: { id: params.projectId },
     });
     if (!project) {
         return <NoViewFound />;

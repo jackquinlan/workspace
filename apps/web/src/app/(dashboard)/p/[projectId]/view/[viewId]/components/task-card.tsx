@@ -10,7 +10,7 @@ interface TaskCardProps {
 
 export const TaskCard = forwardRef<HTMLLIElement, TaskCardProps>(
     ({ task }: TaskCardProps, ref) => {
-        return (
-            <li ref={ref}>{task.content}</li>
-        );
+    return (
+        <li ref={ref} className="flex rounded-md p-2 border bg-card">{task.content}</li>
+    );
 });
