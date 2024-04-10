@@ -14,3 +14,4 @@ export const TaskCard = forwardRef<HTMLLIElement, TaskCardProps>(
         <li ref={ref} className="flex rounded-md p-2 border bg-card">{task.content}</li>
     );
 });
+TaskCard.displayName = "TaskCard";
