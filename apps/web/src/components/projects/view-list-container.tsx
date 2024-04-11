@@ -7,12 +7,7 @@ import { useParams } from "next/navigation";
 import { CalendarDays, KanbanSquare, List, Plus, Table } from "lucide-react";
 
 import type { Project, View } from "@workspace/db/client";
-import { 
-    Button,
-    ContextMenu,
-    ContextMenuContent,
-    ContextMenuTrigger,
-} from "@workspace/ui";
+import { Button, ContextMenu, ContextMenuContent, ContextMenuTrigger } from "@workspace/ui";
 
 import { useVisibleViews } from "@/hooks/use-visible-views";
 import { cn } from "@/lib/utils";
@@ -35,16 +30,18 @@ export function ViewListContainer({ project, views }: ViewListContainerProps) {
     const { maxVisibleViews, containerRef, viewListRef } = useVisibleViews(views.length, 80);
     const params = useParams<{ viewId: string; id: string }>();
     const displayViews = views.slice(0, maxVisibleViews);
-    const activeView = views.filter(v => v.id === params.viewId)[0];
+    const activeView = views.filter((v) => v.id === params.viewId)[0];
     return (
         <div className="border-b-border flex h-10 w-full items-center justify-between gap-0.5 border-b">
-            <div 
-                ref={containerRef} 
-                className="flex w-1/2 items-center gap-3"
-            >
+            <div ref={containerRef} className="flex w-1/2 items-center gap-3">
                 <ol ref={viewListRef} className="flex list-none items-center gap-2">
                     {displayViews.map((view) => (
-                        <ViewItem key={view.id} projectId={project.id} view={view} isActive={view.id === params.viewId} />
+                        <ViewItem
+                            key={view.id}
+                            projectId={project.id}
+                            view={view}
+                            isActive={view.id === params.viewId}
+                        />
                     ))}
                     {views.length - displayViews.length > 0 && (
                         <li className="hover:bg-accent flex w-16 cursor-pointer items-center gap-1 rounded-md p-1 text-sm">
@@ -56,7 +53,7 @@ export function ViewListContainer({ project, views }: ViewListContainerProps) {
                 <CreateViewMenu project={project} />
             </div>
             <div className="flex w-2/3 items-center justify-end gap-1 md:w-1/3">
-                {activeView && (<ViewSettingsDropdown projectId={project.id} view={activeView} />)}
+                {activeView && <ViewSettingsDropdown projectId={project.id} view={activeView} />}
                 <Button size="xs" className="flex w-fit items-center gap-1">
                     <Plus className="block h-4 w-4 md:hidden" />
                     <span className="hidden md:block">New Task</span>
@@ -66,22 +63,22 @@ export function ViewListContainer({ project, views }: ViewListContainerProps) {
     );
 }
 
-export function ViewItem({ 
-    projectId, 
+export function ViewItem({
+    projectId,
     view,
     isActive,
-}: { 
-    projectId: string; 
+}: {
+    projectId: string;
     view: View;
-    isActive: boolean; 
+    isActive: boolean;
 }) {
     return (
         <ContextMenu>
             <ContextMenuTrigger asChild>
-                <div 
+                <div
                     className={cn(
-                        "flex h-10 items-center", 
-                        isActive && "border-primary border-b-2"
+                        "flex h-10 items-center",
+                        isActive && "border-primary border-b-2",
                     )}
                 >
                     <Link
@@ -93,9 +90,7 @@ export function ViewItem({
                     </Link>
                 </div>
             </ContextMenuTrigger>
-            <ContextMenuContent className="w-64">
-                View Settings
-            </ContextMenuContent>
+            <ContextMenuContent className="w-64">View Settings</ContextMenuContent>
         </ContextMenu>
     );
 }

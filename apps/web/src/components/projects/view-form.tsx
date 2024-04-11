@@ -8,8 +8,8 @@ import {
     FormControl,
     FormField,
     FormItem,
-    FormMessage,
     FormLabel,
+    FormMessage,
     Input,
     Label,
     RadioGroup,
@@ -40,7 +40,13 @@ export function ViewForm({ showLabels = false, form }: ViewFormProps) {
                     <FormItem>
                         {showLabels && <FormLabel>Name</FormLabel>}
                         <FormControl>
-                            <Input className="h-8" placeholder="View name" autoComplete="off" autoFocus {...field} />
+                            <Input
+                                className="h-8"
+                                placeholder="View name"
+                                autoComplete="off"
+                                autoFocus
+                                {...field}
+                            />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -52,7 +58,11 @@ export function ViewForm({ showLabels = false, form }: ViewFormProps) {
                 render={({ field }) => (
                     <FormItem>
                         {showLabels && <FormLabel>Layout</FormLabel>}
-                        <RadioGroup className="grid grid-cols-2 gap-2" defaultValue={field.value} onValueChange={field.onChange}>
+                        <RadioGroup
+                            className="grid grid-cols-2 gap-2"
+                            defaultValue={field.value}
+                            onValueChange={field.onChange}
+                        >
                             <ViewTypes />
                         </RadioGroup>
                     </FormItem>

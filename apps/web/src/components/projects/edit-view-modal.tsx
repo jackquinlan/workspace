@@ -7,16 +7,16 @@ import { Pencil } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { editViewSchema } from "@workspace/lib/validators/view";
-import type { View } from "@workspace/db/client";
 import { api } from "@workspace/api/react";
+import type { View } from "@workspace/db/client";
+import { editViewSchema } from "@workspace/lib/validators/view";
 import {
-    dropdownItemClass,
     Button,
     Dialog,
     DialogContent,
     DialogFooter,
     DialogTitle,
+    dropdownItemClass,
     Form,
     useZodForm,
 } from "@workspace/ui";
@@ -60,17 +60,24 @@ export function EditViewModal({ view }: Props) {
         <Dialog open={open} onOpenChange={() => setOpen(!open)}>
             <div onClick={() => setOpen(!open)} className={cn(dropdownItemClass)}>
                 <Pencil className="h-4 w-4" />
-                Edit 
+                Edit
             </div>
             <DialogContent className="top-[25%]" showClose={false}>
                 <DialogTitle>Update {view.name}</DialogTitle>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(handleSubmit)}>
-                        <div className="px-6 pb-4 -mt-4">
+                        <div className="-mt-4 px-6 pb-4">
                             <ViewForm form={form} showLabels />
                         </div>
                         <DialogFooter>
-                            <Button type="submit" size="sm" loading={isLoading} disabled={isLoading}>Update</Button>
+                            <Button
+                                type="submit"
+                                size="sm"
+                                loading={isLoading}
+                                disabled={isLoading}
+                            >
+                                Update
+                            </Button>
                         </DialogFooter>
                     </form>
                 </Form>

@@ -27,7 +27,7 @@ export default function Signup() {
             <div className="-mt-32 flex justify-center lg:p-8">
                 <div className="w-full md:w-3/4">
                     <div className="py-2">
-                        <h1 className="flex text-2xl leading-7 font-medium">
+                        <h1 className="flex text-2xl font-medium leading-7">
                             Create a free account
                         </h1>
                         <h2 className="pt-1 text-sm text-zinc-500">

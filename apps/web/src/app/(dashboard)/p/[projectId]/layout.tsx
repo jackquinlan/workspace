@@ -10,8 +10,8 @@ import { ThemeSquare } from "@/components/theme-square";
 
 interface ProjectLayoutProps {
     children: React.ReactNode;
-    params: { 
-        projectId: string 
+    params: {
+        projectId: string;
     };
 }
 
