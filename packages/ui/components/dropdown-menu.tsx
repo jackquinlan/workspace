@@ -75,7 +75,8 @@ const DropdownMenuContent = React.forwardRef<
 ));
 DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;
 
-export const dropdownItemClass = "hover:bg-accent focus:bg-accent focus:text-accent-foreground relative flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50";
+export const dropdownItemClass =
+    "hover:bg-accent focus:bg-accent focus:text-accent-foreground relative flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50";
 
 const DropdownMenuItem = React.forwardRef<
     React.ElementRef<typeof DropdownMenuPrimitive.Item>,
@@ -85,11 +86,7 @@ const DropdownMenuItem = React.forwardRef<
 >(({ className, inset, ...props }, ref) => (
     <DropdownMenuPrimitive.Item
         ref={ref}
-        className={cn(
-            inset && "pl-8",
-            dropdownItemClass,
-            className,
-        )}
+        className={cn(inset && "pl-8", dropdownItemClass, className)}
         {...props}
     />
 ));

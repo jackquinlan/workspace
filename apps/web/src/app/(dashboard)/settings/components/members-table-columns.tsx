@@ -77,7 +77,10 @@ export const columns: ColumnDef<MemberWithUser>[] = [
                     <DropdownMenuContent className="w-64" align="end" sideOffset={-3}>
                         {row.original.currentRole === "owner" &&
                             row.original.user.id !== row.original.currentUser && (
-                                <TransferOwnerModal workspace={row.original.workspace} newOwnerId={row.original.user.id} />
+                                <TransferOwnerModal
+                                    workspace={row.original.workspace}
+                                    newOwnerId={row.original.user.id}
+                                />
                             )}
                         <UpdateMemberRoles
                             currentUser={row.original.currentUser}

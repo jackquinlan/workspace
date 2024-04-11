@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 
 import type { ViewType } from "@workspace/db/client";
-import { newViewSchema, deleteViewSchema, editViewSchema } from "@workspace/lib/validators/view";
+import { deleteViewSchema, editViewSchema, newViewSchema } from "@workspace/lib/validators/view";
 
 import { createRouter, protectedProcedure } from "../trpc";
 

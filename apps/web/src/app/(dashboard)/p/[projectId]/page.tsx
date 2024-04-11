@@ -1,16 +1,13 @@
-import React from "react";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { db } from "@workspace/db";
 
-import { NoViewFound } from "./no-view-found";
-
-export default async function ProjectPage({ params }: { params: { id: string } }) {
+export default async function ProjectPage({ params }: { params: { projectId: string } }) {
     const project = await db.project.findUnique({
-        where: { id: params.id },
+        where: { id: params.projectId },
     });
     if (!project) {
-        return <NoViewFound />;
+        return notFound();
     }
     const links = await db.link.findMany({
         where: {

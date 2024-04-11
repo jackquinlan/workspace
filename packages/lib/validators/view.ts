@@ -9,7 +9,7 @@ export const newViewSchema = z.object({
 export const editViewSchema = z.object({
     viewId: z.string().cuid(),
     name: z.string().min(1, { message: "Required" }),
-    type: z.string().min(1)
+    type: z.string().min(1),
 });
 
 export const deleteViewSchema = z.object({

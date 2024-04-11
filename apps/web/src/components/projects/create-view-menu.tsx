@@ -10,14 +10,7 @@ import { z } from "zod";
 import { api } from "@workspace/api/react";
 import type { Project, View } from "@workspace/db/client";
 import { newViewSchema } from "@workspace/lib/validators/view";
-import {
-    Button,
-    Form,
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-    useZodForm,
-} from "@workspace/ui";
+import { Button, Form, Popover, PopoverContent, PopoverTrigger, useZodForm } from "@workspace/ui";
 
 import { ViewForm } from "./view-form";
 
@@ -73,10 +66,17 @@ export function CreateViewMenu({ project }: Props) {
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(handleSubmit)}>
                         <ViewForm form={form} />
-                        <p className="text-xs py-2">
-                            By creating a new view, all members in your workspace will have access to it.
+                        <p className="py-2 text-xs">
+                            By creating a new view, all members in your workspace will have access
+                            to it.
                         </p>
-                        <Button className="w-full" type="submit" size="xs" disabled={isLoading} loading={isLoading}>
+                        <Button
+                            className="w-full"
+                            type="submit"
+                            size="xs"
+                            disabled={isLoading}
+                            loading={isLoading}
+                        >
                             Create
                         </Button>
                     </form>

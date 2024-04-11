@@ -5,14 +5,14 @@ import React from "react";
 import { Copy, Settings } from "lucide-react";
 
 import type { View } from "@workspace/db/client";
-import { 
+import {
     Button,
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuTrigger,
-    DropdownMenuLabel,
     DropdownMenuItem,
+    DropdownMenuLabel,
     DropdownMenuSeparator,
+    DropdownMenuTrigger,
 } from "@workspace/ui";
 
 import { DeleteViewModal } from "./delete-view-modal";
@@ -28,7 +28,7 @@ export function ViewSettingsDropdown({ projectId, view }: Props) {
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button size="xs" variant="ghost" className="flex items-center gap-1">
-                    <Settings className="w-4 h-4" /> Settings
+                    <Settings className="h-4 w-4" /> Settings
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-36" align="end" sideOffset={-2}>

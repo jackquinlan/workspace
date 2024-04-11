@@ -1,5 +1,4 @@
 import React, { Suspense } from "react";
-import Image from "next/image";
 import Link from "next/link";
 
 import { buttonVariants } from "@workspace/ui";
@@ -28,8 +27,7 @@ export default function Signup() {
             <div className="-mt-32 flex justify-center lg:p-8">
                 <div className="w-full md:w-3/4">
                     <div className="py-2">
-                        <h1 className="flex gap-2 text-xl font-medium">
-                            <Image src="/logo.svg" width="28" height="28" alt="" />
+                        <h1 className="flex text-2xl font-medium leading-7">
                             Create a free account
                         </h1>
                         <h2 className="pt-1 text-sm text-zinc-500">
