@@ -63,7 +63,7 @@ export function ResizeLayoutWrapper({
             <SidebarToggleButton />
             <ResizablePanel id="content" defaultSize={defaultLayout[1]} order={2}>
                 <ScrollArea className="h-full w-full">
-                    <main className="container grow">{children}</main>
+                    <main className="mx-8 grow">{children}</main>
                 </ScrollArea>
             </ResizablePanel>
         </ResizablePanelGroup>

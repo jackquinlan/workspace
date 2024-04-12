@@ -5,7 +5,7 @@ const config: Omit<Config, "content"> = {
     darkMode: "class",
     theme: {
         container: {
-            padding: "2rem",
+            padding: "0.1rem",
             screens: {
                 "2xl": "1400px",
             },

@@ -32,8 +32,8 @@ export function ViewListContainer({ project, views }: ViewListContainerProps) {
     const displayViews = views.slice(0, maxVisibleViews);
     const activeView = views.filter((v) => v.id === params.viewId)[0];
     return (
-        <div className="border-b-border flex h-10 w-full items-center justify-between gap-0.5 border-b">
-            <div ref={containerRef} className="flex w-1/2 items-center gap-3">
+        <div className="flex items-center justify-between gap-0.5 h-10 border-b">
+            <div ref={containerRef} className="flex items-center gap-3">
                 <ol ref={viewListRef} className="flex list-none items-center gap-2">
                     {displayViews.map((view) => (
                         <ViewItem
@@ -52,11 +52,11 @@ export function ViewListContainer({ project, views }: ViewListContainerProps) {
                 <div className="border-border h-4 w-px rounded-md border-l" />
                 <CreateViewMenu project={project} />
             </div>
-            <div className="flex w-2/3 items-center justify-end gap-1 md:w-1/3">
+            <div className="flex items-center justify-end gap-1">
                 {activeView && <ViewSettingsDropdown projectId={project.id} view={activeView} />}
                 <Button size="xs" className="flex w-fit items-center gap-1">
-                    <Plus className="block h-4 w-4 md:hidden" />
-                    <span className="hidden md:block">New Task</span>
+                    <Plus className="h-4 w-4" />
+                    <span className="hidden md:block">Task</span>
                 </Button>
             </div>
         </div>

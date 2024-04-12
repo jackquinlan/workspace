@@ -31,10 +31,7 @@ export const TaskCard = memo(
             <li ref={ref} className="list-none">
                 <Card className={cn("flex flex-col justify-between h-28 bg-card p-3", isDragging && "border-2 border-primary")} style={style} {...listeners}>
                     <div className="flex flex-col">
-                        <div className="flex items-center justify-between">
-                            <h1 className="font-medium truncate">{task.content}</h1>
-                            <MoreHorizontal className="w-4 h-4" />
-                        </div>
+                        <h1 className="font-medium truncate">{task.content}</h1>
                         <h2 className="text-sm truncate">
                             {task.description}
                         </h2>
@@ -60,9 +57,12 @@ export const TaskCard = memo(
                                 <TooltipContent side="bottom">Tags</TooltipContent>
                             </Tooltip>
                         </div>
-                        <Avatar className="h-6 w-6">
-                            <AvatarFallback className="border-border border text-xs text-white bg-orange-500">J</AvatarFallback>
-                        </Avatar>
+                        <div className="flex items-center gap-2">
+                            <MoreHorizontal className="w-4 h-4" />
+                            <Avatar className="h-6 w-6">
+                                <AvatarFallback className="border-border border text-xs text-white bg-orange-500">J</AvatarFallback>
+                            </Avatar>
+                        </div>
                     </div>
                 </Card>
             </li>

@@ -154,12 +154,13 @@ model Project {
 }
 
 model Group {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
   name  String
   color String @default("#ef4444")
+  order Int    @default(1)
 
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId String
@@ -171,16 +172,16 @@ model Group {
 }
 
 model Task {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
   content     String
   description String?
+  order       Int
 
-  order   Int
   group   Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  groupId Int
+  groupId String
 
   @@index([groupId])
   @@map(name: "tasks")

@@ -6,6 +6,8 @@ import { ScrollArea, ScrollBar } from "@workspace/ui";
 
 import { Board } from "./components/board";
 
+export const dynamic = "force-dynamic";
+
 export default async function ViewPage({
     params,
 }: {
@@ -25,8 +27,8 @@ export default async function ViewPage({
     });
 
     return (
-        <div className="flex flex-col py-6">
-            <ScrollArea className="flex flex-grow pt-2">
+        <div className="flex flex-col h-2/3 py-6">
+            <ScrollArea className="flex flex-grow h-full pt-2">
                 <div className="w-max">
                     <Board groupsWithTasks={groupsWithTasks} projectId={params.projectId} />
                 </div>

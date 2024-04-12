@@ -18,7 +18,7 @@ export const GroupContainer = forwardRef<HTMLDivElement, GroupProps>(
         return (
             <div
                 ref={ref}
-                className="flex min-h-[200px] w-[400px] flex-col rounded-md border bg-zinc-50 shadow outline-none"
+                className="flex min-h-[200px] w-[325px] flex-col rounded-md border bg-zinc-50 shadow outline-none"
                 style={style}
             >
                 <div className="flex items-center justify-between pr-2" {...handleProps}>
