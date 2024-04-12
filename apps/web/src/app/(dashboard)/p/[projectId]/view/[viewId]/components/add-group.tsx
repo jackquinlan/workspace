@@ -61,7 +61,7 @@ export function AddGroup({ projectId }: AddGroupProps) {
                     render={({ field }) => (
                         <FormItem>
                             <FormControl>
-                                <Input className="w-[400px]" autoFocus {...field} />
+                                <Input className="w-[400px]" autoComplete="off" autoFocus {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>

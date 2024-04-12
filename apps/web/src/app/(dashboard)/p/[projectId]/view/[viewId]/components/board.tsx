@@ -58,10 +58,8 @@ export function Board({ groupsWithTasks, projectId }: BoardViewProps) {
 
     const [tasksByGroup, setTasksByGroup] = useState<Tasks>(() => {
         const obj: Tasks = {};
-        let i = 1;
         groups.forEach((group) => {
             obj[group.id] = group.tasks;
-            i++;
         });
         return obj;
     });
@@ -260,10 +258,11 @@ export function SortableTaskCard({ task }: SortableTaskCardProps) {
     const style = {
         transform: CSS.Transform.toString(transform),
         transition,
+        opacity: isDragging ? 0.45 : 1,
     };
 
     return (
-        <TaskCard ref={setNodeRef} task={task} style={style} listeners={listeners} />
+        <TaskCard ref={setNodeRef} task={task} style={style} listeners={listeners} isDragging={isDragging} />
     );
 }
 

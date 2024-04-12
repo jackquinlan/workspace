@@ -41,10 +41,9 @@ export function ViewForm({ showLabels = false, form }: ViewFormProps) {
                         {showLabels && <FormLabel>Name</FormLabel>}
                         <FormControl>
                             <Input
+                                autoComplete="off"
                                 className="h-8"
                                 placeholder="View name"
-                                autoComplete="off"
-                                autoFocus
                                 {...field}
                             />
                         </FormControl>
