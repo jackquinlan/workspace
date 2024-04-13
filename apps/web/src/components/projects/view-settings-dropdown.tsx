@@ -27,11 +27,11 @@ export function ViewSettingsDropdown({ projectId, view }: Props) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button size="xs" variant="ghost" className="flex items-center gap-1">
+                <Button size="xs" variant="outline" className="flex items-center gap-1">
                     <Settings className="h-4 w-4" /> Settings
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-36" align="end" sideOffset={-2}>
+            <DropdownMenuContent className="w-36" align="end">
                 <DropdownMenuLabel>View options</DropdownMenuLabel>
                 <EditViewModal view={view} />
                 <DropdownMenuItem className="flex items-center gap-1 py-0.5">

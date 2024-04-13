@@ -1,12 +1,12 @@
-datasource db {
-  provider     = "mysql"
-  url          = env("DATABASE_URL")
-  relationMode = "prisma"
-}
-
 generator client {
   provider = "prisma-client-js"
 }
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
 
 model Account {
   id                String  @id @default(cuid())
@@ -98,6 +98,7 @@ model Workspace {
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
   color String @default("#ef4444")
+  image String?
   name  String
   slug  String @unique
   plan  Plan   @default(free)
@@ -154,12 +155,13 @@ model Project {
 }
 
 model Group {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
   name  String
   color String @default("#ef4444")
+  order Int    @default(1)
 
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId String
@@ -171,16 +173,16 @@ model Group {
 }
 
 model Task {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
   content     String
   description String?
+  order       Int
 
-  order   Int
   group   Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  groupId Int
+  groupId String
 
   @@index([groupId])
   @@map(name: "tasks")

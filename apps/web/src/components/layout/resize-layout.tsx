@@ -10,7 +10,7 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup, ScrollArea } from
 
 import { Sidebar } from "@/components/layout/sidebar";
 import { SidebarToggleButton } from "@/components/layout/sidebar-toggle";
-import { useSidebar } from "@/hooks/use-sidebar";
+import { useSidebar } from "@/context/use-sidebar";
 import { cn } from "@/lib/utils";
 import { SettingsSidebar } from "./settings-sidebar";
 
@@ -63,7 +63,7 @@ export function ResizeLayoutWrapper({
             <SidebarToggleButton />
             <ResizablePanel id="content" defaultSize={defaultLayout[1]} order={2}>
                 <ScrollArea className="h-full w-full">
-                    <main className="container grow">{children}</main>
+                    <main className="mx-8 grow">{children}</main>
                 </ScrollArea>
             </ResizablePanel>
         </ResizablePanelGroup>

@@ -71,7 +71,7 @@ export function Board({ groupsWithTasks, projectId }: BoardViewProps) {
             return id;
         }
         return Object.keys(tasksByGroup).find((key) =>
-            tasksByGroup[key].map((t) => t.id).includes(id as number),
+            tasksByGroup[key].map((t) => t.id).includes(id as string),
         );
     }
     /**
@@ -105,7 +105,7 @@ export function Board({ groupsWithTasks, projectId }: BoardViewProps) {
                 over = closestCenter({
                     ...args,
                     droppableContainers: args.droppableContainers.filter(
-                        c => c.id !== over && groupItems.includes(c.id as number),
+                        c => c.id !== over && groupItems.includes(c.id as string),
                     ),
                 })[0]?.id;
             }

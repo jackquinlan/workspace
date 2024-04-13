@@ -33,9 +33,9 @@ export function AddGroup({ projectId }: AddGroupProps) {
     const router = useRouter();
     const addGroup = api.group.addGroup.useMutation({
         onSuccess: () => {
-            router.refresh();
-            form.reset();
             setOpen(false);
+            form.reset();
+            router.refresh();
         },
         onError: (error) => {
             toast.error(error.message);
@@ -46,7 +46,7 @@ export function AddGroup({ projectId }: AddGroupProps) {
     }
     if (!open) {
         return (
-            <Button className="w-[400px] border border-dashed" variant="ghost" onClick={() => setOpen(true)}>
+            <Button className="w-[300px] border border-dashed" variant="ghost" onClick={() => setOpen(true)}>
                 <Plus className="mr-0.5 h-4 w-4" /> Add Group
             </Button>
         );
@@ -61,7 +61,7 @@ export function AddGroup({ projectId }: AddGroupProps) {
                     render={({ field }) => (
                         <FormItem>
                             <FormControl>
-                                <Input className="w-[400px]" autoComplete="off" autoFocus {...field} />
+                                <Input className="w-[300px]" autoComplete="off" autoFocus {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>

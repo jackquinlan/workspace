@@ -16,6 +16,7 @@
         "@radix-ui/react-icons": "^1.3.0",
         "@tanstack/react-table": "^8.13.2",
         "@trpc/server": "^10.45.1",
+        "@uploadthing/react": "^6.4.4",
         "@workspace/api": "workspace:*",
         "@workspace/db": "workspace:*",
         "@workspace/lib": "workspace:*",
@@ -32,6 +33,7 @@
         "react-hook-form": "^7.47.0",
         "sonner": "^1.4.0",
         "tailwind-merge": "^1.14.0",
+        "uploadthing": "^6.9.0",
         "uuid": "^9.0.1",
         "zod": "^3.22.4"
     },

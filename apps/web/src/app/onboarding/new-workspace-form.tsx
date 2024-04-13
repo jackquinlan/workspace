@@ -45,7 +45,7 @@ export function NewWorkspaceForm({}: Props) {
         <div className="flex w-1/3 flex-col space-y-4">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2">
-                    <WorkspaceForm form={form} />
+                    <WorkspaceForm form={form} showLogo />
                     <div className="flex items-center justify-end gap-2">
                         <Button type="submit" loading={isLoading} disabled={isLoading}>
                             {isLoading ? "Creating" : "Create"}
