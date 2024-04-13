@@ -1,7 +1,7 @@
 import React from "react";
 import { redirect } from "next/navigation";
 
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, Upload } from "lucide-react";
 
 import { getServerAuthSession } from "@workspace/lib/next-auth/get-server-session";
 
@@ -9,6 +9,7 @@ import { PageHeader } from "@/components/page-header";
 import { Shell } from "@/components/shell";
 import { DeleteUserModal } from "../components/delete-user-modal";
 import { EditProfileForm } from "../components/profile-form";
+import { UpdateAvatar } from "../components/update-avatar";
 
 export default async function ProfileSettingsPage() {
     const session = await getServerAuthSession();
@@ -21,6 +22,7 @@ export default async function ProfileSettingsPage() {
                 heading="Profile"
                 description="Manage settings for your Workspace profile"
             />
+            <UpdateAvatar user={session?.user} />
             <EditProfileForm user={session?.user} />
             <hr className="my-4" />
             <Shell className="flex items-center justify-between bg-zinc-50 font-medium">

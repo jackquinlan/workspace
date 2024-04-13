@@ -53,7 +53,7 @@ export function DeleteUserModal({ user }: Props) {
         <AlertDialog>
             <AlertDialogTrigger asChild>
                 <Button variant="danger" size="sm" className="w-fit">
-                    <Trash className="me-1 h-3 w-3" /> Delete account
+                    Delete account
                 </Button>
             </AlertDialogTrigger>
             <AlertDialogContent className="top-[25%]">

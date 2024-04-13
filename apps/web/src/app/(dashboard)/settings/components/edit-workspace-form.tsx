@@ -63,10 +63,7 @@ export function EditWorkspaceForm({ activeWorkspace }: Props) {
                     <Button type="submit" size="sm" disabled={isLoading} loading={isLoading}>
                         Update
                     </Button>
-                    {/* prettier-ignore */}
-                    {watchName !== activeWorkspace.name ||
-                    watchSlug !== activeWorkspace.slug ||
-                    watchTheme !== activeWorkspace.color ? (
+                    {watchName !== activeWorkspace.name || watchSlug !== activeWorkspace.slug || watchTheme !== activeWorkspace.color ? (
                         <Button
                             type="button"
                             size="sm"
