@@ -3,11 +3,11 @@
 import React, { useEffect } from "react";
 
 import { FieldValues, UseFormReturn } from "react-hook-form";
+import { z } from "zod";
 
 import {
     Avatar,
     AvatarFallback,
-    Button,
     FormControl,
     FormDescription,
     FormField,
@@ -20,33 +20,38 @@ import {
 import { ColorSelect } from "@/components/theme-select";
 import { slugify } from "@/lib/utils";
 
+export const deleteImageSchema = z.object({
+    file: z.string().min(1),
+});
+
 interface WorkspaceFormProps<T extends FieldValues = any> {
     form: UseFormReturn<T>;
+    showLogo?: boolean;
 }
 
-export function WorkspaceForm({ form }: WorkspaceFormProps) {
+export function WorkspaceForm({ form, showLogo = false }: WorkspaceFormProps) {
+    // const deleteAvatarWithFile = deleteAvatar.bind(null, workspace?.image ?? "");
     const watchSlug = form.watch("slug");
     useEffect(() => {
         if (!Object.keys(form.formState.dirtyFields).includes("slug")) {
             form.setValue("slug", slugify(watchSlug));
         }
     }, [watchSlug, form]);
-    const theme = form.watch("theme");
+    const theme  = form.watch("theme");
     return (
         <div className="space-y-3 py-2">
-            <div className="flex items-center gap-4">
-                <Avatar className="flex h-14 w-14 items-center justify-center">
-                    <AvatarFallback
-                        className="border-border border text-lg font-medium text-white"
-                        style={{ backgroundColor: theme }}
-                    >
-                        {form.getValues("name")[0] ?? "W"}
-                    </AvatarFallback>
-                </Avatar>
-                <Button variant="outline" size="sm" onClick={(e) => e.preventDefault()}>
-                    Upload image
-                </Button>
-            </div>
+            {showLogo && (
+                <div className="flex items-center gap-4">
+                    <Avatar className="flex h-16 w-16 items-center justify-center">
+                        <AvatarFallback
+                            className="border-border border text-lg font-medium text-white"
+                            style={{ backgroundColor: theme }}
+                        >
+                            {form.getValues("name")[0] ?? "W"}
+                        </AvatarFallback>
+                    </Avatar>
+                </div>
+            )}
             <FormField
                 control={form.control}
                 name="name"

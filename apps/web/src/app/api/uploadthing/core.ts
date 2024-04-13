@@ -16,7 +16,6 @@ export const ourFileRouter = {
             return { userId: session.user.id };
         })
         .onUploadComplete(async ({ metadata, file }) => {
-            console.log(file);
             const updateUser = await db.user.update({
                 where: { 
                     id: metadata.userId,
@@ -24,6 +23,27 @@ export const ourFileRouter = {
                 data: { image: file.url },
             });
             return { uploadedBy: updateUser.id };
+        }),
+    workspaceLogo: f({ image: { maxFileSize: "4MB" } })
+        .middleware(async ({ req }) => {
+            const session = await getServerAuthSession();
+            const members = await db.workspaceMember.findMany({
+                where: { workspaceId: session?.user.activeWorkspace },
+            });
+            const userInWorkspace = members.find((m) => m.userId === session?.user.id);
+            if (!session?.user || !userInWorkspace) {
+                throw new UploadThingError("Unauthorized");
+            }
+            return { workspace: session.user.activeWorkspace };
+        })
+        .onUploadComplete(async ({ metadata, file }) => {
+            await db.workspace.update({
+                where: { 
+                    id: metadata.workspace,
+                },
+                data: { image: file.url },
+            });
+            return {};
         }),
 } satisfies FileRouter;
  

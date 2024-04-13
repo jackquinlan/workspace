@@ -8,7 +8,7 @@ import { getServerAuthSession } from "@workspace/lib/next-auth/get-server-sessio
 import { NextAuthProvider } from "@/app/_providers/session-provider";
 import { ResizeLayoutWrapper } from "@/components/layout/resize-layout";
 import { LockScroll } from "@/components/lock-scroll";
-import { SidebarProvider } from "@/hooks/use-sidebar";
+import { SidebarProvider } from "@/context/use-sidebar";
 
 interface MainLayoutProps {
     children: React.ReactNode;

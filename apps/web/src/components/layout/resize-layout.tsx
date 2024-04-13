@@ -10,7 +10,7 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup, ScrollArea } from
 
 import { Sidebar } from "@/components/layout/sidebar";
 import { SidebarToggleButton } from "@/components/layout/sidebar-toggle";
-import { useSidebar } from "@/hooks/use-sidebar";
+import { useSidebar } from "@/context/use-sidebar";
 import { cn } from "@/lib/utils";
 import { SettingsSidebar } from "./settings-sidebar";
 

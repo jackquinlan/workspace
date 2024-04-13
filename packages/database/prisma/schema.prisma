@@ -98,6 +98,7 @@ model Workspace {
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
   color String @default("#ef4444")
+  image String?
   name  String
   slug  String @unique
   plan  Plan   @default(free)

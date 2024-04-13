@@ -17,7 +17,7 @@ import {
 } from "@workspace/ui";
 
 import { UploadButton } from "@/lib/uploadthing";
-import { deleteAvatar } from "../actions/delete-avatar";
+import { deleteAvatar } from "../../../../actions/delete-image";
 
 export const deleteImageSchema = z.object({
     file: z.string().min(1),
