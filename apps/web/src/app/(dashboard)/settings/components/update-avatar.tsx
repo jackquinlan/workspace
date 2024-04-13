@@ -12,12 +12,11 @@ import {
     AvatarFallback, 
     AvatarImage, 
     Button,
-    Form,
-    useZodForm
 } from "@workspace/ui";
 
 import { UploadButton } from "@/lib/uploadthing";
-import { deleteAvatar } from "../../../../actions/delete-image";
+import { deleteAvatar } from "@/actions/delete-image";
+import { useAction } from "@/hooks/use-action";
 
 export const deleteImageSchema = z.object({
     file: z.string().min(1),
@@ -29,11 +28,17 @@ interface Props {
 
 export function UpdateAvatar({ user }: Props) {
     const router = useRouter();
-    const deleteAvatarWithFile = deleteAvatar.bind(null, user.image ?? "");
-    const form = useZodForm({
-        schema: deleteImageSchema,
-        defaultValues: { file: user.image ?? "" },
+    const { execute } = useAction(deleteAvatar, {
+        onError: (error) => {
+            toast(error);
+        },
     });
+    function handleRemove() {
+        if (!user.image) {
+            return;
+        }
+        execute({ file: user.image });
+    }
 
     return (
         <div className="flex items-center gap-4 pb-6 pt-4">
@@ -49,21 +54,17 @@ export function UpdateAvatar({ user }: Props) {
                     className="ut-button:mt-4 ut-button:bg-primary ut-button:h-8 ut-button:px-3 ut-button:text-xs ut-button:hover:bg-red-600 ut-button:ring-0 ut-button:ut-uploading:after:bg-red-500"
                     endpoint="userAvatar"
                     onClientUploadComplete={() => {
-                        toast("Avatar updated successfully.");
+                        toast("Avatar updated");
                         router.refresh();
                     }}
                     onUploadError={() => {
-                        toast.error("Failed to update avatar.");
+                        toast("Failed to update avatar");
                     }}
                 />
                 {user.image && (
-                    <Form {...form}>
-                        <form action={deleteAvatarWithFile}>
-                            <Button className="mt-4" variant="outline" size="sm">
-                                Remove
-                            </Button>
-                        </form>
-                    </Form>
+                    <Button className="mt-4" variant="outline" size="sm" onClick={handleRemove}>
+                        Remove
+                    </Button>
                 )}
             </div>
         </div>

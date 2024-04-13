@@ -16,11 +16,12 @@ const deleteImageSchema = z.object({
 
 const utapi = new UTApi();
 
-export async function deleteAvatar(file: string, formData: FormData) {
+async function userHandler(data: z.infer<typeof deleteImageSchema>): Promise<{}> {
     const session = await getServerAuthSession();
     if (!session?.user) {
         throw new Error("Unauthorized");
     }
+    const { file } = data;
     if (file.startsWith("https://utfs.io/f/")) {
         // Delete the file from the UploadThing API
         const key = file.split("/")[4];
@@ -36,7 +37,10 @@ export async function deleteAvatar(file: string, formData: FormData) {
         },
     });
     revalidatePath("/settings/profile");
+    return {};
 }
+
+export const deleteAvatar = createSafeAction(deleteImageSchema, userHandler); 
 
 async function workspaceHandler(data: z.infer<typeof deleteImageSchema>): Promise<{}> {
     const session = await getServerAuthSession();

@@ -29,7 +29,7 @@ interface Props {
 }
 
 export function EditWorkspaceForm({ activeWorkspace }: Props) {
-    const { execute, isLoading } = useAction(deleteWorkspaceLogo, {
+    const { execute } = useAction(deleteWorkspaceLogo, {
         onError: (error) => {
             toast(error);
         },
