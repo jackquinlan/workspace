@@ -27,7 +27,7 @@ export default async function ViewPage({
     });
 
     return (
-        <div className="flex flex-col h-2/3 py-6">
+        <div className="flex flex-col h-2/3 py-3">
             <ScrollArea className="flex flex-grow h-full pt-2">
                 <div className="w-max">
                     <Board groupsWithTasks={groupsWithTasks} projectId={params.projectId} />

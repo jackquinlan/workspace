@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import type { Group } from "@workspace/db/client";
 import { addGroupSchema } from "@workspace/lib/validators/group";
-import { api } from "@workspace/api/react";
 import { 
     Button,
     CancelButton,
@@ -21,28 +21,36 @@ import {
     useZodForm,
 } from "@workspace/ui";
 
+import { createGroup } from "@/actions/group/create-group";
+import { useAction } from "@/hooks/use-action";
+
 interface AddGroupProps {
-    projectId: string
+    projectId: string;
+    handleAddGroup: (group: Group) => void;
 }
 
-export function AddGroup({ projectId }: AddGroupProps) {
+export function AddGroup({ projectId, handleAddGroup }: AddGroupProps) {
+    const [loading, startTransition] = useTransition();
+    const router = useRouter();
     const [open, setOpen] = useState<boolean>(false);
     const form = useZodForm({ 
         schema: addGroupSchema, defaultValues: { name: "", projectId: projectId } 
     }); 
-    const router = useRouter();
-    const addGroup = api.group.addGroup.useMutation({
-        onSuccess: () => {
+    const { execute } = useAction(createGroup, {
+        onSuccess: (data) => {
             setOpen(false);
+            handleAddGroup(data);
+            // router.refresh();
             form.reset();
-            router.refresh();
         },
         onError: (error) => {
-            toast.error(error.message);
+            toast(error);
         },
     });
     async function handleSubmit(data: z.infer<typeof addGroupSchema>) {
-        await addGroup.mutateAsync(data); 
+        startTransition(() => {
+            execute(data);
+        });
     }
     if (!open) {
         return (
@@ -68,7 +76,7 @@ export function AddGroup({ projectId }: AddGroupProps) {
                     )}
                 />
                 <div className="flex items-center gap-2 pt-2">
-                    <Button type="submit" size="sm">Add Group</Button>
+                    <Button type="submit" size="sm" loading={loading} disabled={loading}>Add Group</Button>
                     <CancelButton close={() => setOpen(false)}>Cancel</CancelButton>
                 </div>
             </form>

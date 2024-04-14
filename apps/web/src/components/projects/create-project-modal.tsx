@@ -3,6 +3,7 @@
 import React, { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
+import { CardStackPlusIcon } from "@radix-ui/react-icons";
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -78,7 +79,10 @@ export function CreateProjectModal({ workspace }: Props) {
             </Tooltip>
             <DialogContent className="top-[25%]" showClose={false}>
                 <DialogHeader>
-                    <DialogTitle>Add project</DialogTitle>
+                    <DialogTitle className="flex items-center gap-1">
+                        <CardStackPlusIcon className="h-5 w-5" />
+                        Add project
+                    </DialogTitle>
                 </DialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">

@@ -72,7 +72,7 @@ export function EditWorkspaceForm({ activeWorkspace }: Props) {
     }
     return (
         <div className="flex flex-col space-y-2">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 pb-6 pt-4">
                 <Avatar className="flex h-16 w-16 items-center justify-center">
                     <AvatarImage src={activeWorkspace?.image ?? undefined} />
                     <AvatarFallback

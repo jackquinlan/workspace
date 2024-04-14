@@ -33,7 +33,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-import type { Task } from "@workspace/db/client";
+import type { Group, Task } from "@workspace/db/client";
 import type { GroupWithTasks } from "@workspace/lib/types/project";
 
 import { GroupContainer, GroupProps } from "./group";
@@ -50,6 +50,7 @@ interface BoardViewProps {
 type Tasks = Record<string, Task[]>;
 
 export function Board({ groupsWithTasks, projectId }: BoardViewProps) {
+    console.log(groupsWithTasks);
     const [mounted, setMounted] = useState<boolean>(false);
     useEffect(() => {
         setMounted(true);
@@ -65,6 +66,12 @@ export function Board({ groupsWithTasks, projectId }: BoardViewProps) {
     });
     const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
     const lastOverId = useRef<UniqueIdentifier | null>(null);
+
+    function handleAddGroup(group: Group) {
+        const groupWithTasks = { ...group, tasks: [] };
+        setGroups((groups) => [...groups, groupWithTasks]);
+        setTasksByGroup((tasks) => ({ ...tasks, [group.id]: [] }));
+    }
 
     function findGroup(id: UniqueIdentifier) {
         if (id in tasksByGroup) {
@@ -211,7 +218,7 @@ export function Board({ groupsWithTasks, projectId }: BoardViewProps) {
                             </SortableContext>
                         </DroppableGroup>
                     ))}
-                    <AddGroup projectId={projectId} />
+                    <AddGroup handleAddGroup={handleAddGroup} projectId={projectId} />
                 </SortableContext>
             </div>
             {mounted

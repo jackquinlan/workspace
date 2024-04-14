@@ -24,13 +24,11 @@ export default async function ProjectLayout({ children, params }: ProjectLayoutP
     if (!project) {
         return notFound();
     }
-    const links = await db.link.findMany({
+    const views = await db.view.findMany({
         where: {
             projectId: project.id,
         },
-        include: { view: true },
     });
-    const views = links.map((link) => link.view);
     return (
         <div className="flex flex-col space-y-2">
             <ProjectToolbar project={project} />

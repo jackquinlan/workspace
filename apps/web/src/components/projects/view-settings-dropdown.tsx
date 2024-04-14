@@ -10,7 +10,6 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@workspace/ui";
@@ -27,12 +26,11 @@ export function ViewSettingsDropdown({ projectId, view }: Props) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button size="xs" variant="outline" className="flex items-center gap-1">
-                    <Settings className="h-4 w-4" /> Settings
+                <Button size="xs" variant="ghost" className="flex items-center gap-1">
+                    <Settings className="h-4 w-4" /> 
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-36" align="end">
-                <DropdownMenuLabel>View options</DropdownMenuLabel>
                 <EditViewModal view={view} />
                 <DropdownMenuItem className="flex items-center gap-1 py-0.5">
                     <Copy className="h-4 w-4" />

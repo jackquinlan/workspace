@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import { UTApi } from "uploadthing/server";
 import { z } from "zod";
 
-import type { Workspace } from "@workspace/db/client";
 import { db } from "@workspace/db";
 import { getServerAuthSession } from "@workspace/lib/next-auth/get-server-session";
 
