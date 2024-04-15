@@ -2,7 +2,7 @@
 
 import React, { useState, useTransition } from "react";
 
-import { AlertTriangle, Trash } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
 import type { User } from "next-auth";
 import { signOut } from "next-auth/react";
 import { toast } from "sonner";

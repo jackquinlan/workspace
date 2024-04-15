@@ -6,12 +6,12 @@ import { useParams } from "next/navigation";
 
 import { CalendarDays, KanbanSquare, LayoutGrid, List, Plus, Table } from "lucide-react";
 
-import type { Project, View } from "@workspace/db/client";
+import type { ProjectWithGroups } from "@workspace/lib/types/project";
+import type { View } from "@workspace/db/client";
 import { Button } from "@workspace/ui";
 
 import { useVisibleViews } from "@/hooks/use-visible-views";
 import { cn } from "@/lib/utils";
-import { CreateTaskModal } from "./create-task-modal";
 import { CreateViewMenu } from "./create-view-menu";
 import { ViewSettingsDropdown } from "./view-settings-dropdown";
 
@@ -23,7 +23,7 @@ export const VIEW_ICONS = {
 };
 
 interface ViewListContainerProps {
-  project: Project;
+  project: ProjectWithGroups;
   views: View[];
 }
 
@@ -36,9 +36,7 @@ export function ViewListContainer({ project, views }: ViewListContainerProps) {
     <div className="flex h-10 items-center justify-between gap-0.5 border-b">
       <div ref={containerRef} className="flex w-2/3 items-center gap-2">
         <ol ref={viewsListRef} className="flex list-none items-center gap-2">
-          <div
-            className={cn("flex h-10 items-center", !params.viewId && "border-primary border-b-2")}
-          >
+          <div className={cn("flex h-10 items-center", !params.viewId && "border-primary border-b-2")}>
             <Link
               className="hover:bg-accent flex h-7 w-fit cursor-pointer items-center gap-1 truncate rounded-md p-1 px-1 text-sm"
               href={`/p/${project.id}`}
@@ -65,7 +63,10 @@ export function ViewListContainer({ project, views }: ViewListContainerProps) {
       </div>
       <div className="flex w-1/3 items-center justify-end gap-1">
         {activeView && <ViewSettingsDropdown projectId={project.id} view={activeView} />}
-        <CreateTaskModal project={project} />
+        <Button size="xs" className="flex w-fit items-center gap-1">
+          <Plus className="h-4 w-4" />
+          <span className="hidden md:block">Task</span>
+        </Button>
       </div>
     </div>
   );

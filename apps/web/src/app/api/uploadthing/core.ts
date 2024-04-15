@@ -8,7 +8,7 @@ const f = createUploadthing();
 
 export const ourFileRouter = {
   userAvatar: f({ image: { maxFileSize: "4MB" } })
-    .middleware(async ({ req }) => {
+    .middleware(async ({ }) => {
       const session = await getServerAuthSession();
       if (!session?.user) {
         throw new UploadThingError("Unauthorized");
@@ -25,7 +25,7 @@ export const ourFileRouter = {
       return { uploadedBy: updateUser.id };
     }),
   workspaceLogo: f({ image: { maxFileSize: "4MB" } })
-    .middleware(async ({ req }) => {
+    .middleware(async ({ }) => {
       const session = await getServerAuthSession();
       const members = await db.workspaceMember.findMany({
         where: { workspaceId: session?.user.activeWorkspace },

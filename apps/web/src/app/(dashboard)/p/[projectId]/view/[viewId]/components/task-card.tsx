@@ -9,7 +9,6 @@ import type { Task } from "@workspace/db/client";
 import {
   Avatar,
   AvatarFallback,
-  AvatarImage,
   Card,
   Tooltip,
   TooltipContent,

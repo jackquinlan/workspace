@@ -3,7 +3,7 @@
 import React, { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
-import { AlertTriangle, Trash } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
 import { toast } from "sonner";
 
 import { api } from "@workspace/api/react";
@@ -55,7 +55,7 @@ export function DeleteWorkspaceModal({ workspace }: Props) {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="danger" size="sm" className="w-fit">
-          <Trash className="me-1 h-3 w-3" /> Delete workspace
+          Delete workspace
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="top-[25%]">

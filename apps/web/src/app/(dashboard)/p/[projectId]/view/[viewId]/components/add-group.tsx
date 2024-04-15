@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
 
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
@@ -31,7 +30,6 @@ interface AddGroupProps {
 
 export function AddGroup({ project, handleAddGroup }: AddGroupProps) {
   const [loading, startTransition] = useTransition();
-  const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
   const form = useZodForm({
     schema: addGroupSchema,
@@ -41,7 +39,6 @@ export function AddGroup({ project, handleAddGroup }: AddGroupProps) {
     onSuccess: (data) => {
       setOpen(false);
       handleAddGroup(data);
-      // router.refresh();
       form.reset();
     },
     onError: (error) => {

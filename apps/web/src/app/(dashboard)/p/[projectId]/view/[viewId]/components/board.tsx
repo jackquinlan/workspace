@@ -50,7 +50,6 @@ interface BoardViewProps {
 type Tasks = Record<string, Task[]>;
 
 export function Board({ groupsWithTasks, project }: BoardViewProps) {
-  console.log(groupsWithTasks);
   const [mounted, setMounted] = useState<boolean>(false);
   useEffect(() => {
     setMounted(true);
@@ -64,6 +63,7 @@ export function Board({ groupsWithTasks, project }: BoardViewProps) {
     });
     return obj;
   });
+
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const lastOverId = useRef<UniqueIdentifier | null>(null);
 

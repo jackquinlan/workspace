@@ -2,46 +2,58 @@
 
 import React from "react";
 
-import { ChevronRight, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
+import { toast } from "sonner";
 import { z } from "zod";
 
-import type { Project } from "@workspace/db/client";
+import type { Group } from "@workspace/db/client";
+import type { ProjectWithGroups } from "@workspace/lib/types/project";
 import { addTaskSchema } from "@workspace/lib/validators/task";
 import {
   Button,
   Dialog,
   DialogContent,
   DialogFooter,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
   Form,
   FormControl,
   FormField,
   FormItem,
   Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
   Textarea,
   useZodForm,
 } from "@workspace/ui";
 
+import { createTask } from "@/actions/task/create-task";
 import { useAction } from "@/hooks/use-action";
 
 interface Props {
-  project: Project;
-  groupId?: string;
+  defaultGroup?: Group;
+  project: ProjectWithGroups;
 }
 
-export function CreateTaskModal({ groupId, project }: Props) {
+export function CreateTaskModal({ defaultGroup, project }: Props) {
   const form = useZodForm({
     schema: addTaskSchema,
     defaultValues: {
-      content: "",
-      description: "",
-      groupId: groupId ?? "",
+      content: "", description: "", groupId: defaultGroup?.id ?? project.groups[0].id ?? "",
+    },
+  });
+  const { execute } = useAction(createTask, {
+    onSuccess: () => {
+      form.reset();
+    },
+    onError: (error) => {
+      toast(error);
     },
   });
   function handleSubmit(data: z.infer<typeof addTaskSchema>) {
-    console.log(data);
+    execute(data);
   }
   return (
     <Dialog>
@@ -51,14 +63,9 @@ export function CreateTaskModal({ groupId, project }: Props) {
           <span className="hidden md:block">Task</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="top-[25%]" showClose={false}>
-        <DialogHeader>
-          <DialogTitle className="text-sm flex items-center gap-1 py-2">
-            {project.name} <ChevronRight className="w-2 h-2" /> New task
-         </DialogTitle>
-        </DialogHeader>
+      <DialogContent className="top-[25%] w-1/3" showClose={false}>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="-mt-3">
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="pt-2">
             <div className="space-y-0 px-2">
               <FormField
                 control={form.control}
@@ -70,7 +77,7 @@ export function CreateTaskModal({ groupId, project }: Props) {
                         autoComplete="off"
                         autoFocus
                         className="border-none text-lg"
-                        placeholder="Title"
+                        placeholder="Task name"
                         {...field}
                       />
                     </FormControl>
@@ -83,19 +90,37 @@ export function CreateTaskModal({ groupId, project }: Props) {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Textarea
-                        className="max-h-[50%] resize-none border-none"
-                        placeholder="Description"
-                        {...field}
-                      />
+                      <Textarea className="resize-none border-none" placeholder="Task description" {...field} />
                     </FormControl>
                   </FormItem>
                 )}
               />
             </div>
-            <DialogFooter>
-              <Button type="submit" size="sm">
-                Create
+            <DialogFooter className="flex items-center justify-between">
+              <FormField
+                control={form.control}
+                name="groupId"
+                render={({ field }) => (
+                  <FormItem>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger showIcon={false} className="bg-background h-7 outline-none">
+                          <SelectValue />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent className="bg-background">
+                        {project.groups.map((group) => (
+                          <SelectItem key={group.id} value={group.id}>
+                            {group.name}
+                          </SelectItem>
+                        ))}      
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" size="xs">
+                Create task
               </Button>
             </DialogFooter>
           </form>

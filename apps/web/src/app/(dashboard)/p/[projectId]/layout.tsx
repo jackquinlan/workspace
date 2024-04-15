@@ -20,7 +20,12 @@ export default async function ProjectLayout({ children, params }: ProjectLayoutP
   if (!session) {
     return notFound();
   }
-  const project = await db.project.findFirst({ where: { id: params.projectId } });
+  const project = await db.project.findFirst({ 
+    where: { 
+      id: params.projectId,
+    },
+    include: { groups: true },
+  });
   if (!project) {
     return notFound();
   }
