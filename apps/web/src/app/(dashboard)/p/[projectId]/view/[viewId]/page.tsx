@@ -9,31 +9,34 @@ import { Board } from "./components/board";
 export const dynamic = "force-dynamic";
 
 export default async function ViewPage({
-    params,
+  params,
 }: {
-    params: { projectId: string; viewId: string };
+  params: { projectId: string; viewId: string };
 }) {
-    const view = await db.view.findUnique({
-        where: { id: params.viewId },
-    });
-    if (!view) {
-        return notFound();
-    }
-    const groupsWithTasks = await db.group.findMany({
-        where: {
-            projectId: params.projectId,
-        },
-        include: { tasks: true },
-    });
+  const proj = await db.project.findFirst({
+    where: { id: params.projectId },
+  });
+  const view = await db.view.findUnique({
+    where: { id: params.viewId },
+  });
+  if (!proj || !view) {
+    return notFound();
+  }
+  const groupsWithTasks = await db.group.findMany({
+    where: {
+      projectId: params.projectId,
+    },
+    include: { tasks: true },
+  });
 
-    return (
-        <div className="flex flex-col h-2/3 py-3">
-            <ScrollArea className="flex flex-grow h-full pt-2">
-                <div className="w-max">
-                    <Board groupsWithTasks={groupsWithTasks} projectId={params.projectId} />
-                </div>
-                <ScrollBar orientation="horizontal" />
-            </ScrollArea>
+  return (
+    <div className="flex h-2/3 flex-col py-3">
+      <ScrollArea className="flex h-full flex-grow pt-2">
+        <div className="w-max">
+          <Board groupsWithTasks={groupsWithTasks} project={proj} />
         </div>
-    );
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
+    </div>
+  );
 }

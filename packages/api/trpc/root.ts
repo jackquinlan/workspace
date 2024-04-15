@@ -6,11 +6,11 @@ import { workspaceRouter } from "./routers/workspace";
 import { createRouter } from "./trpc";
 
 const appRouter = createRouter({
-    group: groupRouter,
-    project: projectRouter,
-    user: userRouter,
-    view: viewRouter,
-    workspace: workspaceRouter,
+  group: groupRouter,
+  project: projectRouter,
+  user: userRouter,
+  view: viewRouter,
+  workspace: workspaceRouter,
 });
 export type AppRouter = typeof appRouter;
 export { appRouter };

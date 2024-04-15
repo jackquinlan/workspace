@@ -4,32 +4,32 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs));
+  return twMerge(clsx(inputs));
 }
 
 export function constructMetadata({
-    title = "Workspace",
-    description = "",
-    icons = "/favicon.ico",
+  title = "Workspace",
+  description = "",
+  icons = "/favicon.ico",
 }: {
-    title?: string;
-    description?: string;
-    icons?: string;
+  title?: string;
+  description?: string;
+  icons?: string;
 } = {}): Metadata {
-    return {
-        title,
-        description,
-        icons,
-    };
+  return {
+    title,
+    description,
+    icons,
+  };
 }
 
 export function slugify(text: string) {
-    return text
-        .toLowerCase()
-        .trim()
-        .normalize("NFD")
-        .replace(/\p{Diacritic}/gu, "")
-        .replace(/[^\p{L}\p{N}\p{Zs}\p{Emoji}]+/gu, "-")
-        .replace(/[\s_#]+/g, "-")
-        .replace(/^-+/, "");
+  return text
+    .toLowerCase()
+    .trim()
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .replace(/[^\p{L}\p{N}\p{Zs}\p{Emoji}]+/gu, "-")
+    .replace(/[\s_#]+/g, "-")
+    .replace(/^-+/, "");
 }

@@ -16,23 +16,23 @@ const rubik = Rubik({ subsets: ["latin"], weight: ["500"], variable: "--font-rub
 
 export const metadata = constructMetadata();
 interface Props {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export default function RootLayout({ children }: Props) {
-    return (
-        <html lang="en">
-            <head />
-            <body className={cn(GeistSans.className, GeistSans.variable, rubik.variable)}>
-                <TRPCProvider>
-                    <TooltipProvider delayDuration={0}>
-                        <div className="flex min-h-screen flex-col">
-                            <main className="flex-1">{children}</main>
-                        </div>
-                    </TooltipProvider>
-                </TRPCProvider>
-                <Toaster position="bottom-right" visibleToasts={6} />
-            </body>
-        </html>
-    );
+  return (
+    <html lang="en">
+      <head />
+      <body className={cn(GeistSans.className, GeistSans.variable, rubik.variable)}>
+        <TRPCProvider>
+          <TooltipProvider delayDuration={0}>
+            <div className="flex min-h-screen flex-col">
+              <main className="flex-1">{children}</main>
+            </div>
+          </TooltipProvider>
+        </TRPCProvider>
+        <Toaster position="bottom-right" visibleToasts={6} />
+      </body>
+    </html>
+  );
 }

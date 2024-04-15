@@ -10,98 +10,98 @@ import { verifyPassword } from "./hash";
 import { sendVerificationEmail } from "./send-verification-email";
 
 const authOptions: NextAuthOptions = {
-    callbacks: {
-        session({ session, token }) {
-            const updatedSession: Session = {
-                ...session,
-                user: {
-                    id: token.id,
-                    activeWorkspace: token.activeWorkspace,
-                    image: token.picture,
-                    email: token.email,
-                    emailVerified: token.emailVerified,
-                    name: token.name,
-                },
-            };
-            return updatedSession;
+  callbacks: {
+    session({ session, token }) {
+      const updatedSession: Session = {
+        ...session,
+        user: {
+          id: token.id,
+          activeWorkspace: token.activeWorkspace,
+          image: token.picture,
+          email: token.email,
+          emailVerified: token.emailVerified,
+          name: token.name,
         },
-        jwt: async ({ user, token }) => {
-            const userFromPrisma = await db.user.findFirst({
-                where: { email: token.email },
-            });
-            if (!userFromPrisma) {
-                if (user) {
-                    token.id = user?.id;
-                }
-                return token;
-            }
-            return {
-                id: userFromPrisma.id,
-                activeWorkspace: userFromPrisma.activeWorkspace ?? undefined,
-                picture: userFromPrisma.image,
-                name: userFromPrisma.name,
-                email: userFromPrisma.email,
-                emailVerified: userFromPrisma.emailVerified
-                    ? new Date(userFromPrisma.emailVerified).toISOString()
-                    : null,
-            } satisfies JWT;
-        },
+      };
+      return updatedSession;
     },
-    adapter: PrismaAdapter(db),
-    providers: [
-        GithubProvider({
-            clientId: process.env.GITHUB_CLIENT_ID!,
-            clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-        }),
-        CredentialsProvider({
-            name: "credentials",
-            credentials: {
-                email: { label: "Email", type: "email", placeholder: "you@email.com" },
-                password: { label: "Password", type: "password", placeholder: "••••••••••" },
-            },
-            authorize: async (credentials) => {
-                if (!credentials) {
-                    throw new Error("No credentials were provided");
-                }
-                const { email, password } = credentials;
+    jwt: async ({ user, token }) => {
+      const userFromPrisma = await db.user.findFirst({
+        where: { email: token.email },
+      });
+      if (!userFromPrisma) {
+        if (user) {
+          token.id = user?.id;
+        }
+        return token;
+      }
+      return {
+        id: userFromPrisma.id,
+        activeWorkspace: userFromPrisma.activeWorkspace ?? undefined,
+        picture: userFromPrisma.image,
+        name: userFromPrisma.name,
+        email: userFromPrisma.email,
+        emailVerified: userFromPrisma.emailVerified
+          ? new Date(userFromPrisma.emailVerified).toISOString()
+          : null,
+      } satisfies JWT;
+    },
+  },
+  adapter: PrismaAdapter(db),
+  providers: [
+    GithubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    }),
+    CredentialsProvider({
+      name: "credentials",
+      credentials: {
+        email: { label: "Email", type: "email", placeholder: "you@email.com" },
+        password: { label: "Password", type: "password", placeholder: "••••••••••" },
+      },
+      authorize: async (credentials) => {
+        if (!credentials) {
+          throw new Error("No credentials were provided");
+        }
+        const { email, password } = credentials;
 
-                const user = await db.user.findFirst({
-                    where: {
-                        email: email,
-                    },
-                });
-                if (!user || !user.hashedPassword) {
-                    throw new Error("No user found");
-                }
-                if (!(await verifyPassword(user.hashedPassword, password))) {
-                    throw new Error("Invalid email or password.");
-                }
-                if (!user.emailVerified) {
-                    const token = await db.verificationToken.findFirst({
-                        where: {
-                            userId: user.id,
-                        },
-                        orderBy: {
-                            createdAt: "desc",
-                        },
-                    });
-                    if (!token) {
-                        await sendVerificationEmail(user);
-                    }
-                }
-                return {
-                    id: user.id,
-                    activeWorkspace: undefined,
-                    email: user.email,
-                    emailVerified: user.emailVerified?.toISOString() ?? null,
-                    name: user.name,
-                } satisfies User;
+        const user = await db.user.findFirst({
+          where: {
+            email: email,
+          },
+        });
+        if (!user || !user.hashedPassword) {
+          throw new Error("No user found");
+        }
+        if (!(await verifyPassword(user.hashedPassword, password))) {
+          throw new Error("Invalid email or password.");
+        }
+        if (!user.emailVerified) {
+          const token = await db.verificationToken.findFirst({
+            where: {
+              userId: user.id,
             },
-        }),
-    ],
-    session: {
-        strategy: "jwt",
-    },
+            orderBy: {
+              createdAt: "desc",
+            },
+          });
+          if (!token) {
+            await sendVerificationEmail(user);
+          }
+        }
+        return {
+          id: user.id,
+          activeWorkspace: undefined,
+          email: user.email,
+          emailVerified: user.emailVerified?.toISOString() ?? null,
+          name: user.name,
+        } satisfies User;
+      },
+    }),
+  ],
+  session: {
+    strategy: "jwt",
+  },
 };
 
 export { authOptions };
