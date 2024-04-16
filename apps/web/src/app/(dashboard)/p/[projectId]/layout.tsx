@@ -9,39 +9,42 @@ import { ViewListContainer } from "@/components/projects/view-list-container";
 import { ThemeSquare } from "@/components/theme-square";
 
 interface ProjectLayoutProps {
-    children: React.ReactNode;
-    params: {
-        projectId: string;
-    };
+  children: React.ReactNode;
+  params: {
+    projectId: string;
+  };
 }
 
 export default async function ProjectLayout({ children, params }: ProjectLayoutProps) {
-    const session = await getServerAuthSession();
-    if (!session) {
-        return notFound();
-    }
-    const project = await db.project.findFirst({ where: { id: params.projectId } });
-    if (!project) {
-        return notFound();
-    }
-    const links = await db.link.findMany({
-        where: {
-            projectId: project.id,
-        },
-        include: { view: true },
-    });
-    const views = links.map((link) => link.view);
-    return (
-        <div className="flex flex-col space-y-2">
-            <ProjectToolbar project={project} />
-            <div className="space-y-1">
-                <h1 className="flex items-center gap-2 text-3xl font-semibold">
-                    <ThemeSquare className="h-6 w-6" color={project.color} />
-                    {project.name}
-                </h1>
-                <ViewListContainer project={project} views={views} />
-            </div>
-            {children}
-        </div>
-    );
+  const session = await getServerAuthSession();
+  if (!session) {
+    return notFound();
+  }
+  const project = await db.project.findFirst({ 
+    where: { 
+      id: params.projectId,
+    },
+    include: { groups: true },
+  });
+  if (!project) {
+    return notFound();
+  }
+  const views = await db.view.findMany({
+    where: {
+      projectId: project.id,
+    },
+  });
+  return (
+    <div className="flex flex-col space-y-2">
+      <ProjectToolbar project={project} />
+      <div className="space-y-1">
+        <h1 className="flex items-center gap-2 text-3xl font-semibold">
+          <ThemeSquare className="h-6 w-6" color={project.color} />
+          {project.name}
+        </h1>
+        <ViewListContainer project={project} views={views} />
+      </div>
+      {children}
+    </div>
+  );
 }

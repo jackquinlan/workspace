@@ -8,7 +8,7 @@ import { db } from "@workspace/db";
 import { getServerAuthSession } from "@workspace/lib/next-auth/get-server-session";
 
 type CreateContextOptions = {
-    session: Session | null;
+  session: Session | null;
 };
 
 /**
@@ -22,10 +22,10 @@ type CreateContextOptions = {
  * @see https://create.t3.gg/en/usage/trpc#-servertrpccontextts
  */
 export const createInnerTRPCContext = (opts: CreateContextOptions) => {
-    return {
-        session: opts.session,
-        db,
-    };
+  return {
+    session: opts.session,
+    db,
+  };
 };
 
 /**
@@ -34,18 +34,18 @@ export const createInnerTRPCContext = (opts: CreateContextOptions) => {
  * @link https://trpc.io/docs/context
  */
 export const createTRPCContext = async (opts: { req: NextRequest }) => {
-    // get session info on the server
-    const session = await getServerAuthSession();
-    return createInnerTRPCContext({
-        session,
-    });
+  // get session info on the server
+  const session = await getServerAuthSession();
+  return createInnerTRPCContext({
+    session,
+  });
 };
 
 export const t = initTRPC.context<typeof createTRPCContext>().create({
-    transformer: superjson,
-    errorFormatter({ shape }) {
-        return shape;
-    },
+  transformer: superjson,
+  errorFormatter({ shape }) {
+    return shape;
+  },
 });
 
 /**
@@ -69,18 +69,18 @@ export const publicProcedure = t.procedure;
  * procedure
  */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
-    if (!ctx.session?.user) {
-        throw new TRPCError({
-            code: "UNAUTHORIZED",
-            message: "You must be logged in to do this action",
-        });
-    }
-    return next({
-        ctx: {
-            // infers the `session` as non-nullable
-            session: { ...ctx.session, user: ctx.session.user },
-        },
+  if (!ctx.session?.user) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "You must be logged in to do this action",
     });
+  }
+  return next({
+    ctx: {
+      // infers the `session` as non-nullable
+      session: { ...ctx.session, user: ctx.session.user },
+    },
+  });
 });
 
 /**
