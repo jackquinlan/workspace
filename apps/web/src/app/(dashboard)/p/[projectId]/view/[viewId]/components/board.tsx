@@ -33,8 +33,8 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { createPortal } from "react-dom";
 
-import type { Group, Task, Project } from "@workspace/db/client";
-import type { GroupWithTasks } from "@workspace/lib/types/project";
+import type { Group, Task } from "@workspace/db/client";
+import type { GroupWithTasks, ProjectWithGroups } from "@workspace/lib/types/project";
 
 import { AddGroup } from "./add-group";
 import { GroupContainer, GroupProps } from "./group";
@@ -45,7 +45,7 @@ const animateLayoutChanges: AnimateLayoutChanges = (args) =>
 
 interface BoardViewProps {
   groupsWithTasks: GroupWithTasks[];
-  project: Project;
+  project: ProjectWithGroups;
 }
 type Tasks = Record<string, Task[]>;
 
@@ -71,6 +71,16 @@ export function Board({ groupsWithTasks, project }: BoardViewProps) {
     const groupWithTasks = { ...group, tasks: [] };
     setGroups((groups) => [...groups, groupWithTasks]);
     setTasksByGroup((tasks) => ({ ...tasks, [group.id]: [] }));
+  }
+  function handleAddTask(task: Task) {
+    const group = groups.find((g) => g.id === task.groupId);
+    if (!group) {
+      return;
+    }
+    setTasksByGroup((tasks) => ({
+      ...tasks,
+      [task.groupId]: [...tasks[task.groupId], task],
+    }));
   }
 
   function findGroup(id: UniqueIdentifier) {
@@ -210,7 +220,7 @@ export function Board({ groupsWithTasks, project }: BoardViewProps) {
       <div className="inline-grid grid-flow-col gap-2">
         <SortableContext items={groups} strategy={horizontalListSortingStrategy}>
           {groups.map((group) => (
-            <DroppableGroup key={group.id} group={group} items={tasksByGroup[group.id]}>
+            <DroppableGroup key={group.id} group={group} items={tasksByGroup[group.id]} handleAddTask={handleAddTask} project={project}>
               <SortableContext items={tasksByGroup[group.id]} strategy={rectSortingStrategy}>
                 {tasksByGroup[group.id].length > 0 &&
                   tasksByGroup[group.id].map((task) => (
@@ -240,7 +250,7 @@ export function Board({ groupsWithTasks, project }: BoardViewProps) {
   function renderGroupOverlay(id: UniqueIdentifier) {
     const g = groupsWithTasks.find((g) => g.id === id);
     return (
-      <GroupContainer group={g!} style={{}}>
+      <GroupContainer group={g!} style={{}} handleAddTask={handleAddTask} project={project}>
         {tasksByGroup[id].map((task) => (
           <TaskCard key={task.id} task={task} />
         ))}
@@ -285,6 +295,8 @@ export function DroppableGroup({
   children,
   group,
   items,
+  handleAddTask,
+  project
 }: Omit<GroupProps, "style"> & { items: Task[] }) {
   const { setNodeRef, listeners, transform, transition, isDragging } = useSortable({
     id: group.id,
@@ -298,7 +310,7 @@ export function DroppableGroup({
   };
 
   return (
-    <GroupContainer ref={setNodeRef} style={style} group={group} handleProps={{ ...listeners }}>
+    <GroupContainer ref={setNodeRef} style={style} group={group} handleProps={{ ...listeners }} handleAddTask={handleAddTask} project={project}>
       {children}
     </GroupContainer>
   );

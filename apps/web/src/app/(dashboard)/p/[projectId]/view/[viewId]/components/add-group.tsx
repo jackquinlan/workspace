@@ -78,7 +78,7 @@ export function AddGroup({ project, handleAddGroup }: AddGroupProps) {
           )}
         />
         <div className="flex items-center gap-2 pt-2">
-          <Button type="submit" size="sm" loading={loading} disabled={loading}>
+          <Button type="submit" size="sm" disabled={loading}>
             Add Group
           </Button>
           <CancelButton close={() => setOpen(false)}>Cancel</CancelButton>

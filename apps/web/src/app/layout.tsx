@@ -25,7 +25,7 @@ export default function RootLayout({ children }: Props) {
       <head />
       <body className={cn(GeistSans.className, GeistSans.variable, rubik.variable)}>
         <TRPCProvider>
-          <TooltipProvider delayDuration={0}>
+          <TooltipProvider delayDuration={2}>
             <div className="flex min-h-screen flex-col">
               <main className="flex-1">{children}</main>
             </div>

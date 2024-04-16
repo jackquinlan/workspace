@@ -2,7 +2,8 @@
 
 import React, { forwardRef } from "react";
 
-import type { Group } from "@workspace/db/client";
+import type { Group, Task } from "@workspace/db/client";
+import type { ProjectWithGroups } from "@workspace/lib/types/project";
 
 import { GroupHeader } from "./group-header";
 
@@ -11,19 +12,21 @@ export interface GroupProps {
   handleProps?: React.HTMLAttributes<any>;
   group: Group;
   style: React.CSSProperties;
+  handleAddTask: (task: Task) => void;
+  project: ProjectWithGroups;
 }
 
 export const GroupContainer = forwardRef<HTMLDivElement, GroupProps>(
-  ({ children, group, handleProps, style }: GroupProps, ref) => {
+  ({ children, group, handleProps, handleAddTask, project, style }: GroupProps, ref) => {
     return (
       <div
         ref={ref}
-        className="flex min-h-[200px] w-[400px] flex-col rounded-md border bg-zinc-50 shadow outline-none"
+        className="flex min-h-[700px] w-[400px] flex-col rounded-md border bg-zinc-50 shadow outline-none"
         style={style}
       >
         <div className="w-full rounded-t-md h-3 cursor-grab hover:bg-zinc-100" {...handleProps} />
         <div className="flex items-center justify-between pr-2">
-          <GroupHeader group={group} />
+          <GroupHeader group={group} handleAddTask={handleAddTask} project={project} />
         </div>
         <ul className="flex flex-col gap-2 p-3">{children}</ul>
       </div>

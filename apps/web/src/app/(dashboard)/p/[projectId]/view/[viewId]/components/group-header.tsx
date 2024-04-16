@@ -2,16 +2,20 @@ import React from "react";
 
 import { MoreHorizontal, Plus } from "lucide-react";
 
-import type { Group } from "@workspace/db/client";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@workspace/ui";
+import type { Group, Task } from "@workspace/db/client";
+import type { ProjectWithGroups } from "@workspace/lib/types/project";
+import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@workspace/ui";
 
+import { CreateTaskModal } from "@/components/projects/create-task-modal";
 import { ThemeSquare } from "@/components/theme-square";
 
 interface GroupHeaderProps {
   group: Group;
+  handleAddTask: (task: Task) => void;
+  project: ProjectWithGroups;
 }
 
-export function GroupHeader({ group }: GroupHeaderProps) {
+export function GroupHeader({ group, handleAddTask, project }: GroupHeaderProps) {
   return (
     <div className="flex w-full items-center justify-between px-3 py-1 font-medium">
       <div className="flex items-center gap-2">
@@ -22,7 +26,7 @@ export function GroupHeader({ group }: GroupHeaderProps) {
         <MoreHorizontal className="h-5 w-5" />
         <Tooltip>
           <TooltipTrigger>
-            <Plus className="h-4 w-4" />
+            <CreateTaskModal handleAddTask={handleAddTask} defaultGroup={group} project={project} />
           </TooltipTrigger>
           <TooltipContent>Add Task</TooltipContent>
         </Tooltip>

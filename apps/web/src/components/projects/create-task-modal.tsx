@@ -1,12 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState, useTransition } from "react";
 
-import { Plus } from "lucide-react";
 import { toast } from "sonner";
+import { Plus } from "lucide-react";
 import { z } from "zod";
 
-import type { Group } from "@workspace/db/client";
+import type { Group, Task } from "@workspace/db/client";
 import type { ProjectWithGroups } from "@workspace/lib/types/project";
 import { addTaskSchema } from "@workspace/lib/validators/task";
 import {
@@ -35,9 +35,12 @@ import { useAction } from "@/hooks/use-action";
 interface Props {
   defaultGroup?: Group;
   project: ProjectWithGroups;
+  handleAddTask: (task: Task) => void;
 }
 
-export function CreateTaskModal({ defaultGroup, project }: Props) {
+export function CreateTaskModal({ defaultGroup, project, handleAddTask }: Props) {
+  const [loading, startTransition] = useTransition();
+  const [open, setOpen] = useState<boolean>(false);
   const form = useZodForm({
     schema: addTaskSchema,
     defaultValues: {
@@ -45,7 +48,9 @@ export function CreateTaskModal({ defaultGroup, project }: Props) {
     },
   });
   const { execute } = useAction(createTask, {
-    onSuccess: () => {
+    onSuccess: (data) => {
+      setOpen(false);
+      handleAddTask(data);
       form.reset();
     },
     onError: (error) => {
@@ -53,15 +58,20 @@ export function CreateTaskModal({ defaultGroup, project }: Props) {
     },
   });
   function handleSubmit(data: z.infer<typeof addTaskSchema>) {
-    execute(data);
+    startTransition(() => {
+      execute(data);
+    });
   }
   return (
-    <Dialog>
+    <Dialog 
+      open={open} 
+      onOpenChange={() => {
+        setOpen(!open);
+        form.reset();
+      }}
+    >
       <DialogTrigger asChild>
-        <Button size="xs" className="flex w-fit items-center gap-1">
-          <Plus className="h-4 w-4" />
-          <span className="hidden md:block">Task</span>
-        </Button>
+          <Plus className="h-6 w-6 p-1 rounded-md hover:bg-accent" />
       </DialogTrigger>
       <DialogContent className="top-[25%] w-1/3" showClose={false}>
         <Form {...form}>
@@ -119,7 +129,7 @@ export function CreateTaskModal({ defaultGroup, project }: Props) {
                   </FormItem>
                 )}
               />
-              <Button type="submit" size="xs">
+              <Button type="submit" size="xs" disabled={loading}>
                 Create task
               </Button>
             </DialogFooter>
