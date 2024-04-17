@@ -38,12 +38,14 @@
         "zod": "^3.22.4"
     },
     "devDependencies": {
+        "@prisma/nextjs-monorepo-workaround-plugin": "^5.12.1",
         "@types/node": "20.1.0",
         "@types/react": "18.2.18",
         "@types/react-dom": "18.2.7",
         "@types/uuid": "^9.0.8",
         "@workspace/tailwind": "workspace:^",
         "autoprefixer": "^10.4.13",
+        "install": "^0.13.0",
         "postcss": "^8.4.32",
         "tailwindcss": "3.3.2",
         "typescript": "5.2.2"
