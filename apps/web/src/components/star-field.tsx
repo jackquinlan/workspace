@@ -41,7 +41,7 @@ export function StarsField() {
           }}
         />
       ))}
-      <Meteors number={10} />
+      {/* <Meteors number={10} /> */}
     </div>
   );
 }
