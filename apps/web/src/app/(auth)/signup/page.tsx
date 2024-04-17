@@ -25,12 +25,13 @@ export default function Signup() {
         <StarsField />
       </div>
       <div className="-mt-32 flex justify-center lg:p-8">
-        <div className="w-full md:w-3/4">
+        <div className="w-full md:w-2/3">
           <div className="py-2">
             <h1 className="flex text-2xl font-medium leading-7">Create a free account</h1>
             <h2 className="pt-1 text-sm text-zinc-500">
               Join us and create a workspace that works for you
             </h2>
+            <hr className="mt-2" />
           </div>
           <SignupForm />
           <div className="relative">
