@@ -1,10 +1,10 @@
 import React from "react";
 
-import { MoreHorizontal, Plus } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 
 import type { Group, Task } from "@workspace/db/client";
 import type { ProjectWithGroups } from "@workspace/lib/types/project";
-import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@workspace/ui";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@workspace/ui";
 
 import { CreateTaskModal } from "@/components/projects/create-task-modal";
 import { ThemeSquare } from "@/components/theme-square";
