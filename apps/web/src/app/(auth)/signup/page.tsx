@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { buttonVariants } from "@workspace/ui";
 
-import { StarsField } from "@/components/star-field";
+import { StarsField } from "@/components/stars-field";
 import { cn } from "@/lib/utils";
 import { GithubButton } from "../components/github-button";
 import { SignupForm } from "../components/signup-form";

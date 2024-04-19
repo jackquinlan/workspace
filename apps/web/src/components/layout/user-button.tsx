@@ -2,8 +2,8 @@
 
 import React from "react";
 
-import { LogOut, Plus, Settings, Star } from "lucide-react";
 import type { User } from "next-auth";
+import { ExitIcon, GearIcon, PlusIcon } from "@radix-ui/react-icons";
 import { signOut } from "next-auth/react";
 
 import {
@@ -27,14 +27,14 @@ export function UserButton({ user }: UserButtonProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="outline-none" asChild>
-        <Avatar className="h-7 w-7">
+        <Avatar className="h-8 w-8">
           <AvatarImage src={user.image ?? undefined} />
           <AvatarFallback className="border-border bg-accent border" />
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[250px]" align="start">
         <div className="flex items-center gap-2 px-1 py-1.5">
-          <Avatar className="h-7 w-7">
+          <Avatar className="h-8 w-8">
             <AvatarImage src={user.image ?? undefined} />
             <AvatarFallback className="border-border bg-accent border" />
           </Avatar>
@@ -46,25 +46,18 @@ export function UserButton({ user }: UserButtonProps) {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuLink href="/settings/profile">
-            <Settings className="h-4 w-4" />
+            <GearIcon className="h-4 w-4" />
             Settings
           </DropdownMenuLink>
           <DropdownMenuLink href="/onboarding">
-            <Plus className="h-4 w-4" />
+            <PlusIcon className="h-4 w-4" />
             Create workspace
           </DropdownMenuLink>
-          <DropdownMenuItem>
-            <Star className="h-4 w-4 text-yellow-400" />
-            Upgrade to Pro
-          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem
-          className="flex items-center gap-2"
-          onClick={() => signOut({ callbackUrl: "/login" })}
-        >
-          <LogOut className="h-4 w-4" />
-          Log out
+        <DropdownMenuItem className="flex items-center gap-2" onClick={() => signOut({ callbackUrl: "/login" })}>
+          <ExitIcon className="h-4 w-4" />
+          Logout
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

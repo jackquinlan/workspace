@@ -69,7 +69,7 @@ export function DeleteUserModal({ user }: Props) {
         </AlertDialogDescription>
         <div className="-mt-4 px-5">
           <div className="pb-2 pt-4 text-sm font-normal">
-            Enter your name <span className="font-mono">{user.name}</span> to confirm.
+            Enter your name <span className="font-medium">{user.name}</span> to confirm.
           </div>
           <Input autoFocus onChange={(e) => setConfirmName(e.target.value)} />
           <div className="mb-2 mt-5 flex items-center gap-2">

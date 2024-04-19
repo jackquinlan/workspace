@@ -70,12 +70,12 @@ export function WorkspaceForm({ form, showLogo = false }: WorkspaceFormProps) {
         name="slug"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Workspace URL</FormLabel>
+            <FormLabel>Slug</FormLabel>
             <FormControl>
               <Input addPrefix="workspace.com/" autoComplete="off" {...field} />
             </FormControl>
             <FormMessage />
-            <FormDescription>A unique identifier for your workspace.</FormDescription>
+            <FormDescription>A unique identifier for your workspace</FormDescription>
           </FormItem>
         )}
       />

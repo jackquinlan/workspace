@@ -45,29 +45,12 @@ const config: Omit<Config, "content"> = {
         input: "hsl(var(--input))",
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)"],
-        rubik: ["var(--font-rubik)"],
+        sans: ["var(--font-geist-sans)"], inter: ["var(--font-inter)"],
       },
       borderRadius: {
         lg: "6px",
         md: "4px",
         sm: "2px",
-      },
-      animation: {
-        "shooting-star": "meteor 5s linear infinite",
-      },
-      keyframes: {
-        meteor: {
-          "0%": {
-            transform: "rotate(215deg) translateX(0)",
-            opacity: 1,
-          },
-          "70%": { opacity: 1 },
-          "100%": {
-            transform: "rotate(215deg) translateX(-500px)",
-            opacity: 0,
-          },
-        },
       },
     },
   },

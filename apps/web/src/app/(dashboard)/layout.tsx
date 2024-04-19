@@ -43,17 +43,7 @@ export default async function MainLayout({ children }: MainLayoutProps) {
   const defaultLayout = layout ? JSON.parse(layout.value) : undefined;
   return (
     <div className="flex h-screen">
-      <SidebarProvider>
-        <ResizeLayoutWrapper
-          defaultLayout={defaultLayout}
-          user={session.user}
-          workspaces={workspaces}
-          projects={projects}
-          activeWorkspace={activeWorkspace!}
-        >
-          <NextAuthProvider session={session}>{children}</NextAuthProvider>
-        </ResizeLayoutWrapper>
-      </SidebarProvider>
+      <NextAuthProvider session={session}>{children}</NextAuthProvider>
       <LockScroll />
     </div>
   );

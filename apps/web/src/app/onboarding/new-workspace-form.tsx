@@ -20,15 +20,12 @@ export function NewWorkspaceForm({}: Props) {
   const form = useZodForm({
     schema: newWorkspaceSchema,
     defaultValues: {
-      name: "",
-      slug: "",
-      theme: "#52525b",
+      name: "", slug: "", theme: "#52525b",
     },
     mode: "onChange",
   });
   const createWorkspace = api.workspace.newWorkspace.useMutation({
     onSuccess: () => {
-      toast.success("Workspace created successfully");
       router.push("/inbox");
       router.refresh();
     },
@@ -42,7 +39,7 @@ export function NewWorkspaceForm({}: Props) {
     });
   }
   return (
-    <div className="flex w-1/2 flex-col space-y-4">
+    <div className="flex flex-col space-y-4 w-full">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2">
           <WorkspaceForm form={form} showLogo />
