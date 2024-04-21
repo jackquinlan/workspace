@@ -30,7 +30,6 @@ interface WorkspaceFormProps<T extends FieldValues = any> {
 }
 
 export function WorkspaceForm({ form, showLogo = false }: WorkspaceFormProps) {
-  // const deleteAvatarWithFile = deleteAvatar.bind(null, workspace?.image ?? "");
   const watchSlug = form.watch("slug");
   useEffect(() => {
     if (!Object.keys(form.formState.dirtyFields).includes("slug")) {

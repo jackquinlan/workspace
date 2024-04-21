@@ -20,7 +20,9 @@ export function NewWorkspaceForm({}: Props) {
   const form = useZodForm({
     schema: newWorkspaceSchema,
     defaultValues: {
-      name: "", slug: "", theme: "#52525b",
+      name: "",
+      slug: "",
+      theme: "#52525b",
     },
     mode: "onChange",
   });
@@ -39,7 +41,7 @@ export function NewWorkspaceForm({}: Props) {
     });
   }
   return (
-    <div className="flex flex-col space-y-4 w-full">
+    <div className="flex w-full flex-col space-y-4">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2">
           <WorkspaceForm form={form} showLogo />

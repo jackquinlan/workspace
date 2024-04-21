@@ -220,7 +220,13 @@ export function Board({ groupsWithTasks, project }: BoardViewProps) {
       <div className="inline-grid grid-flow-col gap-2">
         <SortableContext items={groups} strategy={horizontalListSortingStrategy}>
           {groups.map((group) => (
-            <DroppableGroup key={group.id} group={group} items={tasksByGroup[group.id]} handleAddTask={handleAddTask} project={project}>
+            <DroppableGroup
+              key={group.id}
+              group={group}
+              items={tasksByGroup[group.id]}
+              handleAddTask={handleAddTask}
+              project={project}
+            >
               <SortableContext items={tasksByGroup[group.id]} strategy={rectSortingStrategy}>
                 {tasksByGroup[group.id].length > 0 &&
                   tasksByGroup[group.id].map((task) => (
@@ -296,7 +302,7 @@ export function DroppableGroup({
   group,
   items,
   handleAddTask,
-  project
+  project,
 }: Omit<GroupProps, "style"> & { items: Task[] }) {
   const { setNodeRef, listeners, transform, transition, isDragging } = useSortable({
     id: group.id,
@@ -310,7 +316,14 @@ export function DroppableGroup({
   };
 
   return (
-    <GroupContainer ref={setNodeRef} style={style} group={group} handleProps={{ ...listeners }} handleAddTask={handleAddTask} project={project}>
+    <GroupContainer
+      ref={setNodeRef}
+      style={style}
+      group={group}
+      handleProps={{ ...listeners }}
+      handleAddTask={handleAddTask}
+      project={project}
+    >
       {children}
     </GroupContainer>
   );

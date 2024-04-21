@@ -24,7 +24,7 @@ export const GroupContainer = forwardRef<HTMLDivElement, GroupProps>(
         className="flex min-h-[700px] w-[400px] flex-col rounded-md border bg-zinc-50 shadow outline-none"
         style={style}
       >
-        <div className="w-full rounded-t-md h-3 cursor-grab hover:bg-zinc-100" {...handleProps} />
+        <div className="h-3 w-full cursor-grab rounded-t-md hover:bg-zinc-100" {...handleProps} />
         <div className="flex items-center justify-between pr-2">
           <GroupHeader group={group} handleAddTask={handleAddTask} project={project} />
         </div>

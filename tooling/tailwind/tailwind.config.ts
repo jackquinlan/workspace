@@ -45,7 +45,8 @@ const config: Omit<Config, "content"> = {
         input: "hsl(var(--input))",
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)"], inter: ["var(--font-inter)"],
+        sans: ["var(--font-geist-sans)"],
+        inter: ["var(--font-inter)"],
       },
       borderRadius: {
         lg: "6px",

@@ -6,8 +6,8 @@ import { useParams } from "next/navigation";
 
 import { CalendarDays, KanbanSquare, LayoutGrid, List, Plus, Table } from "lucide-react";
 
-import type { ProjectWithGroups } from "@workspace/lib/types/project";
 import type { View } from "@workspace/db/client";
+import type { ProjectWithGroups } from "@workspace/lib/types/project";
 import { Button } from "@workspace/ui";
 
 import { useVisibleViews } from "@/hooks/use-visible-views";
@@ -36,7 +36,9 @@ export function ViewListContainer({ project, views }: ViewListContainerProps) {
     <div className="flex h-10 items-center justify-between gap-0.5 border-b">
       <div ref={containerRef} className="flex w-2/3 items-center gap-2">
         <ol ref={viewsListRef} className="flex list-none items-center gap-2">
-          <div className={cn("flex h-10 items-center", !params.viewId && "border-primary border-b-2")}>
+          <div
+            className={cn("flex h-10 items-center", !params.viewId && "border-primary border-b-2")}
+          >
             <Link
               className="hover:bg-accent flex h-7 w-fit cursor-pointer items-center gap-1 truncate rounded-md p-1 px-1 text-sm"
               href={`/p/${project.id}`}

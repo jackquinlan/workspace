@@ -14,10 +14,10 @@ export default async function ViewPage({
   params: { projectId: string; viewId: string };
 }) {
   const proj = await db.project.findFirst({
-    where: { 
-      id: params.projectId 
+    where: {
+      id: params.projectId,
     },
-    include: { groups: true }
+    include: { groups: true },
   });
   const view = await db.view.findUnique({
     where: { id: params.viewId },
@@ -34,7 +34,7 @@ export default async function ViewPage({
 
   return (
     <div className="flex h-2/3 flex-col py-3">
-      <ScrollArea className="flex h-full flex-grow pt-2 w-full">
+      <ScrollArea className="flex h-full w-full flex-grow pt-2">
         <div className="w-max">
           <Board groupsWithTasks={groupsWithTasks} project={proj} />
         </div>
