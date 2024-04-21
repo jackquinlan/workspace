@@ -20,19 +20,24 @@ export default async function MainLayout({ children }: MainLayoutProps) {
   if (!session.user.activeWorkspace) {
     return redirect("/onboarding");
   }
-  const memberships = await db.workspaceMember.findMany({
+  const workspaces = await db.workspace.findMany({
     where: {
-      userId: session.user.id,
+      members: {
+        some: { userId: session.user.id },
+      },
     },
-    include: { workspace: true },
   });
-  const workspaces = memberships.map((m) => m.workspace);
-  const active = workspaces.find((w) => w.id === session.user.activeWorkspace);
+  const projects = await db.project.findMany({
+    where: {
+      workspaceId: session.user.activeWorkspace,
+    },
+  });
+  console.log(projects)
   return (
     <NextAuthProvider session={session}>
       <div className="flex min-h-screen">
-        <Sidebar user={session.user} workspaces={workspaces} active={active!} />
-        <main className="grow">{children}</main>
+        <Sidebar user={session.user} workspaces={workspaces} projects={projects} />
+        <main className="px-6 grow">{children}</main>
       </div>
       <LockScroll />
     </NextAuthProvider>

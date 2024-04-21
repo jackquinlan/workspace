@@ -2,8 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 
-import { cn } from "@/lib/utils";
-
 type Star = {
   size: number;
   opacity: number;
@@ -26,7 +24,7 @@ export function StarsField({ fullWidth = false }: { fullWidth?: boolean }) {
   const [stars, setStars] = useState<Star[]>([]);
   useEffect(() => {
     setStars(generateStars(1000, fullWidth));
-  }, []);
+  }, [fullWidth]);
 
   return (
     <div className="pointer-events-none absolute left-0 top-0 z-[50] h-screen w-screen">

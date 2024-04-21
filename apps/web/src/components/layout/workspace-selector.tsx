@@ -40,7 +40,7 @@ export function WorkspaceSelector({ active, workspaces }: Props) {
               {active.name[0].toUpperCase()}
             </AvatarFallback>
           </Avatar>
-          <p className="w-full overflow-hidden truncate font-semibold">{active.name}</p>
+          <p className="w-full overflow-hidden truncate font-semibold text-sm">{active.name}</p>
         </div>
         <CaretSortIcon className="h-4 w-4" />
       </DropdownMenuTrigger>
