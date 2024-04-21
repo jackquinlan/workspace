@@ -1,11 +1,11 @@
 import React from "react";
 import { redirect } from "next/navigation";
 
+import { db } from "@workspace/db";
 import { getServerAuthSession } from "@workspace/lib/next-auth/get-server-session";
 
 import { LockScroll } from "@/components/lock-scroll";
-import { BackButton } from "./back-button";
-import { Logout } from "./logout-button";
+import { LayoutButtons } from "./layout-buttons";
 
 interface OnboardingLayoutProps {
   children: React.ReactNode;
@@ -16,10 +16,12 @@ export default async function OnboardingLayout({ children }: OnboardingLayoutPro
   if (!session) {
     return redirect("/login");
   }
+  const memberships = await db.workspaceMember.findMany({
+    where: { userId: session.user.id },
+  });
   return (
-    <div className="flex h-screen w-full flex-col items-center bg-zinc-50">
-      {session.user.activeWorkspace && <BackButton />}
-      <Logout user={session.user} />
+    <div className="bg-muted/40 flex h-screen flex-col items-center">
+      <LayoutButtons hasWorkspace={memberships.length > 0} user={session.user} />
       {children}
       <LockScroll />
     </div>

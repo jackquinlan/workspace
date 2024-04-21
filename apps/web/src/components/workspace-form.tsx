@@ -30,7 +30,6 @@ interface WorkspaceFormProps<T extends FieldValues = any> {
 }
 
 export function WorkspaceForm({ form, showLogo = false }: WorkspaceFormProps) {
-  // const deleteAvatarWithFile = deleteAvatar.bind(null, workspace?.image ?? "");
   const watchSlug = form.watch("slug");
   useEffect(() => {
     if (!Object.keys(form.formState.dirtyFields).includes("slug")) {
@@ -70,12 +69,12 @@ export function WorkspaceForm({ form, showLogo = false }: WorkspaceFormProps) {
         name="slug"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Workspace URL</FormLabel>
+            <FormLabel>Slug</FormLabel>
             <FormControl>
               <Input addPrefix="workspace.com/" autoComplete="off" {...field} />
             </FormControl>
             <FormMessage />
-            <FormDescription>A unique identifier for your workspace.</FormDescription>
+            <FormDescription>A unique identifier for your workspace</FormDescription>
           </FormItem>
         )}
       />

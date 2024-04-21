@@ -2,8 +2,8 @@
 
 import React, { useState, useTransition } from "react";
 
-import { toast } from "sonner";
 import { Plus } from "lucide-react";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import type { Group, Task } from "@workspace/db/client";
@@ -44,7 +44,9 @@ export function CreateTaskModal({ defaultGroup, project, handleAddTask }: Props)
   const form = useZodForm({
     schema: addTaskSchema,
     defaultValues: {
-      content: "", description: "", groupId: defaultGroup?.id ?? project.groups[0].id ?? "",
+      content: "",
+      description: "",
+      groupId: defaultGroup?.id ?? project.groups[0].id ?? "",
     },
   });
   const { execute } = useAction(createTask, {
@@ -63,15 +65,15 @@ export function CreateTaskModal({ defaultGroup, project, handleAddTask }: Props)
     });
   }
   return (
-    <Dialog 
-      open={open} 
+    <Dialog
+      open={open}
       onOpenChange={() => {
         setOpen(!open);
         form.reset();
       }}
     >
       <DialogTrigger asChild>
-          <Plus className="h-6 w-6 p-1 rounded-md hover:bg-accent" />
+        <Plus className="hover:bg-accent h-6 w-6 rounded-md p-1" />
       </DialogTrigger>
       <DialogContent className="top-[25%] w-1/3" showClose={false}>
         <Form {...form}>
@@ -100,7 +102,11 @@ export function CreateTaskModal({ defaultGroup, project, handleAddTask }: Props)
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Textarea className="resize-none border-none" placeholder="Task description" {...field} />
+                      <Textarea
+                        className="resize-none border-none"
+                        placeholder="Task description"
+                        {...field}
+                      />
                     </FormControl>
                   </FormItem>
                 )}
@@ -123,7 +129,7 @@ export function CreateTaskModal({ defaultGroup, project, handleAddTask }: Props)
                           <SelectItem key={group.id} value={group.id}>
                             {group.name}
                           </SelectItem>
-                        ))}      
+                        ))}
                       </SelectContent>
                     </Select>
                   </FormItem>

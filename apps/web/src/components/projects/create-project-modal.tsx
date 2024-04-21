@@ -31,7 +31,7 @@ import {
   useZodForm,
 } from "@workspace/ui";
 
-import { ColorSelect } from "../theme-select";
+import { ColorSelect } from "@/components/theme-select";
 
 interface Props {
   workspace: Workspace;
@@ -44,9 +44,7 @@ export function CreateProjectModal({ workspace }: Props) {
   const form = useZodForm({
     schema: newProjectSchema,
     defaultValues: {
-      name: "",
-      workspaceId: workspace.id,
-      color: "#52525b",
+      color: "#52525b", name: "", workspaceId: workspace.id,
     },
   });
   const newProject = api.project.newProject.useMutation({
@@ -74,7 +72,7 @@ export function CreateProjectModal({ workspace }: Props) {
           </div>
         </TooltipTrigger>
         <TooltipContent side="right" sideOffset={4}>
-          Create Project
+          Add Project
         </TooltipContent>
       </Tooltip>
       <DialogContent className="top-[25%]" showClose={false}>

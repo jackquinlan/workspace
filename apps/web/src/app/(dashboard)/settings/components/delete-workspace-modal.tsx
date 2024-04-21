@@ -71,7 +71,7 @@ export function DeleteWorkspaceModal({ workspace }: Props) {
         </AlertDialogDescription>
         <div className="-mt-4 px-5">
           <div className="pb-2 pt-4 text-sm font-normal">
-            Enter workspace name <span className="font-mono">{workspace.name}</span> to confirm.
+            Enter workspace name <span className="font-medium">{workspace.name}</span> to confirm.
           </div>
           <Input autoFocus onChange={(e) => setConfirmName(e.target.value)} />
           <div className="mb-2 mt-5 flex items-center gap-2">
