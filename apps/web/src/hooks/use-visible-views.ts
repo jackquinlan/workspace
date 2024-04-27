@@ -10,7 +10,6 @@ export function useVisibleViews(numViews: number) {
       const viewList = viewsListRef.current;
       const viewListWidth = viewList?.offsetWidth || 0;
       const viewWidth = (viewListWidth / numViews) * 1.05;
-      console.log(viewWidth);
 
       // Get the width of the container that the view list is in
       const container = containerRef.current;

@@ -4,14 +4,16 @@ import { Inter } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
 import { Toaster } from "sonner";
 
-import { TRPCProvider } from "@workspace/api/react";
 import { TooltipProvider } from "@workspace/ui";
+import { TRPCProvider } from "@workspace/api/react";
 
 import { cn, constructMetadata } from "@/lib/utils";
 
 import "@/styles/globals.css";
 
-const inter = Inter({ subsets: ["latin"], weight: ["500"], variable: "--font-inter" });
+const inter = Inter({ 
+  subsets: ["latin"], weight: ["500"], variable: "--font-inter" 
+});
 
 export const metadata = constructMetadata();
 interface Props {

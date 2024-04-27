@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { CaretSortIcon, CheckIcon, GearIcon, PlusIcon } from "@radix-ui/react-icons";
 import { toast } from "sonner";
+import { useSession } from "next-auth/react";
 
 import { api } from "@workspace/api/react";
 import type { Workspace } from "@workspace/db/client";
@@ -64,9 +65,11 @@ export function WorkspaceSelector({ active, workspaces }: Props) {
 }
 
 export function WorkspaceInfo({ activeId, workspace }: { activeId: string; workspace: Workspace }) {
+  const { update } = useSession();
   const router = useRouter();
   const switchWorkspace = api.workspace.switchWorkspace.useMutation({
-    onSuccess: () => {
+    onSuccess: async (res) => {
+      await update(res);
       router.push("/inbox");
       router.refresh();
     },

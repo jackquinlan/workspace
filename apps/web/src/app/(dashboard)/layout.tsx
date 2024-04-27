@@ -32,7 +32,6 @@ export default async function MainLayout({ children }: MainLayoutProps) {
       workspaceId: session.user.activeWorkspace,
     },
   });
-  console.log(projects)
   return (
     <NextAuthProvider session={session}>
       <div className="flex min-h-screen">
